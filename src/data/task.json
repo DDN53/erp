@@ -1,0 +1,63 @@
+[
+    {
+      "moduleId": 1,
+      "groupId": 6,
+      "groupName": "HR Group 1",
+      "processId": 2,
+      "processName": "proces 2",
+      "tasks": [
+        {
+          "taskId": 51,
+          "taskName": "task 3",
+          "orderById": 3
+        }
+      ]
+    },
+    {
+      "moduleId": 1,
+      "groupId": 6,
+      "groupName": "HR Group 1",
+      "processId": 3,
+      "processName": "process 3",
+      "tasks": [
+        {
+          "taskId": 52,
+          "taskName": "task 4",
+          "orderById": 1
+        }
+      ]
+    },
+    {
+      "moduleId": 5,
+      "groupId": 1,
+      "groupName": "Request",
+      "processId": 7,
+      "processName": "Material Request (MR)",
+      "tasks": [
+        {
+          "taskId": 54,
+          "taskName": "Capture",
+          "orderById": 1
+        },
+        {
+          "taskId": 55,
+          "taskName": "Generate",
+          "orderById": 2
+        }
+      ]
+    },
+    {
+      "moduleId": 11,
+      "groupId": 9,
+      "groupName": "User Management",
+      "processId": 6,
+      "processName": "User Management",
+      "tasks": [
+        {
+          "taskId": 53,
+          "taskName": "Assign Tasks ",
+          "orderById": 2
+        }
+      ]
+    }
+  ]

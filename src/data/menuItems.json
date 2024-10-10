@@ -1,0 +1,17 @@
+{
+    "menuItems": [
+      {
+        "name": "Bill Calculator",
+        "link": "#"
+      },
+      {
+        "name": "Loan Calculator",
+        "link": "#"
+      },
+      {
+        "name": "Help Documents",
+        "link": "#"
+      }
+    ]
+  }
+  

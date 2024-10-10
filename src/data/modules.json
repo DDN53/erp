@@ -1,0 +1,192 @@
+[
+    {
+      "moduleId": 1,
+      "moduleCode": "1",
+      "moduleName": "Human Resources",
+      "welcomeMessage": "Human Resources",
+      "description": "Human Resources",
+      "moduleImage": "public/images/homeCardImages/HumanResource.jpg",
+      "pageLink": "/about",
+      "orderById": 1
+    },
+    {
+      "moduleId": 2,
+      "moduleCode": "2",
+      "moduleName": "Payroll",
+      "welcomeMessage": "Payroll",
+      "description": "Payroll",
+      "moduleImage": "/images/homeCardImages/Payroll.jpg",
+      "pageLink": "/about",
+      "orderById": 2
+    },
+    {
+      "moduleId": 3,
+      "moduleCode": "3",
+      "moduleName": "Purchase",
+      "welcomeMessage": "Purchase",
+      "description": "Purchase",
+      "moduleImage": "/images/homeCardImages/Purchasing.jpg",
+      "pageLink": "/about",
+      "orderById": 3
+    },
+    {
+      "moduleId": 4,
+      "moduleCode": "4",
+      "moduleName": "Supply",
+      "welcomeMessage": "Supply",
+      "description": "Supply",
+      "moduleImage": "/images/homeCardImages/Supplies.jpg",
+      "pageLink": "/about",
+      "orderById": 4
+    },
+    {
+      "moduleId": 5,
+      "moduleCode": "5",
+      "moduleName": "Inventory",
+      "welcomeMessage": "Inventory",
+      "description": "Inventory",
+      "moduleImage": "/images/homeCardImages/inventory.jpg",
+      "pageLink": "/about",
+      "orderById": 5
+    },
+    {
+      "moduleId": 12,
+      "moduleCode": "12",
+      "moduleName": "Customer Information",
+      "welcomeMessage": "Customer Information",
+      "description": "Customer Information",
+      "moduleImage": "/images/homeCardImages/customer.jpg",
+      "pageLink": "/about",
+      "orderById": 6
+    },
+    {
+      "moduleId": 14,
+      "moduleCode": "14",
+      "moduleName": "Grievance",
+      "welcomeMessage": "Grievance",
+      "description": "Grievance",
+      "moduleImage": "/images/homeCardImages/grievance.jpeg",
+      "pageLink": "/about",
+      "orderById": 7
+    },
+    {
+      "moduleId": 15,
+      "moduleCode": "15",
+      "moduleName": "Billing and Recovery",
+      "welcomeMessage": "Billing and Recovery",
+      "description": "Billing and Recovery",
+      "moduleImage": "/images/homeCardImages/billing2.jpg",
+      "pageLink": "/about",
+      "orderById": 8
+    },
+    {
+      "moduleId": 13,
+      "moduleCode": "13",
+      "moduleName": "Assets",
+      "welcomeMessage": "Asset",
+      "description": "Asset",
+      "moduleImage": "/images/homeCardImages/assets.jpg",
+      "pageLink": "/about",
+      "orderById": 9
+    },
+    {
+      "moduleId": 7,
+      "moduleCode": "7",
+      "moduleName": "Finance",
+      "welcomeMessage": "Finance",
+      "description": "Finance",
+      "moduleImage": "/images/homeCardImages/finance.jpeg",
+      "pageLink": "/about",
+      "orderById": 10
+    },
+    {
+      "moduleId": 6,
+      "moduleCode": "6",
+      "moduleName": "Water Quality",
+      "welcomeMessage": "Water Quality",
+      "description": "Water Quality",
+      "moduleImage": "/images/homeCardImages/WaterQuality.jpg",
+      "pageLink": "/about",
+      "orderById": 11
+    },
+    {
+      "moduleId": 16,
+      "moduleCode": "16",
+      "moduleName": "Water Production",
+      "welcomeMessage": "Water Production",
+      "description": "Water Production",
+      "moduleImage": "/images/homeCardImages/water-production.jpg",
+      "pageLink": "/about",
+      "orderById": 12
+    },
+    {
+      "moduleId": 17,
+      "moduleCode": "17",
+      "moduleName": "Project Progress and Monitoring",
+      "welcomeMessage": "Project Progress and Monitoring",
+      "description": "Project Progress and Monitoring",
+      "moduleImage": "/images/homeCardImages/project-monitoring.png",
+      "pageLink": "/about",
+      "orderById": 13
+    },
+    {
+      "moduleId": 18,
+      "moduleCode": "18",
+      "moduleName": "Auditing",
+      "welcomeMessage": "Auditing",
+      "description": "Auditing",
+      "moduleImage": "/images/homeCardImages/auditing.jpg",
+      "pageLink": "/about",
+      "orderById": 14
+    },
+    {
+      "moduleId": 19,
+      "moduleCode": "19",
+      "moduleName": "Sewage Management",
+      "welcomeMessage": "Sewage Management",
+      "description": "Sewage Management",
+      "moduleImage": "/images/homeCardImages/Sewage.jpg",
+      "pageLink": "/about",
+      "orderById": 15
+    },
+    {
+      "moduleId": 9,
+      "moduleCode": "9",
+      "moduleName": "Dashboard",
+      "welcomeMessage": "ERP Dashboard",
+      "description": "ERP Dashboard",
+      "moduleImage": "/images/homeCardImages/ERPDashboard.jpg",
+      "pageLink": "/about",
+      "orderById": 16
+    },
+    {
+      "moduleId": 10,
+      "moduleCode": "10",
+      "moduleName": "Traceability",
+      "welcomeMessage": "ERP Traceability",
+      "description": "ERP Traceability",
+      "moduleImage": "/images/homeCardImages/traceability.png",
+      "pageLink": "/about",
+      "orderById": 17
+    },
+    {
+      "moduleId": 8,
+      "moduleCode": "8",
+      "moduleName": "Data Warehouse",
+      "welcomeMessage": "Data Warehouse",
+      "description": "Data Warehouse",
+      "moduleImage": "/images/homeCardImages/DataWarehouse.jpg",
+      "pageLink":"/about",
+      "orderById": 18
+    },
+    {
+      "moduleId": 11,
+      "moduleCode": "11",
+      "moduleName": "Administration",
+      "welcomeMessage": "Administration",
+      "description": "Administration",
+      "moduleImage": "/images/homeCardImages/Administration.jpg",
+      "pageLink": "/about",
+      "orderById": 19
+    }
+  ]
