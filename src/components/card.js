@@ -1,9 +1,10 @@
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-//import images from "@/public/images/homeCardImages";
+import Image from "next/image";
+
+import img from "@/public/images/homeCardImages/Administration.jpg";
 
 const Card = ({ title, description, image, link, moduleId, moduleName }) => {
-  //const imagePath = images[image];
   const router = useRouter();
 
   const handleClick = async () => {
@@ -21,10 +22,15 @@ const Card = ({ title, description, image, link, moduleId, moduleName }) => {
       className="relative group rounded-lg overflow-hidden cursor-pointer h-70 w-48 border"
       onClick={handleClick}
     >
-      <img
+      <p>{JSON.stringify(image)}</p>
+      <Image
         src={image}
+        // src={img}
+        width={300}
+        height={300}
         alt={title}
         className="w-full h-40 object-cover rounded-lg"
+        unoptimized={true}
       />
       <div className="p-2 text-center">
         <h2 className="text-sm font-bold">{title}</h2>

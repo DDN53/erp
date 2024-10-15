@@ -2,13 +2,16 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-// import LoginLayout from "@/components/MainLayout";
+
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 
 import img2 from "@/public/images/Water-Board-Logo.png";
 import img3 from "@/public/images/EmblemSriLanka.png";
 import img4 from "@/public/images/login_image.jpg";
+
+import adminService from "@/services/adminService";
+import { Authenticate } from "@/services/authService";
 
 export default function Login() {
   const router = useRouter();
@@ -21,8 +24,48 @@ export default function Login() {
     password: "",
   });
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
+
+    setErrors({ apiError: "", employeeNo: "", password: "" });
+
+    let validationErrors = {};
+    if (!employeeNo) {
+      validationErrors.employeeNo = "Employee number is required";
+    }
+    if (!password) {
+      validationErrors.password = "Password is required";
+    }
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    try {
+      // Call the Authenticate API
+      const result = await Authenticate(employeeNo, password);
+
+      if (result.success) {
+        // const data = await adminService.getEmployeeDetails(employeeNo);
+
+        // sessionStorage.setItem(
+        //   "employeeDetails",
+        //   JSON.stringify({
+        //     costCenter: result.data.empCostCenter || "",
+        //     designation: result.data.designation || "",
+        //     employeeName: result.data.empName || "",
+        //   })
+        // );
+        router.push("/home");
+        sessionStorage.setItem("userType", "regular");
+
+        // Redirect to the home page
+      } else {
+        setErrors({ apiError: result.message });
+      }
+    } catch (error) {
+      setErrors({ apiError: "Failed to authenticate. Please try again." });
+    }
   };
 
   const handleForgotPasswordClick = () => {};

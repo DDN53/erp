@@ -1,26 +1,47 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Card from "@/components/card";
-import modulesData from "@/data/modules.json";
+// import modulesData from "@/data/modules.json";
 import { Footer } from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 
+import adminService from "@/services/adminService";
+
 const HomeCards = () => {
-  const [cards, setCards] = useState(modulesData);
+  const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // useEffect(() => {
+  //   setLoading(true);
+  //   try {
+  //     setCards(modulesData);
+  //   } catch (err) {
+  //     setError("Failed to load modules");
+  //     console.error("Error loading modules:", err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }, []);
+
   useEffect(() => {
-    setLoading(true);
-    try {
-      setCards(modulesData);
-    } catch (err) {
-      setError("Failed to load modules");
-      console.error("Error loading modules:", err);
-    } finally {
-      setLoading(false);
-    }
+    const fetchModules = async () => {
+      try {
+        const response = await adminService.getModules();
+        setCards(response);
+      } catch (err) {
+        setError("Failed to fetch modules");
+        console.error(
+          "Error fetching modules:",
+          err.response ? err.response.data : err.message
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchModules();
   }, []);
 
   if (loading) {
@@ -35,7 +56,6 @@ const HomeCards = () => {
     <>
       <nav className="h-full max-h-full">
         <Navbar />
-       
 
         <div className="container mx-auto mt-12 p-4 flex flex-col min-h-screen mb-0 pt-10">
           <div className="flex justify-center mt-4 mb-4">

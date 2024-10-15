@@ -1,13 +1,22 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { FaUserCircle } from "react-icons/fa";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function Profile() {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    sessionStorage.clear();
+    localStorage.clear();
+
+    router.push("/");
   };
 
   return (
@@ -41,15 +50,13 @@ export default function Profile() {
                 Profile
               </a>
             </li>
-            {/* <li>
-              <a href="/settings" className="block px-4 py-2 hover:bg-gray-200">
-                Settings
-              </a>
-            </li> */}
             <li>
-              <a href="/logout" className="block px-4 py-2 hover:bg-gray-200">
+              <button
+                onClick={handleLogout}
+                className="w-full text-left px-4 py-2 hover:bg-gray-200"
+              >
                 Logout
-              </a>
+              </button>
             </li>
           </ul>
         </div>
