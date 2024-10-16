@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import classNames from "classnames";
 import Link from "next/link";
+import adminService from "@/services/adminService";
+
 import {
   FaChevronDown,
   FaChevronRight,
@@ -9,11 +11,13 @@ import {
 } from "react-icons/fa";
 import Cookies from "js-cookie";
 import reportData from "@/data/reportData.json";
-import taskData from "@/data/task.json";
+
+//import taskData from "@/data/task.json";
 
 const Sidebar = ({ isOpen }) => {
   const [expandedGroupId, setExpandedGroupId] = useState(null);
   const [expandedProcessId, setExpandedProcessId] = useState(null);
+  const [expandedReportProcessId, setExpandedReportProcessId] = useState(null);
 
   const [isMainProcessExpanded, setIsMainProcessExpanded] = useState(false);
   const [isReportsExpanded, setIsReportsExpanded] = useState(false);
@@ -30,62 +34,66 @@ const Sidebar = ({ isOpen }) => {
     fetchDataFromCookies();
   }, []);
 
-  const fetchDataFromCookies = () => {
+  const fetchDataFromCookies = async () => {
     const taskIdsCookie = Cookies.get("assignedTaskIds");
-    console.log("Task IDs cookie:", taskIdsCookie);
-    console.log("Module ID:", moduleId);
-    console.log("Module Name:", moduleName);
+    const userType = sessionStorage.getItem("userType");
+    const employeeNo = sessionStorage.getItem("employeeNo");
 
     if (taskIdsCookie) {
-      const taskIds = JSON.parse(taskIdsCookie);
-      console.log("Parsed Task IDs:", taskIds);
+      try {
+        const taskIds = JSON.parse(taskIdsCookie);
+        let fetchedData = [];
 
-      console.log("Task Data:", taskData);
+        if (userType === "regular") {
+          fetchedData = await adminService.getAssignedTasks(employeeNo);
+        } else if (userType === "admin") {
+          fetchedData = await adminService.getAdminTasks();
+        } else {
+          throw new Error("Unknown user type");
+        }
 
-      const relevantTasks = taskData
-        .filter((task) => {
-          const isMatch =
-            task.moduleId === moduleId && taskIds.includes(task.taskId);
-          console.log(
-            `Checking Task ID: ${task.taskId}, Module ID: ${task.moduleId}, Match: ${isMatch}`
-          );
-          return isMatch;
-        })
-        .reduce((acc, task) => {
-          const existingGroup = acc.find(
-            (group) => group.groupId === task.groupId
-          );
-          if (existingGroup) {
-            const existingProcess = existingGroup.processes.find(
-              (process) => process.processId === task.processId
+        const relevantGroups = fetchedData.reduce((acc, item) => {
+          const filteredTasks = item.tasks
+            .filter((task) => taskIds.includes(task.taskId))
+            .reduce((uniqueTasks, task) => {
+              if (!uniqueTasks.find((t) => t.taskId === task.taskId)) {
+                uniqueTasks.push(task);
+              }
+              return uniqueTasks;
+            }, []);
+
+          if (filteredTasks.length > 0) {
+            const existingGroup = acc.find(
+              (group) => group.groupId === item.groupId
             );
-            if (existingProcess) {
-              existingProcess.tasks.push(task);
-            } else {
+            if (existingGroup) {
               existingGroup.processes.push({
-                processId: task.processId,
-                processName: task.processName,
-                tasks: [task],
+                processId: item.processId,
+                processName: item.processName,
+                tasks: filteredTasks,
+              });
+            } else {
+              acc.push({
+                groupId: item.groupId,
+                groupName: item.groupName,
+                processes: [
+                  {
+                    processId: item.processId,
+                    processName: item.processName,
+                    tasks: filteredTasks,
+                  },
+                ],
               });
             }
-          } else {
-            acc.push({
-              groupId: task.groupId,
-              groupName: task.groupName,
-              processes: [
-                {
-                  processId: task.processId,
-                  processName: task.processName,
-                  tasks: [task],
-                },
-              ],
-            });
           }
           return acc;
         }, []);
 
-      console.log("Relevant Tasks:", relevantTasks);
-      setMenuData(relevantTasks);
+        setMenuData(relevantGroups);
+      } catch (error) {
+        console.error("Error fetching tasks based on cookie data:", error);
+        setMenuData([]);
+      }
     } else {
       console.log("No task IDs found in cookies.");
       setMenuData([]);
@@ -116,6 +124,24 @@ const Sidebar = ({ isOpen }) => {
       if (!prev) setIsMainProcessExpanded(false);
       return !prev;
     });
+  };
+
+  const toggleReportProcess = (rptProcessId) => {
+    setExpandedReportProcessId((prevProcessId) =>
+      prevProcessId === rptProcessId ? null : rptProcessId
+    );
+  };
+
+  const isActiveTask = (taskUrl) => location.pathname === taskUrl;
+  const isActiveProcess = (processId) => {
+    const activeTaskUrl = location.pathname;
+    return menuData
+      .find((group) =>
+        group.processes.some((process) => process.processId === processId)
+      )
+      ?.processes.some((process) =>
+        process.tasks.some((task) => task.taskUrl === activeTaskUrl)
+      );
   };
 
   return (
@@ -150,7 +176,7 @@ const Sidebar = ({ isOpen }) => {
             <div key={group.groupId} className="ml-0 mb-2 font-semibold">
               <h4
                 onClick={() => toggleGroup(group.groupId)}
-                className="text-xl ml-2 cursor-pointer flex justify-between items-center border-b p-1 pb-2 pt-2 hover:bg-gray-400 rounded-md"
+                className="text-sm ml-2 cursor-pointer flex justify-between items-center border-b p-1 pb-2 pt-2 hover:bg-gray-400 rounded-md"
               >
                 {group.groupName}
                 {expandedGroupId === group.groupId ? (
@@ -165,7 +191,7 @@ const Sidebar = ({ isOpen }) => {
                   <div key={process.processId} className="ml-4">
                     <h5
                       onClick={() => toggleProcess(process.processId)}
-                      className="text-lg ml-2 cursor-pointer flex justify-between items-center border-b p-1 pb-2 pt-2 hover:bg-gray-400 rounded-md"
+                      className="text-sm ml-2 cursor-pointer flex justify-between items-center border-b p-1 pb-2 pt-2 hover:bg-gray-400 rounded-md"
                     >
                       {process.processName}
                       {expandedProcessId === process.processId ? (
@@ -180,7 +206,7 @@ const Sidebar = ({ isOpen }) => {
                         <Link
                           href={task.taskUrl || "#"}
                           key={task.taskId}
-                          className="cursor-pointer text-lg font-semibold mt-0"
+                          className="cursor-pointer text-sm font-medium mt-0"
                         >
                           <div className="ml-4 p-1 hover:bg-gray-400 rounded-md">
                             {task.taskName}
@@ -208,17 +234,46 @@ const Sidebar = ({ isOpen }) => {
       </div>
 
       {isReportsExpanded && (
-        <div className="p-1 overflow-y-auto max-h-[calc(100vh-210px)]">
+        <div className="p-1 overflow-y-auto max-h-[calc(100vh-230px)]">
           {filteredReportData.map((process) => (
-            <div key={process.processId}>
-              <Link
-                href={process.processUrl || "#"}
-                className="text-lg font-semibold cursor-pointer ml-4"
+            <div key={process.rptProcessId} className="ml-0 mb-2 font-semibold">
+              <h4
+                onClick={() => toggleReportProcess(process.rptProcessId)}
+                style={{
+                  backgroundColor: isActiveProcess(process.rptProcessId)
+                    ? gray
+                    : undefined,
+                }}
+                className="text-sm ml-2 cursor-pointer flex justify-between items-center border-b p-1 pb-2 pt-2 hover:bg-gray-400 rounded-md"
               >
-                <div className="ml-4 p-1 hover:bg-gray-400 rounded-md">
-                  {process.processName}
-                </div>
-              </Link>
+                {process.rptProcessName}
+                {expandedReportProcessId === process.rptProcessId ? (
+                  <FaChevronDown />
+                ) : (
+                  <FaChevronRight />
+                )}
+              </h4>
+
+              {expandedReportProcessId === process.rptProcessId &&
+                process.rptTasks.map((task) => (
+                  <Link
+                    key={task.rptTaskId}
+                    href={task.rptTaskUrl || "#"}
+                    className="cursor-pointer text-sm  font-medium mt-0"
+                  >
+                    <div
+                      key={task.rptTaskId}
+                      className="ml-4 p-1 hover:bg-gray-200 rounded-md"
+                      style={{
+                        backgroundColor: isActiveTask(task.rptTaskUrl)
+                          ? gray
+                          : undefined,
+                      }}
+                    >
+                      {task.rptTaskName}
+                    </div>
+                  </Link>
+                ))}
             </div>
           ))}
         </div>

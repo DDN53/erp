@@ -17,47 +17,69 @@ export default function Navbar() {
   };
 
   return (
-    <nav className=" fixed top-0 left-0 w-full p-2 border-b z-50 bg-white dark:bg-black bg-opacity-90">
+    <nav className="fixed top-0 left-0 w-full p-2 border-b z-50 bg-white dark:bg-black bg-opacity-90">
       <div className="container mx-auto flex items-center justify-between">
         {/* Left Side: Logo */}
-        <Link href="/">
+        <div className="flex items-center">
           <Image
             className="dark:invert"
             src={logo}
             alt="NWSDB logo"
-            width={60}
+            width={54}
             height={38}
             priority
           />
-        </Link>
+        </div>
 
+        {/* Toggle Menu Button */}
         <button className="lg:hidden text-xl" onClick={toggleMenu}>
           {isMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
-        {/* Right Side: Links */}
-        {/* <div className=" flex item-center space-x-6"> */}
-        <div
-          className={`${
-            isMenuOpen ? "flex" : "hidden"
-          } flex-col lg:flex lg:flex-row lg:items-center space-x-6 absolute lg:static top-16 left-0 w-full lg:w-auto bg-white dark:bg-black lg:bg-transparent p-4 lg:p-0 z-50 border lg:border-none`}
-        >
+        {/* Right Side: Icons (Desktop View) */}
+        <div className="hidden lg:flex lg:items-center space-x-6">
           <Link href="/home" className="hover:underline">
             Home
           </Link>
           <Link href="/about" className="hover:underline">
             About
           </Link>
-          <Link href="/Bill" className="hover:underline">
+          <Link href="/home/inventory" className="hover:underline">
             Bill Calculator
           </Link>
           <Link href="/Loan" className="hover:underline">
             Loan Calculator
           </Link>
-          <div className="flex flex-row space-x-3">
+          <div className="flex items-center space-x-3">
             <ModeToggle />
             <Profile />
           </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`${
+          isMenuOpen ? "flex" : "hidden"
+        } flex-col lg:hidden items-center w-full bg-white dark:bg-black p-4 border-t`}
+      >
+        <Link href="/home" className="hover:underline py-2">
+          Home
+        </Link>
+        <Link href="/about" className="hover:underline py-2">
+          About
+        </Link>
+        <Link href="/home/inventory" className="hover:underline py-2">
+          Bill Calculator
+        </Link>
+        <Link href="/Loan" className="hover:underline py-2">
+          Loan Calculator
+        </Link>
+
+        {/* Show icons in mobile menu */}
+        <div className="flex flex-row space-x-3 mt-2">
+          <ModeToggle />
+          <Profile />
         </div>
       </div>
     </nav>

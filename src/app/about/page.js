@@ -1,12 +1,12 @@
 "use client";
-import MoainLayout from "@/components/MainLayout";
+import MainLayout from "@/components/MainLayout";
 import { Footer } from "@/components/Footer";
 import Nav from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import { Button } from "@/components/ui/button";
 export default function About() {
   return (
-    <MoainLayout>
+    <MainLayout>
       <main className="p-24">
         <section className="py-24 flex flex-col gap-8">
           <h1 className="text-4xl">About page</h1>
@@ -17,6 +17,6 @@ export default function About() {
           <Button>Cancel</Button>
         </div>
       </main>
-    </MoainLayout>
+    </MainLayout>
   );
 }

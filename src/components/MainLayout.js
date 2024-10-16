@@ -58,7 +58,7 @@ export default function MainLayout({ children }) {
           {/* Sidebar */}
           <div
             ref={sidebarRef}
-            className={`fixed flex flex-grow pt-4 top-16 left-0 h-full overflow-auto transition-transform duration-300 ${
+            className={`fixed flex flex-grow pt-4 top-14 left-0 h-full overflow-auto transition-transform duration-300 ${
               isSidebarOpen ? "translate-x-0" : "-translate-x-full"
             }`}
           >

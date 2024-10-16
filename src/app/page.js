@@ -42,24 +42,17 @@ export default function Login() {
     }
 
     try {
-      // Call the Authenticate API
       const result = await Authenticate(employeeNo, password);
 
       if (result.success) {
-        // const data = await adminService.getEmployeeDetails(employeeNo);
+        const data = await adminService.getEmployeeDetails(employeeNo);
 
-        // sessionStorage.setItem(
-        //   "employeeDetails",
-        //   JSON.stringify({
-        //     costCenter: result.data.empCostCenter || "",
-        //     designation: result.data.designation || "",
-        //     employeeName: result.data.empName || "",
-        //   })
-        // );
+        sessionStorage.setItem("costCenter", data.empCostCenter);
+        sessionStorage.setItem("designation", data.designation);
+        sessionStorage.setItem("employeeName", data.empName);
+
         router.push("/home");
         sessionStorage.setItem("userType", "regular");
-
-        // Redirect to the home page
       } else {
         setErrors({ apiError: result.message });
       }
@@ -70,8 +63,29 @@ export default function Login() {
 
   const handleForgotPasswordClick = () => {};
 
-  const handleAdminLoginClick = () => {
-    router.push("/home");
+  const handleAdminLoginClick = async () => {
+    if (!employeeNo || !password) {
+      setErrors({
+        adminLogin: "Username and Password are required for admin login.",
+      });
+      return;
+    }
+
+    try {
+      const result = await adminService.loginAdmin({
+        UserName: employeeNo,
+        Password: password,
+      });
+      if (result) {
+        sessionStorage.setItem("userType", "admin");
+
+        router.push("/home");
+      } else {
+        setErrors({ adminLogin: "Invalid admin credentials." });
+      }
+    } catch (error) {
+      setErrors({ adminLogin: "Admin login failed." });
+    }
   };
 
   return (
@@ -93,19 +107,22 @@ export default function Login() {
               src={img2}
               alt="Second Logo"
               className="h-12 mx-2 w-60"
-              width={48}
+              width={"auto"}
               height={48}
             />
             <Image
               src={img3}
               alt="First Logo"
               className="h-12 mx-2"
-              width={48}
+              width={"auto"}
               height={48}
             />
           </div>
           <h2 className="mb-6 text-2xl font-bold text-left">Login</h2>
-          {errors.apiError && <p className="text-red-500">{errors.apiError}</p>}
+          {errors.apiError && <p className="text-error">{errors.apiError}</p>}
+          {errors.adminLogin && (
+            <p className="text-error">{errors.adminLogin}</p>
+          )}
           <div className="mb-4">
             <label htmlFor="employeeNo" className="block mb-2 text-black-700">
               User Name
@@ -120,7 +137,7 @@ export default function Login() {
               style={{ backgroundColor: "white" }}
             />
             {errors.employeeNo && (
-              <p className="text-sm text-red-500">{errors.employeeNo}</p>
+              <p className="text-sm text-error">{errors.employeeNo}</p>
             )}
           </div>
           <div className="relative mb-6">
@@ -143,7 +160,7 @@ export default function Login() {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </div>
             {errors.password && (
-              <p className="text-sm text-red-500">{errors.password}</p>
+              <p className="text-sm text-error">{errors.password}</p>
             )}
           </div>
           <div className="flex flex-col mb-4">

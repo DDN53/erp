@@ -1,0 +1,269 @@
+[
+    {
+      "moduleId": 1,
+      "rptProcessId": 1,
+      "rptProcessName": "HR Reports",
+      "rptTasks": [
+        {
+          "rptTaskId": 1,
+          "rptProcessId": 1,
+          "moduleId": 1,
+          "rptTaskName": "HR Task 1",
+          "rptTaskUrl": "/hr/HRTask1"
+        },
+        {
+          "rptTaskId": 2,
+          "rptProcessId": 1,
+          "moduleId": 1,
+          "rptTaskName": "HR Task 2",
+          "rptTaskUrl": "/hr/HRTask2"
+        },
+        {
+          "rptTaskId": 3,
+          "rptProcessId": 1,
+          "moduleId": 1,
+          "rptTaskName": "HR Task 3",
+          "rptTaskUrl": "/hr/HRTask3"
+        }
+      ]
+    },
+    {
+      "moduleId": 1,
+      "rptProcessId": 2,
+      "rptProcessName": "Financial Reports",
+      "rptTasks": [
+        {
+          "rptTaskId": 4,
+          "rptProcessId": 2,
+          "moduleId": 1,
+          "rptTaskName": "Finance Task 1",
+          "rptTaskUrl": "/finance/FinanceTask1"
+        }
+      ]
+    },
+    {
+      "moduleId": 2,
+      "rptProcessId": 3,
+      "rptProcessName": "Inventory Reports",
+      "rptTasks": [
+        {
+          "rptTaskId": 5,
+          "rptProcessId": 3,
+          "moduleId": 2,
+          "rptTaskName": "Inventory Task 1",
+          "rptTaskUrl": "/inventory/InventoryTask1"
+        },
+        {
+          "rptTaskId": 6,
+          "rptProcessId": 3,
+          "moduleId": 2,
+          "rptTaskName": "Inventory Task 2",
+          "rptTaskUrl": "/inventory/InventoryTask2"
+        }
+      ]
+    },
+    {
+      "moduleId": 5,
+      "rptProcessId": 8,
+      "rptProcessName": "Stock Ledger",
+      "rptTasks": [
+        {
+          "rptTaskId": 7,
+          "rptProcessId": 8,
+          "moduleId": 5,
+          "rptTaskName": "Stock Ledger Details",
+          "rptTaskUrl": "/sales/SalesTask1"
+        },
+        {
+            "rptTaskId": 8,
+            "rptProcessId": 8,
+            "moduleId": 5,
+            "rptTaskName": "Stock Movements",
+            "rptTaskUrl": "/sales/SalesTask1"
+          },
+          {
+            "rptTaskId": 9,
+            "rptProcessId": 8,
+            "moduleId": 5,
+            "rptTaskName": "Summary of Goods Received",
+            "rptTaskUrl": "/sales/SalesTask1"
+          },
+          {
+            "rptTaskId": 10,
+            "rptProcessId": 8,
+            "moduleId": 5,
+            "rptTaskName": "Issues & Receives Details",
+            "rptTaskUrl": "/sales/SalesTask1"
+          }
+      ]
+    },
+    {
+        "moduleId": 5,
+        "rptProcessId": 9,
+        "rptProcessName": "Organization Stock",
+        "rptTasks": [
+          {
+            "rptTaskId": 11,
+            "rptProcessId": 9,
+            "moduleId": 5,
+            "rptTaskName": "Stock Position",
+            "rptTaskUrl": "/sales/SalesTask1"
+          },
+          {
+              "rptTaskId": 12,
+              "rptProcessId": 9,
+              "moduleId": 5,
+              "rptTaskName": "Current Stock Position",
+              "rptTaskUrl": "/sales/SalesTask1"
+            },
+            {
+              "rptTaskId": 13,
+              "rptProcessId": 9,
+              "moduleId": 5,
+              "rptTaskName": "Stock Levels",
+              "rptTaskUrl": "/sales/SalesTask1"
+            },
+            {
+              "rptTaskId": 14,
+              "rptProcessId": 9,
+              "moduleId": 5,
+              "rptTaskName": "Stock by Substore",
+              "rptTaskUrl": "/sales/SalesTask1"
+            },
+            {
+                "rptTaskId": 15,
+                "rptProcessId": 9,
+                "moduleId": 5,
+                "rptTaskName": "Slow Moving Stock",
+                "rptTaskUrl": "/sales/SalesTask1"
+              },
+              {
+                "rptTaskId": 16,
+                "rptProcessId": 9,
+                "moduleId": 5,
+                "rptTaskName": "Stock Finder",
+                "rptTaskUrl": "/sales/SalesTask1"
+              }
+        ]
+      },
+      {
+        "moduleId": 5,
+        "rptProcessId": 10,
+        "rptProcessName": "Costing",
+        "rptTasks": [
+          {
+            "rptTaskId": 17,
+            "rptProcessId": 10,
+            "moduleId": 5,
+            "rptTaskName": "Stock Valuation",
+            "rptTaskUrl": "/sales/SalesTask1"
+          },
+          {
+              "rptTaskId": 18,
+              "rptProcessId": 10,
+              "moduleId": 5,
+              "rptTaskName": "Activity Costing",
+              "rptTaskUrl": "/sales/SalesTask1"
+            },
+            {
+              "rptTaskId": 19,
+              "rptProcessId": 10,
+              "moduleId": 5,
+              "rptTaskName": "User Section Consumption",
+              "rptTaskUrl": "/sales/SalesTask1"
+            },
+            {
+              "rptTaskId": 20,
+              "rptProcessId": 10,
+              "moduleId": 5,
+              "rptTaskName": "Store Substore Reconcilation",
+              "rptTaskUrl": "/sales/SalesTask1"
+            },
+            {
+                "rptTaskId": 21,
+                "rptProcessId": 10,
+                "moduleId": 5,
+                "rptTaskName": "Stock Value Reconsilation",
+                "rptTaskUrl": "/sales/SalesTask1"
+              }
+        ]
+      },
+      {
+        "moduleId": 5,
+        "rptProcessId": 11,
+        "rptProcessName": "Stock Verification",
+        "rptTasks": [
+          {
+            "rptTaskId": 22,
+            "rptProcessId": 11,
+            "moduleId": 5,
+            "rptTaskName": "Detail [Form 01]",
+            "rptTaskUrl": "/sales/SalesTask1"
+          },
+          {
+              "rptTaskId": 23,
+              "rptProcessId": 11,
+              "moduleId": 5,
+              "rptTaskName": "Consumption [Form 02]",
+              "rptTaskUrl": "/sales/SalesTask1"
+            },
+            {
+              "rptTaskId": 24,
+              "rptProcessId": 11,
+              "moduleId": 5,
+              "rptTaskName": "Category Analysis [Form 03]",
+              "rptTaskUrl": "/sales/SalesTask1"
+            },
+            {
+              "rptTaskId": 25,
+              "rptProcessId": 11,
+              "moduleId": 5,
+              "rptTaskName": "Category Analysis Year End [Form 03A]",
+              "rptTaskUrl": "/sales/SalesTask1"
+            },
+            {
+                "rptTaskId": 26,
+                "rptProcessId": 11,
+                "moduleId": 5,
+                "rptTaskName": "Major Spares [Form 05]",
+                "rptTaskUrl": "/sales/SalesTask1"
+              },
+              {
+                "rptTaskId": 27,
+                "rptProcessId": 11,
+                "moduleId": 5,
+                "rptTaskName": "Major Spares Year End [Form 05A]",
+                "rptTaskUrl": "/sales/SalesTask1"
+              },
+              {
+                "rptTaskId": 28,
+                "rptProcessId": 11,
+                "moduleId": 5,
+                "rptTaskName": "Stock Type Analysis",
+                "rptTaskUrl": "/sales/SalesTask1"
+              }
+        ]
+      },
+      {
+        "moduleId": 5,
+        "rptProcessId": 12,
+        "rptProcessName": "Disposal",
+        "rptTasks": [
+          {
+            "rptTaskId": 29,
+            "rptProcessId": 12,
+            "moduleId": 5,
+            "rptTaskName": "Excess Stock",
+            "rptTaskUrl": "/sales/SalesTask1"
+          },
+          {
+            "rptTaskId": 30,
+            "rptProcessId": 12,
+            "moduleId": 5,
+            "rptTaskName": "Disposal Items",
+            "rptTaskUrl": "/sales/SalesTask1"
+          }
+        ]
+    }
+  ]
+  

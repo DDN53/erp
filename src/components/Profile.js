@@ -1,12 +1,30 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+
+import Cookies from "js-cookie";
+
 import { FaUserCircle } from "react-icons/fa";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function Profile() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const [empName, setEmpName] = useState("");
+  const [designation, setDesignation] = useState("");
+
+  useEffect(() => {
+    const storedEmpName = sessionStorage.getItem("employeeName");
+    const storedDesignation = sessionStorage.getItem("designation");
+
+    if (storedEmpName) {
+      setEmpName(storedEmpName);
+    }
+
+    if (storedDesignation) {
+      setDesignation(storedDesignation);
+    }
+  }, []);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -15,6 +33,11 @@ export default function Profile() {
   const handleLogout = () => {
     sessionStorage.clear();
     localStorage.clear();
+
+    const allCookies = Cookies.get();
+    for (let cookie in allCookies) {
+      Cookies.remove(cookie);
+    }
 
     router.push("/");
   };
@@ -28,7 +51,7 @@ export default function Profile() {
 
       {/* Profile Dropdown */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 rounded-lg bg-white dark:bg-black bg-opacity-90 border">
+        <div className="absolute right-0 mt-2 w-52 rounded-lg bg-white dark:bg-black bg-opacity-90 border">
           <div className="flex items-center p-4 border-b">
             {/* <img
               src={FaUserCircle}
@@ -40,8 +63,8 @@ export default function Profile() {
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <div className="pl-4">
-              <p className="text-sm font-medium">A.B.Perera</p>
-              <p className="text-xs">IT</p>
+              <p className="text-sm font-medium">{empName}</p>
+              <p className="text-xs">{designation}</p>
             </div>
           </div>
           <ul className="py-1">
