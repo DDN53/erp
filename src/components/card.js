@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import adminService from "@/services/adminService";
 
-import imagePaths from "@/public/images/imagePaths";
+import imagePaths from "@/public/images/homeCardImages/imagePaths";
 
 import img from "@/public/images/homeCardImages/Administration.jpg";
 
@@ -64,8 +64,7 @@ const Card = ({ title, description, image, link, moduleId, moduleName }) => {
       <p>{image}</p>
       <p>{imagePaths[image]}</p> */}
       <Image
-        // src={image}
-        src={imagePaths[image]}
+        src={imagePaths[image]} // This is correct
         width={300}
         height={300}
         alt={title}

@@ -6,7 +6,7 @@ const TextBox = ({ label, type, value, onChange }) => {
         type={type}
         value={value}
         onChange={onChange}
-        className="mt-1 block w-full pl-3 pr-3 py-2 text-base border  rounded-md focus:outline-none"
+        className="mt-1 block w-full pl-3 pr-3 py-2 text-sm border  rounded-md focus:outline-none"
       />
     </div>
   );

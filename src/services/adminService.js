@@ -98,7 +98,7 @@ const getAssignedTasks = async (employeeNumber) => {
 const updateEmployeeTasks = async (employeeNumber, taskUpdates) => {
   try {
     const response = await apiClient.put(
-      `/UpdateEmployeeTasks/${employeeNumber}`,
+      `/UpdateEmployeeGroupedTasks/${employeeNumber}`,
       taskUpdates
     );
     return response.data;

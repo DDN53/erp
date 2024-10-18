@@ -132,16 +132,40 @@ const Sidebar = ({ isOpen }) => {
     );
   };
 
-  const isActiveTask = (taskUrl) => location.pathname === taskUrl;
-  const isActiveProcess = (processId) => {
-    const activeTaskUrl = location.pathname;
-    return menuData
-      .find((group) =>
-        group.processes.some((process) => process.processId === processId)
-      )
-      ?.processes.some((process) =>
-        process.tasks.some((task) => task.taskUrl === activeTaskUrl)
-      );
+  // const isActiveTask = (taskUrl) => location.pathname === taskUrl;
+  const isActiveTask = (taskUrl) => {
+    return (
+      typeof window !== "undefined" && window.location.pathname === taskUrl
+    );
+  };
+
+  // const isActiveProcess = (processId) => {
+  //   const activeTaskUrl = location.pathname;
+  //   return menuData
+  //     .find((group) =>
+  //       group.processes.some((process) => process.processId === processId)
+  //     )
+  //     ?.processes.some((process) =>
+  //       process.tasks.some((task) => task.taskUrl === activeTaskUrl)
+  //     );
+  // };
+  const isActiveProcess = (processId, isReport = false) => {
+    const activeTaskUrl =
+      typeof window !== "undefined" && window.location.pathname;
+
+    if (!isReport) {
+      return menuData
+        .find((group) =>
+          group.processes.some((process) => process.processId === processId)
+        )
+        ?.processes.some((process) =>
+          process.tasks.some((task) => task.taskUrl === activeTaskUrl)
+        );
+    } else {
+      return filteredReportData
+        .find((process) => process.rptProcessId === processId)
+        ?.rptTasks.some((task) => task.rptTaskUrl === activeTaskUrl);
+    }
   };
 
   return (
@@ -191,7 +215,10 @@ const Sidebar = ({ isOpen }) => {
                   <div key={process.processId} className="ml-4">
                     <h5
                       onClick={() => toggleProcess(process.processId)}
-                      className="text-sm ml-2 cursor-pointer flex justify-between items-center border-b p-1 pb-2 pt-2 hover:bg-gray-400 rounded-md"
+                      // className="text-sm ml-2 cursor-pointer flex justify-between items-center border-b p-1 pb-2 pt-2 hover:bg-gray-400 rounded-md"
+                      className={`text-sm ml-2 cursor-pointer flex justify-between items-center border-b p-1 pb-2 pt-2 hover:bg-gray-400 rounded-md ${
+                        isActiveProcess(process.processId) ? "bg-gray-300" : ""
+                      }`}
                     >
                       {process.processName}
                       {expandedProcessId === process.processId ? (
@@ -208,7 +235,11 @@ const Sidebar = ({ isOpen }) => {
                           key={task.taskId}
                           className="cursor-pointer text-sm font-medium mt-0"
                         >
-                          <div className="ml-4 p-1 hover:bg-gray-400 rounded-md">
+                          <div
+                            className={`ml-4 p-1 hover:bg-gray-400 rounded-md ${
+                              isActiveTask(task.taskUrl) ? "bg-gray-400" : ""
+                            }`}
+                          >
                             {task.taskName}
                           </div>
                         </Link>
@@ -262,13 +293,10 @@ const Sidebar = ({ isOpen }) => {
                     className="cursor-pointer text-sm  font-medium mt-0"
                   >
                     <div
-                      key={task.rptTaskId}
-                      className="ml-4 p-1 hover:bg-gray-200 rounded-md"
-                      style={{
-                        backgroundColor: isActiveTask(task.rptTaskUrl)
-                          ? gray
-                          : undefined,
-                      }}
+                      // key={task.rptTaskId}
+                      className={`ml-4 p-1 hover:bg-gray-400 rounded-md ${
+                        isActiveTask(task.taskUrl) ? "bg-gray-300" : ""
+                      }`}
                     >
                       {task.rptTaskName}
                     </div>

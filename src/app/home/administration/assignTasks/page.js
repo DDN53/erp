@@ -66,24 +66,24 @@ const AssignTasks = () => {
 
           const assignedTasks = await adminService.getAssignedTasks(number);
           const assignedTaskIds = {};
-          assignedTasks.forEach((module) => {
-            module.groups.forEach((group) => {
-              group.processes.forEach((process) => {
-                process.tasks.forEach((task) => {
-                  assignedTaskIds[task.taskId] = true;
-                });
-              });
+          // console.log("Assigned Tasks Data:", assignedTasks);
+
+          assignedTasks.forEach((assignedModule) => {
+            assignedModule.tasks.forEach((task) => {
+              assignedTaskIds[task.taskId] = true;
+              // console.log(
+              //   `Assigned Task ID: ${task.taskId} - ${task.taskName}`
+              // );
             });
           });
 
           setSelectedTasks(assignedTaskIds);
-          setPreviousTasks(assignedTaskIds); 
+          setPreviousTasks(assignedTaskIds);
           setError(null);
         } catch (err) {
           console.error("Fetch error:", err);
-          setError(
-            "Failed to fetch employee details. Please check the employee number and try again."
-          );
+          setError();
+          // "Failed to fetch employee details. Please check the employee number and try again."
         } finally {
           setLoading(false);
         }
@@ -134,12 +134,22 @@ const AssignTasks = () => {
       (taskId) => !selectedTasks[taskId]
     );
 
+    // console.log("Tasks to Add:", tasksToAdd);
+    // console.log("Tasks to Remove:", tasksToRemove);
+
     try {
       if (tasksToAdd.length > 0 || tasksToRemove.length > 0) {
-        await adminService.updateEmployeeTasks(employeeNumber, {
-          TaskIdsToAdd: tasksToAdd,
-          TaskIdsToRemove: tasksToRemove,
-        });
+        const response = await adminService.updateEmployeeTasks(
+          employeeNumber,
+          {
+            employeeId: employeeNumber,
+            taskIdsToAdd: tasksToAdd,
+            taskIdsToRemove: tasksToRemove,
+          }
+        );
+
+        // console.log("API Response:", response);
+
         alert("Tasks updated successfully.");
         setPreviousTasks(selectedTasks);
         resetFormData();
@@ -262,7 +272,7 @@ const AssignTasks = () => {
                 <div key={module.moduleId}>
                   <h2
                     onClick={() => toggleModule(module.moduleId)}
-                    style={{ cursor: "pointer",paddingTop: "10px", }}
+                    style={{ cursor: "pointer", paddingTop: "10px" }}
                   >
                     {expandedModules[module.moduleId] ? "▼" : "►"}{" "}
                     {module.moduleName}
@@ -272,7 +282,7 @@ const AssignTasks = () => {
                       <div key={group.groupId} style={{ marginLeft: "20px" }}>
                         <h3
                           onClick={() => toggleGroup(group.groupId)}
-                          style={{ cursor: "pointer" ,}}
+                          style={{ cursor: "pointer" }}
                         >
                           {expandedGroups[group.groupId] ? "▼" : "►"}{" "}
                           {group.groupName}
@@ -327,12 +337,8 @@ const AssignTasks = () => {
             )}
           </div>
 
-          {/* <div className="flex flex-row space-x-4">
-          <Button label="Submit" onClick={handleSubmit} type="submit" />
-          <Button label="Reset" onClick={resetFormData} disabled={false} />
-        </div> */}
           <div className="flex gap-6 py-6">
-            <Button variant={"secondary"} onClick={handleSubmit} type="submit">
+            <Button variant={"secondary"} type="submit">
               Submit
             </Button>
             <Button onClick={resetFormData}>Cancel</Button>
