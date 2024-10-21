@@ -1,10 +1,14 @@
 "use client";
 
 import { useState } from "react";
+
 import MainLayout from "@/components/MainLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
 import adminService from "@/services/adminService";
+
 const UserRegister = () => {
   const [formData, setFormData] = useState({
     empNo: "",
@@ -51,57 +55,85 @@ const UserRegister = () => {
 
   return (
     <MainLayout>
-      <div className="flex min-h-screen w-full flex-col pt-10 ">
-        {/* <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-6 md:p-8 shadow-lg rounded-lg mx-auto w-full max-w-3xl"> */}
-        <h1 className="text-2xl font-bold text-gray-900 mb-4 text-center">
-          User Registration
-        </h1>
-        <Card className="shadow-md rounded-lg border-2 border-gray-150">
+      <div className="flex min-h-screen w-full flex-col pt-10 flex-1 flex-col gap-4 p-4 md:gap-6 md:p-8  mx-auto w-full max-w-3xl">
+        <h1 className="text-xl font-bold mb-4">User Registration</h1>
+        <Card className="rounded-lg border-2 ">
           <CardHeader>
-            <CardTitle className="text-lg font-semibold text-gray-400">
-              Please fill Registration Form
+            <CardTitle className="text-sm font-semibold">
+              Please fill out the Registration Form
             </CardTitle>
           </CardHeader>
           <CardContent>
             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-              {[
-                "empNo",
-                "name",
-                "phoneNumber",
-                "email",
-                "password",
-                "confirmPassword",
-                "securityAnswer",
-              ].map((field) => (
-                <div key={field} className="flex flex-col gap-2">
-                  <label className="text-xs font-medium text-gray-800">
-                    {field.replace(/([A-Z])/g, " $1").trim()}
-                  </label>
-                  <Input
-                    type={
-                      field === "phoneNumber"
-                        ? "tel"
-                        : field === "email"
-                        ? "email"
-                        : "text"
-                    }
-                    name={field}
-                    value={formData[field]}
-                    onChange={
-                      field === "phoneNumber"
-                        ? handlePhoneNumberInput
-                        : handleChange
-                    }
-                    required
-                    maxLength={field === "phoneNumber" ? 10 : undefined}
-                    className="border border-gray-300 rounded-md p-2 text-gray-500"
-                  />
-                </div>
-              ))}
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-medium text-gray-800">
-                  Security Question
-                </label>
+                <label className="text-xs font-medium">Employee Number</label>
+                <Input
+                  type="text"
+                  name="empNo"
+                  value={formData.empNo}
+                  onChange={handleChange}
+                  required
+                  className="border border-gray-300 rounded-md p-2 text-gray-500"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-medium">Full Name</label>
+                <Input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  className="border border-gray-300 rounded-md p-2 text-gray-500"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-medium">Phone Number</label>
+                <Input
+                  type="tel"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handlePhoneNumberInput}
+                  required
+                  maxLength={10}
+                  className="border border-gray-300 rounded-md p-2 text-gray-500"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-medium">Email Address</label>
+                <Input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="border border-gray-300 rounded-md p-2 text-gray-500"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-medium">Password</label>
+                <Input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  className="border border-gray-300 rounded-md p-2 text-gray-500"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-medium">Confirm Password</label>
+                <Input
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                  className="border border-gray-300 rounded-md p-2 text-gray-500"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-medium">Security Question</label>
                 <select
                   name="securityQuestion"
                   className="border border-gray-300 rounded-md p-2 text-gray-500"
@@ -110,7 +142,7 @@ const UserRegister = () => {
                   required
                 >
                   <option value="" disabled>
-                    Select
+                    Select a question
                   </option>
                   {[
                     "What was the name of your first pet?",
@@ -124,18 +156,25 @@ const UserRegister = () => {
                   ))}
                 </select>
               </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-medium">Security Answer</label>
+                <Input
+                  type="text"
+                  name="securityAnswer"
+                  value={formData.securityAnswer}
+                  onChange={handleChange}
+                  required
+                  className="border border-gray-300 rounded-md p-2 text-gray-500"
+                />
+              </div>
               <div className="flex justify-center mt-4">
-                <button
-                  type="submit"
-                  className="bg-black text-white py-2 px-6 rounded-lg shadow hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                >
+                <Button variant={"default"} type="submit">
                   Register
-                </button>
+                </Button>
               </div>
             </form>
           </CardContent>
         </Card>
-        {/* </main> */}
       </div>
     </MainLayout>
   );

@@ -1,16 +1,39 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
 
 import { ModeToggle } from "./ui/toggle-mode";
 import Profile from "./Profile";
 
-import logo from "@/public/images/nwsdb_logo.png";
+import logoLight from "@/public/images/nwsdb_logo.png";
+import logoDark from "@/public/images/nwsdb_logi_dark.png";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const checkDarkMode = () => {
+    return document.documentElement.classList.contains("dark");
+  };
+
+  useEffect(() => {
+    setIsDarkMode(checkDarkMode());
+
+    const observer = new MutationObserver(() => {
+      setIsDarkMode(checkDarkMode());
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -22,8 +45,9 @@ export default function Navbar() {
         {/* Left Side: Logo */}
         <div className="flex items-center">
           <Image
-            className="dark:invert"
-            src={logo}
+            // className="dark:invert-0"
+            // src={logoLight}
+            src={isDarkMode ? logoDark : logoLight}
             alt="NWSDB logo"
             width={54}
             height={38}

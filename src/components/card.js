@@ -64,7 +64,7 @@ const Card = ({ title, description, image, link, moduleId, moduleName }) => {
       <p>{image}</p>
       <p>{imagePaths[image]}</p> */}
       <Image
-        src={imagePaths[image]} // This is correct
+        src={imagePaths[image]}
         width={300}
         height={300}
         alt={title}

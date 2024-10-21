@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
-import { FaBars } from "react-icons/fa";
+// import { FaBars } from "react-icons/fa";
+import { VscLayoutSidebarLeft } from "react-icons/vsc";
 
 export default function MainLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -73,7 +74,13 @@ export default function MainLayout({ children }) {
           >
             {/* Page Path and Toggle Icon */}
             <div className="flex items-center mb-4">
-              <FaBars className="cursor-pointer mr-4" onClick={toggleSidebar} />
+              {/* <FaBars className="cursor-pointer mr-4" onClick={toggleSidebar} /> */}
+              <VscLayoutSidebarLeft
+                size={22}
+                className="cursor-pointer mr-4"
+                onClick={toggleSidebar}
+              />
+
               {/* <span>{generatePath()}</span> */}
             </div>
 

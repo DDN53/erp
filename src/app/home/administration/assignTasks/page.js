@@ -338,10 +338,10 @@ const AssignTasks = () => {
           </div>
 
           <div className="flex gap-6 py-6">
-            <Button variant={"secondary"} type="submit">
-              Submit
+            <Button type="submit">Submit</Button>
+            <Button variant={"secondary"} onClick={resetFormData}>
+              Cancel
             </Button>
-            <Button onClick={resetFormData}>Cancel</Button>
           </div>
         </form>
       </div>
