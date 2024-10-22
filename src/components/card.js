@@ -4,9 +4,7 @@ import Image from "next/image";
 
 import adminService from "@/services/adminService";
 
-import imagePaths from "@/public/images/homeCardImages/imagePaths";
-
-import img from "@/public/images/homeCardImages/Administration.jpg";
+import imagePaths from "@/data/imagePaths";
 
 const Card = ({ title, description, image, link, moduleId, moduleName }) => {
   const router = useRouter();
@@ -60,14 +58,12 @@ const Card = ({ title, description, image, link, moduleId, moduleName }) => {
       className="relative group rounded-lg overflow-hidden cursor-pointer h-70 w-48 border"
       onClick={handleClick}
     >
-      {/* <p>{JSON.stringify(image)}</p>
-      <p>{image}</p>
-      <p>{imagePaths[image]}</p> */}
       <Image
         src={imagePaths[image]}
         width={300}
         height={300}
         alt={title}
+        priority={true}
         className="w-full h-40 object-cover rounded-lg"
         unoptimized={true}
       />

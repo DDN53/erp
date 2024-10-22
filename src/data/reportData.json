@@ -264,6 +264,90 @@
             "rptTaskUrl": "/sales/SalesTask1"
           }
         ]
+    },
+    {
+      "moduleId": 16,
+      "rptProcessId": 15,
+      "rptProcessName": "Well Details",
+      "rptTasks": [
+        {
+          "rptTaskId": 40,
+          "rptProcessId": 15,
+          "moduleId": 16,
+          "rptTaskName": "Add",
+          "rptTaskUrl": "/finance/FinanceTask1"
+        },
+        {
+          "rptTaskId": 41,
+          "rptProcessId": 15,
+          "moduleId": 16,
+          "rptTaskName": "Modify",
+          "rptTaskUrl": "/finance/FinanceTask1"
+        },
+        {
+          "rptTaskId": 42,
+          "rptProcessId": 15,
+          "moduleId": 16,
+          "rptTaskName": "View",
+          "rptTaskUrl": "/finance/FinanceTask1"
+        }
+      ]
+    },
+    {
+      "moduleId": 16,
+      "rptProcessId": 16,
+      "rptProcessName": "Monthly Production",
+      "rptTasks": [
+        {
+          "rptTaskId": 43,
+          "rptProcessId": 16,
+          "moduleId": 16,
+          "rptTaskName": "Add",
+          "rptTaskUrl": "/finance/FinanceTask1"
+        },
+        {
+          "rptTaskId": 44,
+          "rptProcessId": 16,
+          "moduleId": 16,
+          "rptTaskName": "Modify",
+          "rptTaskUrl": "/finance/FinanceTask1"
+        },
+        {
+          "rptTaskId": 45,
+          "rptProcessId": 16,
+          "moduleId": 16,
+          "rptTaskName": "View",
+          "rptTaskUrl": "/finance/FinanceTask1"
+        }
+      ]
+    },
+    {
+      "moduleId": 16,
+      "rptProcessId": 17,
+      "rptProcessName": "Drill Log",
+      "rptTasks": [
+        {
+          "rptTaskId": 46,
+          "rptProcessId": 17,
+          "moduleId": 16,
+          "rptTaskName": "Add",
+          "rptTaskUrl": "/finance/FinanceTask1"
+        },
+        {
+          "rptTaskId": 47,
+          "rptProcessId": 17,
+          "moduleId": 16,
+          "rptTaskName": "Modify",
+          "rptTaskUrl": "/finance/FinanceTask1"
+        },
+        {
+          "rptTaskId": 48,
+          "rptProcessId": 17,
+          "moduleId": 16,
+          "rptTaskName": "View",
+          "rptTaskUrl": "/finance/FinanceTask1"
+        }
+      ]
     }
   ]
   

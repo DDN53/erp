@@ -1,22 +1,32 @@
 [
-    {
-      "moduleId": 1,
-      "moduleCode": "1",
-      "moduleName": "Human Resources",
-      "welcomeMessage": "Human Resources",
-      "description": "Human Resources",
-      "moduleImage": "/images/login_image.jpg",
-      "pageLink": "/about",
-      "orderById": 1      
-    },
-    {
-      "moduleId": 2,
-      "moduleCode": "2",
-      "moduleName": "Payroll",
-      "welcomeMessage": "Payroll",
-      "description": "Payroll",
-      "moduleImage": "/images/homeCardImages/Administration.jpg",
-      "pageLink": "/about",
-      "orderById": 2
-    }
-  ]
+  {
+    "moduleId": 1,
+    "moduleCode": "1",
+    "moduleName": "Human Resources",
+    "welcomeMessage": "Human Resources",
+    "description": "Human Resources",
+    "moduleImage": "/HumanResource.jpg",
+    "pageLink": "/about",
+    "orderById": 1
+  },
+  {
+    "moduleId": 2,
+    "moduleCode": "2",
+    "moduleName": "Payroll",
+    "welcomeMessage": "Payroll",
+    "description": "Payroll",
+    "moduleImage": "/Payroll.jpg",
+    "pageLink": "/about",
+    "orderById": 2
+  },
+  {
+    "moduleId": 16,
+    "moduleCode": "1",
+    "moduleName": "Water Production",
+    "welcomeMessage": "Water Production",
+    "description": "Water Production",
+    "moduleImage": "/water-production.jpg",
+    "pageLink": "/home/waterProduction",
+    "orderById": 1
+  }
+]

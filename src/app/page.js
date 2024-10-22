@@ -6,10 +6,6 @@ import Image from "next/image";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 
-import img2 from "@/public/images/Water-Board-Logo.png";
-import img3 from "@/public/images/EmblemSriLanka.png";
-import img4 from "@/public/images/login_image.jpg";
-
 import adminService from "@/services/adminService";
 import { Authenticate } from "@/services/authService";
 
@@ -92,7 +88,10 @@ export default function Login() {
     <div className="flex flex-col min-h-screen md:flex-row">
       <div
         className="flex-col items-center justify-between flex-1 hidden bg-white md:flex"
-        style={{ backgroundImage: `url(${img4.src})`, backgroundSize: "cover" }}
+        style={{
+          backgroundImage: `url("/images/login_image1.jpg")`,
+          backgroundSize: "cover",
+        }}
       >
         <div className="flex-1"></div>
         <p className="mb-4 text-white">Developed by NWSDB IT Division</p>
@@ -104,17 +103,17 @@ export default function Login() {
         >
           <div className="flex justify-center mb-6">
             <Image
-              src={img2}
-              alt="Second Logo"
+              src="/images/Water-Board-Logo1.png"
+              alt="Water-Board-Logo"
               className="h-12 mx-2 w-60"
-              width={"auto"}
+              width={240}
               height={48}
             />
             <Image
-              src={img3}
-              alt="First Logo"
+              src="/images/EmblemSriLanka1.png"
+              alt="Emblem SriLanka"
               className="h-12 mx-2"
-              width={"auto"}
+              width={40}
               height={48}
             />
           </div>

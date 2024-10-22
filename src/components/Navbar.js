@@ -7,9 +7,6 @@ import { FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
 import { ModeToggle } from "./ui/toggle-mode";
 import Profile from "./Profile";
 
-import logoLight from "@/public/images/nwsdb_logo.png";
-import logoDark from "@/public/images/nwsdb_logi_dark.png";
-
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -40,17 +37,23 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full p-2 border-b z-50 bg-white dark:bg-black bg-opacity-90">
+    <nav className="fixed top-0 left-0 w-full p-1 border-b z-50 bg-white dark:bg-black bg-opacity-90">
       <div className="container mx-auto flex items-center justify-between">
         {/* Left Side: Logo */}
         <div className="flex items-center">
           <Image
-            // className="dark:invert-0"
-            // src={logoLight}
-            src={isDarkMode ? logoDark : logoLight}
+            src={
+              isDarkMode
+                ? "/images/nwsdb_logo_dark1.png"
+                : "/images/nwsdb_logo1.png"
+            }
             alt="NWSDB logo"
             width={54}
             height={38}
+            style={{
+              width: "auto",
+              height: "100%",
+            }}
             priority
           />
         </div>

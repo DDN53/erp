@@ -1,5 +1,5 @@
 const images = {
-  HRMIcon: "/images/login_image.jpg",
+  HRMIcon: "/images/homeCardImages/HumanResource.jpg",
   PayrollIcon: "/images/homeCardImages/Payroll.jpg",
   PurchaseIcon: "/images/homeCardImages/Purchasing.jpg",
   SupplyIcon: "/images/homeCardImages/Supplies.jpg",

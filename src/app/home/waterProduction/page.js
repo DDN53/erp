@@ -1,11 +1,11 @@
 "use client";
 
 import MainLayout from "@/components/MainLayout";
-const HR = () => {
+const WP = () => {
   return (
     <MainLayout>
-      <h1>HR page</h1>
+      <h1>Water Production page</h1>
     </MainLayout>
   );
 };
-export default HR;
+export default WP;

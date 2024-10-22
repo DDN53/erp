@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Card from "@/components/card";
-// import modulesData from "@/data/modules.json";
+import modulesData from "@/data/modules.json";
 import { Footer } from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
