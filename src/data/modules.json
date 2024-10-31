@@ -25,8 +25,8 @@
     "moduleName": "Water Production",
     "welcomeMessage": "Water Production",
     "description": "Water Production",
-    "moduleImage": "/water-production.jpg",
-    "pageLink": "/home/waterProduction",
+    "moduleImage": "/images/water-production.jpg",
+    "pageLink": "/waterProduction",
     "orderById": 1
   }
 ]

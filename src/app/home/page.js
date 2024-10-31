@@ -1,75 +1,66 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Card from "@/components/card";
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import modulesData from "@/data/modules.json";
 import { Footer } from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import Sidebar from "@/components/Sidebar";
-
-import adminService from "@/services/adminService";
 
 const HomeCards = () => {
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   try {
-  //     setCards(modulesData);
-  //   } catch (err) {
-  //     setError("Failed to load modules");
-  //     console.error("Error loading modules:", err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }, []);
+  const router = useRouter();
 
   useEffect(() => {
-    const fetchModules = async () => {
-      try {
-        const response = await adminService.getModules();
-        setCards(response);
-      } catch (err) {
-        setError("Failed to fetch modules");
-        console.error(
-          "Error fetching modules:",
-          err.response ? err.response.data : err.message
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchModules();
+    setLoading(true);
+    try {
+      setCards(modulesData);
+    } catch (err) {
+      setError("Failed to load modules");
+      console.error("Error loading modules:", err);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+  const handleCardClick = (card) => {
+    if (card.moduleName === "Water Production") {
+      router.push("/waterProduction");
+    } else {
+      router.push(card.pageLink);
+    }
+  };
 
-  if (error) {
-    return <p style={{ color: "red" }}>{error}</p>;
-  }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <>
       <nav className="h-full max-h-full">
         <Navbar />
-
         <div className="container mx-auto mt-12 p-4 flex flex-col min-h-screen mb-0 pt-10">
           <div className="flex justify-center mt-4 mb-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
               {cards.map((card) => (
-                <Card
+                <div 
                   key={card.moduleId}
-                  title={card.moduleName}
-                  description={card.description}
-                  image={card.moduleImage}
-                  link={card.pageLink}
-                  moduleId={card.moduleId}
-                  moduleName={card.moduleName}
-                />
+                  className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
+                  onClick={() => handleCardClick(card)}
+                >
+                  <div className="relative h-40">
+                    <Image
+                      src={card.moduleImage}
+                      alt={card.moduleName}
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h2 className="text-xl font-semibold mb-2">{card.moduleName}</h2>
+                    <p className="text-gray-600">{card.description}</p>
+                  </div>
+                </div>
               ))}
             </div>
           </div>

@@ -49,8 +49,11 @@ const Card = ({ title, description, image, link, moduleId, moduleName }) => {
       Cookies.set("moduleId", moduleId);
       Cookies.set("moduleName", moduleName);
 
+      console.log('Navigating to:', link);
       router.push(link);
-    } catch (error) {}
+    } catch (error) {
+      console.error('Navigation error:', error);
+    }
   };
 
   return (
