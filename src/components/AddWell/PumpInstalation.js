@@ -12,7 +12,7 @@ function PumpInstalation(props) {
           value={props.formData.SWL}
           onChange={props.handleChange}
           type="text"
-          className="p-2 ml-auto border border-gray-500 rounded-md w-52"
+          className="p-2 ml-auto border border-gray-500 rounded-md w-52 dark:bg-slate-700 dark:text-white"
         />
       </div>
       {/*  */}
@@ -26,7 +26,7 @@ function PumpInstalation(props) {
             value={props.formData.InstalledDatePedestal}
             onChange={props.handleChange}
             type="text"
-            className="w-24 p-2 border border-gray-500 rounded-md"
+            className="w-24 p-2 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
           />
         </div>
         <div className="text-center">
@@ -37,7 +37,7 @@ function PumpInstalation(props) {
             value={props.formData.InstalledDatePump}
             onChange={props.handleChange}
             type="text"
-            className="w-24 p-2 ml-4 border border-gray-500 rounded-md"
+            className="w-24 p-2 ml-4 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
           />
         </div>
       </div>
@@ -52,7 +52,7 @@ function PumpInstalation(props) {
             value={props.formData.PumpType}
             onChange={props.handleChange}
             type="text"
-            className="w-24 p-2 border border-gray-500 rounded-md"
+            className="w-24 p-2 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
           />
         </div>
         <div className="text-center">
@@ -63,7 +63,7 @@ function PumpInstalation(props) {
             value={props.formData.PumpHeadNo}
             onChange={props.handleChange}
             type="text"
-            className="w-24 p-2 ml-4 border border-gray-500 rounded-md"
+            className="w-24 p-2 ml-4 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
           />
         </div>
       </div>
@@ -78,7 +78,7 @@ function PumpInstalation(props) {
             value={props.formData.CylinderType}
             onChange={props.handleChange}
             type="text"
-            className="w-24 p-2 border border-gray-500 rounded-md"
+            className="w-24 p-2 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
           />
         </div>
         <div className="text-center">
@@ -89,7 +89,7 @@ function PumpInstalation(props) {
             value={props.formData.CylinderDepth}
             onChange={props.handleChange}
             type="text"
-            className="w-24 p-2 ml-4 border border-gray-500 rounded-md"
+            className="w-24 p-2 ml-4 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
           />
         </div>
       </div>
@@ -104,7 +104,7 @@ function PumpInstalation(props) {
             value={props.formData.RiserPipeType}
             onChange={props.handleChange}
             type="text"
-            className="w-24 p-2 border border-gray-500 rounded-md"
+            className="w-24 p-2 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
           />
         </div>
         <div className="text-center">
@@ -115,7 +115,7 @@ function PumpInstalation(props) {
             value={props.formData.RiserPipeLength}
             onChange={props.handleChange}
             type="text"
-            className="w-24 p-2 ml-4 border border-gray-500 rounded-md"
+            className="w-24 p-2 ml-4 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
           />
         </div>
       </div>
@@ -130,7 +130,7 @@ function PumpInstalation(props) {
             value={props.formData.ConnecRodType}
             onChange={props.handleChange}
             type="text"
-            className="w-24 p-2 border border-gray-500 rounded-md"
+            className="w-24 p-2 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
           />
         </div>
         <div className="text-center">
@@ -141,7 +141,7 @@ function PumpInstalation(props) {
             value={props.formData.ConnecRodLength}
             onChange={props.handleChange}
             type="text"
-            className="w-24 p-2 ml-4 border border-gray-500 rounded-md"
+            className="w-24 p-2 ml-4 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
           />
         </div>
       </div>
@@ -154,7 +154,7 @@ function PumpInstalation(props) {
           value={props.formData.Remarks}
           onChange={props.handleChange}
           type="text"
-          className="p-2 ml-auto border border-gray-500 rounded-md w-52"
+          className="p-2 ml-auto border border-gray-500 rounded-md w-52 dark:bg-slate-700 dark:text-white"
         />
       </div>
     </div>

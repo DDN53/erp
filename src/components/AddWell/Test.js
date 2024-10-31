@@ -14,7 +14,7 @@ function Test(props) {
               value={props.formData.TestDate}
               onChange={props.handleChange}
               type="date"
-              className="p-2  border border-gray-500 rounded-md  -ml-1"
+              className="p-2  border border-gray-500 rounded-md  -ml-1 dark:bg-slate-700 dark:text-white"
             />
           </div>
 
@@ -30,7 +30,7 @@ function Test(props) {
                   value={props.formData.PumpInstallationDepth}
                   onChange={props.handleChange}
                   type="text"
-                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                 />
               </div>
             </div>
@@ -44,7 +44,7 @@ function Test(props) {
                   value={props.formData.StaticWaterLevel}
                   onChange={props.handleChange}
                   type="text"
-                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                 />
               </div>
             </div>
@@ -72,7 +72,7 @@ function Test(props) {
                       value={props.formData.Step1one}
                       onChange={props.handleChange}
                       type="text"
-                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                     />
                   </div>
                 </td>
@@ -84,7 +84,7 @@ function Test(props) {
                       value={props.formData.Step1two}
                       onChange={props.handleChange}
                       type="text"
-                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                     />
                   </div>
                 </td>
@@ -99,7 +99,7 @@ function Test(props) {
                       value={props.formData.Step2one}
                       onChange={props.handleChange}
                       type="text"
-                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                     />
                   </div>
                 </td>
@@ -111,7 +111,7 @@ function Test(props) {
                       value={props.formData.Step2two}
                       onChange={props.handleChange}
                       type="text"
-                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                     />
                   </div>
                 </td>
@@ -126,7 +126,7 @@ function Test(props) {
                       value={props.formData.Step3one}
                       onChange={props.handleChange}
                       type="text"
-                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                     />
                   </div>
                 </td>
@@ -138,7 +138,7 @@ function Test(props) {
                       value={props.formData.Step3two}
                       onChange={props.handleChange}
                       type="text"
-                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                     />
                   </div>
                 </td>
@@ -153,7 +153,7 @@ function Test(props) {
                       value={props.formData.Step4one}
                       onChange={props.handleChange}
                       type="text"
-                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                     />
                   </div>
                 </td>
@@ -165,7 +165,7 @@ function Test(props) {
                       value={props.formData.Step4two}
                       onChange={props.handleChange}
                       type="text"
-                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                     />
                   </div>
                 </td>
@@ -180,7 +180,7 @@ function Test(props) {
                       value={props.formData.Step5one}
                       onChange={props.handleChange}
                       type="text"
-                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                     />
                   </div>
                 </td>
@@ -192,7 +192,7 @@ function Test(props) {
                       value={props.formData.Step5two}
                       onChange={props.handleChange}
                       type="text"
-                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                      className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                     />
                   </div>
                 </td>
@@ -213,8 +213,8 @@ function Test(props) {
                   name="TestDate2"
                   value={props.formData.TestDate2}
                   onChange={props.handleChange}
-                  type="text"
-                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                  type="date"
+                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                 />
               </div>
             </div>
@@ -227,8 +227,8 @@ function Test(props) {
                   name="EndDate2"
                   value={props.formData.EndDate2}
                   onChange={props.handleChange}
-                  type="text"
-                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                  type="date"
+                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                 />
               </div>
             </div>
@@ -246,33 +246,33 @@ function Test(props) {
                   value={props.formData.PumpInstallationDepth2}
                   onChange={props.handleChange}
                   type="text"
-                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                 />
               </div>
               {/*  */}
               <div className="flex items-center mb-1">
-                <p className="mr-2">Avarage Discharge Rate (lpm) : </p>
+                <p className="mr-2">Average Discharge Rate (lpm) : </p>
                 <input
-                  placeholder="Avarage Discharge Rate"
+                  placeholder="Average Discharge Rate"
                   name="AvarageDischargeRate"
                   value={props.formData.AvarageDischargeRate}
                   onChange={props.handleChange}
                   type="text"
-                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                 />
               </div>
             </div>
             <div className="w-[50%] ml-1 flex items-center">
               {/*  */}
               <div className="flex items-center justify-between w-full mb-1">
-                <p className="mr-2 -mt-10">water level at end of the recovery (m) : </p>
+                <p className="mr-2 -mt-10">Water Level at End of Recovery (m) : </p>
                 <input
-                  placeholder="water level at end of the recovery"
+                  placeholder="Water Level at End of Recovery"
                   name="waterlevelatendoftherecovery"
                   value={props.formData.waterlevelatendoftherecovery}
                   onChange={props.handleChange}
                   type="text"
-                  className="w-20 p-2 border border-gray-500 rounded-md -mt-10"
+                  className="w-20 p-2 border border-gray-500 rounded-md -mt-10 dark:bg-slate-700 dark:text-white"
                 />
               </div>
             </div>
@@ -283,28 +283,28 @@ function Test(props) {
             <div className="w-[50%] mr-1">
               {/*  */}
               <div className="flex items-center mb-1">
-                <p className="mr-2 ">Puming Duration (mn) : </p>
+                <p className="mr-2 ">Pumping Duration (min) : </p>
                 <input
-                  placeholder="Puming Duration"
+                  placeholder="Pumping Duration"
                   name="PumingDuration"
                   value={props.formData.PumingDuration}
                   onChange={props.handleChange}
                   type="text"
-                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                 />
               </div>
             </div>
             <div className="w-[50%] ml-1">
               {/*  */}
               <div className="flex items-center mb-1">
-                <p className="mr-2">Statistic Water Level (m) : </p>
+                <p className="mr-2">Static Water Level (m) : </p>
                 <input
-                  placeholder="Statistic Water Level"
+                  placeholder="Static Water Level"
                   name="StatisticWaterLevel"
                   value={props.formData.StatisticWaterLevel}
                   onChange={props.handleChange}
                   type="text"
-                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                 />
               </div>
             </div>
@@ -316,29 +316,29 @@ function Test(props) {
               {/*  */}
               <div className="flex items-center mb-1">
                 <p className="mr-2">
-                  Pumping Water Level at the End of the test(m) :{" "}
+                  Pumping Water Level at End of Test (m) :{" "}
                 </p>
                 <input
-                  placeholder="Pumping Water Level at the End of the test"
+                  placeholder="Pumping Water Level at End of Test"
                   name="PumpingWaterLevelattheEndofthetest"
                   value={props.formData.PumpingWaterLevelattheEndofthetest}
                   onChange={props.handleChange}
                   type="text"
-                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                 />
               </div>
             </div>
             <div className="w-[50%] ml-1">
               {/*  */}
               <div className="flex items-center mb-1">
-                <p className="mr-2">Storativity (s) : </p>
+                <p className="mr-2">Storativity (S) : </p>
                 <input
                   placeholder="Storativity"
                   name="Storativity"
                   value={props.formData.Storativity}
                   onChange={props.handleChange}
                   type="text"
-                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                 />
               </div>
             </div>
@@ -349,28 +349,28 @@ function Test(props) {
             <div className="w-[50%] mr-1">
               {/*  */}
               <div className="flex items-center mb-1">
-                <p className="mr-2">Recovery Period (mn) : </p>
+                <p className="mr-2">Recovery Period (min) : </p>
                 <input
                   placeholder="Recovery Period"
                   name="RecoveryPeriod"
                   value={props.formData.RecoveryPeriod}
                   onChange={props.handleChange}
                   type="text"
-                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                 />
               </div>
             </div>
             <div className="w-[50%] ml-1">
               {/*  */}
               <div className="flex items-center mb-1">
-                <p className="mr-2">Transmassvity (T) (m2/day) : </p>
+                <p className="mr-2">Transmissivity (T) (m²/day) : </p>
                 <input
-                  placeholder="Transmassvity"
+                  placeholder="Transmissivity"
                   name="Transmassvity"
                   value={props.formData.Transmassvity}
                   onChange={props.handleChange}
                   type="text"
-                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                 />
               </div>
             </div>
@@ -388,7 +388,7 @@ function Test(props) {
                   value={props.formData.B}
                   onChange={props.handleChange}
                   type="text"
-                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                 />
               </div>
             </div>
@@ -402,7 +402,7 @@ function Test(props) {
                   value={props.formData.C}
                   onChange={props.handleChange}
                   type="text"
-                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md"
+                  className="w-20 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
                 />
               </div>
             </div>
@@ -410,7 +410,7 @@ function Test(props) {
         </div>
       </div>
 
-      <div className="w-[100%] p-4  border-t border-gray-400">
+      <div className="w-[100%] p-4 border-t border-gray-400">
         <div className="flex flex-wrap ml-36">
           <div className="w-1/2 pr-2 mb-2">
             <p className="mr-2">Test Date : </p>
@@ -419,8 +419,8 @@ function Test(props) {
               name="TestDate3"
               value={props.formData.TestDate3}
               onChange={props.handleChange}
-              type="text"
-              className="w-[220px] p-2 border border-gray-500 rounded-md"
+              type="date"
+              className="w-[220px] p-2 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           <div className="w-1/2 pl-2 mb-2">
@@ -431,7 +431,7 @@ function Test(props) {
               value={props.formData.PumpInstallationDepth3}
               onChange={props.handleChange}
               type="text"
-              className="w-[220px] p-2 border border-gray-500 rounded-md"
+              className="w-[220px] p-2 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           <div className="w-1/2 pr-2 mb-2">
@@ -442,7 +442,7 @@ function Test(props) {
               value={props.formData.DischargeRate}
               onChange={props.handleChange}
               type="text"
-              className="w-[220px] p-2 border border-gray-500 rounded-md"
+              className="w-[220px] p-2 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           <div className="w-1/2 pl-2 mb-2">
@@ -453,7 +453,7 @@ function Test(props) {
               value={props.formData.PumpingWaterLevel}
               onChange={props.handleChange}
               type="text"
-              className="w-[220px] p-2 border border-gray-500 rounded-md"
+              className="w-[220px] p-2 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           <div className="w-1/2 pr-2 mb-2">
@@ -464,7 +464,7 @@ function Test(props) {
               value={props.formData.PumpingDuration}
               onChange={props.handleChange}
               type="text"
-              className="w-[220px] p-2 border border-gray-500 rounded-md"
+              className="w-[220px] p-2 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           <div className="w-1/2 pl-2 mb-2">
@@ -475,7 +475,7 @@ function Test(props) {
               value={props.formData.RecommendationBasedon}
               onChange={props.handleChange}
               type="text"
-              className="w-[220px] p-2 border border-gray-500 rounded-md"
+              className="w-[220px] p-2 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
         </div>

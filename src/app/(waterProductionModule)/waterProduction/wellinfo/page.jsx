@@ -661,7 +661,7 @@ function WellInfo() {
 
           {/* Filter section */}
           {showFilters && (
-            <div className="mb-4 bg-gray-100 p-4 rounded-lg">
+            <div className="mb-4 bg-gray-100 p-4 rounded-lg dark:bg-slate-800">
               <h2 className="text-lg font-semibold mb-2">Filters</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <select
@@ -723,9 +723,9 @@ function WellInfo() {
             </div>
           )}
           <div className="overflow-x-auto">
-            <table className="min-w-full bg-white border border-gray-300">
+            <table className="min-w-full dark:bg-slate-900 bg-white border border-gray-300">
               <thead>
-                <tr className="bg-gray-100">
+                <tr className="bg-gray-100 dark:bg-slate-800 dark:hover:bg-slate-700">
                   <th className="py-2 px-4 border-b text-left">Well No</th>
                   <th className="py-2 px-4 border-b text-left">Location</th>
                   <th className="py-2 px-4 border-b text-left">Province</th>
@@ -738,7 +738,7 @@ function WellInfo() {
               </thead>
               <tbody>
                 {filteredWells.map((well) => (
-                  <tr key={well.newWellNo} className="hover:bg-gray-50 align-left">
+                  <tr key={well.newWellNo} className="hover:bg-gray-50 align-left dark:hover:bg-slate-800">
                     <td className="py-2 px-4 border-b text-left">{well.newWellNo}</td>
                     <td className="py-2 px-4 border-b text-left">{well.Location}</td>
                     <td className="py-2 px-4 border-b text-left">{well.selectedProvince}</td>

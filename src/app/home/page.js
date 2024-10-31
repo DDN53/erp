@@ -45,7 +45,7 @@ const HomeCards = () => {
               {cards.map((card) => (
                 <div 
                   key={card.moduleId}
-                  className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
+                  className="dark:bg-slate-800 bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
                   onClick={() => handleCardClick(card)}
                 >
                   <div className="relative h-40">

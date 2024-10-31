@@ -13,7 +13,7 @@ function RequestGeneral(props) {
             value={props.formData.RequestMode}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md  dark:bg-slate-700 dark:text-white"
           />
         </div>
         {/* Funding criteria */}
@@ -25,7 +25,7 @@ function RequestGeneral(props) {
             value={props.formData.Fundingcriteria}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md  dark:bg-slate-700 dark:text-white"
           />
         </div>
         {/* Well Category */}
@@ -37,7 +37,7 @@ function RequestGeneral(props) {
             value={props.formData.WellCategory}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md  dark:bg-slate-700 dark:text-white"
           />
         </div>
         {/* Agent Name */}
@@ -49,7 +49,7 @@ function RequestGeneral(props) {
             value={props.formData.AgentName}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md  dark:bg-slate-700 dark:text-white"
           />
         </div>
         {/* Project Name */}
@@ -61,7 +61,7 @@ function RequestGeneral(props) {
             value={props.formData.ProjectName}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md  dark:bg-slate-700 dark:text-white"
           />
         </div>
         {/* Contact Order No */}
@@ -73,7 +73,7 @@ function RequestGeneral(props) {
             value={props.formData.ContactOrderNo}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md  dark:bg-slate-700 dark:text-white"
           />
         </div>
       </div>
@@ -89,7 +89,7 @@ function RequestGeneral(props) {
             value={props.formData.DistancetoNearestPublicPerinialWell}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md mt-[0.7rem]"
+            className="p-2 ml-auto border border-gray-500 rounded-md mt-[0.7rem]  dark:bg-slate-700 dark:text-white"
           />
         </div>
         {/* No. Of Houses Within 500M */}
@@ -101,7 +101,7 @@ function RequestGeneral(props) {
             value={props.formData.NoOfHousesWithin500M}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md mt-[0.7rem]"
+            className="p-2 ml-auto border border-gray-500 rounded-md mt-[0.7rem]  dark:bg-slate-700 dark:text-white"
           />
         </div>
         {/* Concent Of P.S. For Maintenance */}
@@ -113,7 +113,7 @@ function RequestGeneral(props) {
             value={props.formData.ConcentOfPSForMaintenance}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md mt-[0.7rem]"
+            className="p-2 ml-auto border border-gray-500 rounded-md mt-[0.7rem]  dark:bg-slate-700 dark:text-white"
           />
         </div>
         {/* Consumer Society Formed */}
@@ -125,7 +125,7 @@ function RequestGeneral(props) {
             value={props.formData.ConsumerSocietyFormed}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md  dark:bg-slate-700 dark:text-white"
           />
         </div>
         {/* Name of Care Taker */}
@@ -137,7 +137,7 @@ function RequestGeneral(props) {
             value={props.formData.NameofCareTaker}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md  dark:bg-slate-700 dark:text-white"
           />
         </div>
         {/* Address of Care Taker */}
@@ -150,7 +150,7 @@ function RequestGeneral(props) {
               value={props.formData.AddressofCareTakerline1}
               onChange={props.handleChange}
               type="text"
-              className="p-2 mb-1 ml-auto border border-gray-500 rounded-md"
+              className="p-2 mb-1 ml-auto border border-gray-500 rounded-md  dark:bg-slate-700 dark:text-white"
             />
             <input
               placeholder="Address of Care Taker line2"
@@ -158,7 +158,7 @@ function RequestGeneral(props) {
               value={props.formData.AddressofCareTakerline2}
               onChange={props.handleChange}
               type="text"
-              className="p-2 mb-1 ml-auto border border-gray-500 rounded-md"
+              className="p-2 mb-1 ml-auto border border-gray-500 rounded-md  dark:bg-slate-700 dark:text-white"
             />
             <input
               placeholder="Address of Care Taker line3"
@@ -166,7 +166,7 @@ function RequestGeneral(props) {
               value={props.formData.AddressofCareTakerline3}
               onChange={props.handleChange}
               type="text"
-              className="p-2 ml-auto border border-gray-500 rounded-md"
+              className="p-2 ml-auto border border-gray-500 rounded-md  dark:bg-slate-700 dark:text-white"
             />
           </div>
         </div>

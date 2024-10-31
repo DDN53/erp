@@ -14,7 +14,7 @@ function ChemicalData(props) {
               value={props.formData.SampleDate}
               onChange={props.handleChange}
               type="Date"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -26,7 +26,7 @@ function ChemicalData(props) {
               value={props.formData.SampleDepth}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -38,7 +38,7 @@ function ChemicalData(props) {
               value={props.formData.SampleTime}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -50,7 +50,7 @@ function ChemicalData(props) {
               value={props.formData.Color}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -62,7 +62,7 @@ function ChemicalData(props) {
               value={props.formData.Turbidity}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -74,7 +74,7 @@ function ChemicalData(props) {
               value={props.formData.PH}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -86,7 +86,7 @@ function ChemicalData(props) {
               value={props.formData.Elecon}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -98,7 +98,7 @@ function ChemicalData(props) {
               value={props.formData.Chlorides}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           <div className="flex items-center mb-1">
@@ -109,7 +109,7 @@ function ChemicalData(props) {
               value={props.formData.Totalk}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white "
             />
           </div>
           <div className="flex items-center mb-1">
@@ -120,7 +120,7 @@ function ChemicalData(props) {
               value={props.formData.FreeAmonia}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           <div className="flex items-center mb-1">
@@ -131,7 +131,7 @@ function ChemicalData(props) {
               value={props.formData.Albamonia}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           <div className="flex items-center mb-1">
@@ -142,7 +142,7 @@ function ChemicalData(props) {
               value={props.formData.Nitrates}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
         </div>
@@ -160,7 +160,7 @@ function ChemicalData(props) {
               value={props.formData.Nitrite}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -172,7 +172,7 @@ function ChemicalData(props) {
               value={props.formData.Fluorides}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -184,7 +184,7 @@ function ChemicalData(props) {
               value={props.formData.Phosphate}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -196,7 +196,7 @@ function ChemicalData(props) {
               value={props.formData.Totdissol}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -208,7 +208,7 @@ function ChemicalData(props) {
               value={props.formData.Tothard}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -220,7 +220,7 @@ function ChemicalData(props) {
               value={props.formData.Calchard}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -232,7 +232,7 @@ function ChemicalData(props) {
               value={props.formData.Totiron}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -244,7 +244,7 @@ function ChemicalData(props) {
               value={props.formData.Magnesium}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -256,7 +256,7 @@ function ChemicalData(props) {
               value={props.formData.Sulphate}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -268,7 +268,7 @@ function ChemicalData(props) {
               value={props.formData.Manganese}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -280,7 +280,7 @@ function ChemicalData(props) {
               value={props.formData.Dissiron}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -292,7 +292,7 @@ function ChemicalData(props) {
               value={props.formData.Totcoli}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
         </div>
@@ -308,7 +308,7 @@ function ChemicalData(props) {
               value={props.formData.Faecalcoli}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -320,7 +320,7 @@ function ChemicalData(props) {
               value={props.formData.Filtiron}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -332,7 +332,7 @@ function ChemicalData(props) {
               value={props.formData.Totresidue}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -344,7 +344,7 @@ function ChemicalData(props) {
               value={props.formData.Calcium}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -356,7 +356,7 @@ function ChemicalData(props) {
               value={props.formData.Oxygen}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -368,7 +368,7 @@ function ChemicalData(props) {
               value={props.formData.Hysul}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
           {/*  */}
@@ -380,7 +380,7 @@ function ChemicalData(props) {
               value={props.formData.Fixediron}
               onChange={props.handleChange}
               type="text"
-              className="w-24 p-2 ml-auto border border-gray-500 rounded-md"
+              className="w-24 p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
             />
           </div>
         </div>

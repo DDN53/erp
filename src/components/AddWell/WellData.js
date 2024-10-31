@@ -47,7 +47,7 @@ function WellData(props) {
   return (
     <div> {/* Changed from form to div since form is in parent */}
       <div>
-        <div className="border-b border-gray-400 ">
+        <div className="border-b border-gray-400 dark:border-gray-600">
           <div className="flex">
             <div className="w-[50%]  p-3 flex items-center -mt-9 mb-6">
               <p className="block mb-2">New Well No : </p>
@@ -58,7 +58,7 @@ function WellData(props) {
                 value={props.formData.newWellNo}
                 onChange={props.handleChange}
                 type="text"
-                className="p-2 border border-gray-500 rounded-md"
+                className="p-2 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
               />
             </div>
             <div className="w-[50%]  p-3 flex items-center -mt-9 mb-6">
@@ -69,7 +69,7 @@ function WellData(props) {
                 value={props.formData.OldWellNo}
                 onChange={props.handleChange}
                 type="text"
-                className="p-2 border border-gray-500 rounded-md"
+                className="p-2 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white  "
               />
             </div>
           </div>
@@ -80,7 +80,7 @@ function WellData(props) {
 
         <div className="flex">
           {/* 1st row */}
-          <div className="w-[50%] border-r border-gray-400 p-[64px] ml-auto -mt-10">
+          <div className="w-[50%] border-r border-gray-400 p-[64px] ml-auto -mt-10 dark:bg-slate-800 dark:text-white">
             {/* project office */}
             <div className="flex items-center mb-1">
               <p className="block mb-2">Project Office : </p>
@@ -90,7 +90,7 @@ function WellData(props) {
                 value={props.formData.ProjectOffice}
                 onChange={props.handleChange}
                 type="text"
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               />
             </div>
             {/* Location */}
@@ -102,7 +102,7 @@ function WellData(props) {
                 value={props.formData.Location}
                 onChange={props.handleChange}
                 type="text"
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               />
             </div>
             {/* Electorate */}
@@ -114,7 +114,7 @@ function WellData(props) {
                 value={props.formData.Electorate}
                 onChange={props.handleChange}
                 type="text"
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               />
             </div>
             {/* Village */}
@@ -126,7 +126,7 @@ function WellData(props) {
                 value={props.formData.Village}
                 onChange={props.handleChange}
                 type="text"
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               />
             </div>
             {/* User Type */}
@@ -135,7 +135,7 @@ function WellData(props) {
               <select
                 value={props.UserType}
                 onChange={(e) => handleUserTypeChange(e.target.value)}
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               >
                 <option value="">Select User Type</option>
                 <option value="Agriculture">Agriculture</option>
@@ -151,7 +151,7 @@ function WellData(props) {
               <select
                 value={props.selectedWellType}
                 onChange={(e) => handleTypeChange(e.target.value)}
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               >
                 <option value="">Select Well Type</option>
                 <option value="Deep Tube Well">Deep Tube Well</option>
@@ -166,7 +166,7 @@ function WellData(props) {
               <select
                 value={props.selectedWellCondition}
                 onChange={(e) => handleWellConditionChange(e.target.value)}
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               >
                 <option value="">Select Well Condition</option>
                 <option value="Pumping">Pumping</option>
@@ -182,7 +182,7 @@ function WellData(props) {
                 value={props.formData.TopoSheet}
                 onChange={props.handleChange}
                 type="text"
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               />
             </div>
             {/* Scale Topo Sheet */}
@@ -194,7 +194,7 @@ function WellData(props) {
                 value={props.formData.ScaleTopoSheet}
                 onChange={props.handleChange}
                 type="text"
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               />
             </div>
             {/* Geology Map */}
@@ -206,7 +206,7 @@ function WellData(props) {
                 value={props.formData.GeologyMap}
                 onChange={props.handleChange}
                 type="text"
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               />
             </div>
             <div className="flex items-center mb-1">
@@ -217,7 +217,7 @@ function WellData(props) {
                 value={props.formData.WeatheredRock}
                 onChange={props.handleChange}
                 type="text"
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               />
             </div>
             {/* Geologist */}
@@ -229,7 +229,7 @@ function WellData(props) {
                 value={props.formData.Geologist || ''} 
                 onChange={props.handleChange}
                 type="text"
-                className="items-end p-2 ml-auto border border-gray-500 rounded-md w-[220px]"
+                className="items-end p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               />
             </div>
           </div>
@@ -241,7 +241,7 @@ function WellData(props) {
               <select
                 value={props.selectedProvince}
                 onChange={(e) => props.handleProvinceChange(e.target.value)}
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               >
                 <option value="">Select Province</option>
                 {props.provinces.map((province) => (
@@ -258,7 +258,7 @@ function WellData(props) {
                 value={props.selectedDistrict}
                 onChange={(e) => props.handleDistrictChange(e.target.value)}
                 disabled={!props.selectedProvince}
-                className="p-2 ml-auto border border-gray-500 rounded-md  w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md  w-[220px] dark:bg-slate-700 dark:text-white"
               >
                 <option value="">Select District</option>
                 {props.getDistrictsByProvince(props.selectedProvince).map((district) => (
@@ -275,7 +275,7 @@ function WellData(props) {
                 value={props.selectedDSDivision}
                 onChange={(e) => props.handleDSDivisionChange(e.target.value)}
                 disabled={!props.selectedDistrict}
-                className="p-2 ml-auto border border-gray-500 rounded-md  w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md  w-[220px] dark:bg-slate-700 dark:text-white"
               >
                 <option value="">Select DS Division</option>
                 {props.getDSDivisionByDistrict(props.selectedDistrict).map((dsDivision) => (
@@ -294,7 +294,7 @@ function WellData(props) {
                 value={props.formData.GSDivision}
                 onChange={props.handleChange}
                 type="text"
-                className="p-2 ml-auto border border-gray-500 rounded-md"
+                className="p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
               />
             </div>
 
@@ -307,7 +307,7 @@ function WellData(props) {
                 value={props.formData.SchemeName}
                 onChange={props.handleChange}
                 type="text"
-                className="p-2 ml-auto border border-gray-500 rounded-md"
+                className="p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
               />
             </div>
 
@@ -323,7 +323,7 @@ function WellData(props) {
                   );
                   handleWorkLocationChange(e.target.value, selectedOption?.name);
                 }}
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               >
                 <option value="">Select Work Location</option>
                 {props.Worklocations.map((workLocation) => (
@@ -341,7 +341,7 @@ function WellData(props) {
                 required
                 value={props.selectedRSC}
                 onChange={(e) => handleRSCChange(e.target.value)}
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
                 disabled={!props.selectedWorkLocation}
               >
                 <option value="">Select RSC Location</option>
@@ -364,7 +364,7 @@ function WellData(props) {
                 value={props.formData.ScaleGeologyMap}
                 onChange={props.handleChange}
                 type="text"
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               />
             </div>
             {/* Depth to Bottom of Soil Layer */}
@@ -376,7 +376,7 @@ function WellData(props) {
                 value={props.formData.DepthtoTheBottomofSoilLayer}
                 onChange={props.handleChange}
                 type="text"
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] mt-[1rem]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] mt-[1rem] dark:bg-slate-700 dark:text-white"
               />
             </div>
             {/* Highly Weathered Rock */}
@@ -388,7 +388,7 @@ function WellData(props) {
                 value={props.formData.HighlyWeatheredRock}
                 onChange={props.handleChange}
                 type="text"
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]  mt-[0.7rem]"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]  mt-[0.7rem] dark:bg-slate-700 dark:text-white"
               />
             </div>
           </div>
@@ -398,7 +398,7 @@ function WellData(props) {
           {/* 1st row */}
           <div className="w-[50%] ">
             <div className="flex">
-              <p>Co-ordinates Geographic</p>
+              <p className="dark:text-white">Co-ordinates Geographic</p>
               <div className="flex ml-8">
                 <div className="flex items-center">
                   <p>X : </p>
@@ -408,7 +408,7 @@ function WellData(props) {
                     value={props.formData.X}
                     onChange={props.handleChange}
                     type="text"
-                    className=" p-2 ml-2 border border-gray-500 rounded-md w-24"
+                    className=" p-2 ml-2 border border-gray-500 rounded-md w-24 dark:bg-slate-700 dark:text-white"
                   />
                 </div>
                 <div className="flex items-center ml-3">
@@ -419,7 +419,7 @@ function WellData(props) {
                     value={props.formData.Y}
                     onChange={props.handleChange}
                     type="text"
-                    className=" p-2 ml-2 border border-gray-500 rounded-md w-24"
+                    className=" p-2 ml-2 border border-gray-500 rounded-md w-24 dark:bg-slate-700 dark:text-white"
                   />
                 </div>
               </div>
@@ -432,7 +432,7 @@ function WellData(props) {
                 value={props.formData.Elevation}
                 onChange={props.handleChange}
                 type="text"
-                className=" p-2 ml-2 border border-gray-500 rounded-md w-24"
+                className=" p-2 ml-2 border border-gray-500 rounded-md w-24 dark:bg-slate-700 dark:text-white"
               />
             </div>
           </div>
@@ -446,7 +446,7 @@ function WellData(props) {
                 value={props.formData.LocalMetric1}
                 onChange={props.handleChange}
                 type="text"
-                className=" p-2 ml-2 border border-gray-500 rounded-md w-24"
+                className=" p-2 ml-2 border border-gray-500 rounded-md w-24 dark:bg-slate-700 dark:text-white"
               />
               <input
                 placeholder="LocalMetric2"
@@ -454,7 +454,7 @@ function WellData(props) {
                 value={props.formData.LocalMetric2}
                 onChange={props.handleChange}
                 type="text"
-                className="w-24 p-2 ml-2 border border-gray-500 rounded-md "
+                className="w-24 p-2 ml-2 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
               />
             </div>
 
@@ -463,7 +463,7 @@ function WellData(props) {
               <select
                 value={props.methodOfSurvey}
                 onChange={(e) => handleMethodOfSurveyChange(e.target.value)}
-                className="p-2 ml-2 border border-gray-500 rounded-md w-[220px]"
+                className="p-2 ml-2 border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               >
                 <option value="">Select Method of survey</option>
                 <option value="GPS">GPS</option>

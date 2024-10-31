@@ -342,7 +342,7 @@ function AddWell() {
       <div>
         <MainLayout>
           <form onSubmit={handleSubmit}>
-            <div className="-mt-5 border border-gray-400 w-[95%] h-[500%] shadow-xl mx-auto p-6 flex flex-col">
+            <div className="-mt-5 border border-gray-400 w-[95%] h-[500%] shadow-xl mx-auto p-6 flex flex-col dark:bg-slate-800 dark:text-white">
               <button
                 className="w-12 h-12 p-2 ml-auto text-3xl text-black rounded-full hover:bg-gray-300 hover:text-white focus:outline-none"
                 onClick={() => router.push('/waterProduction')}

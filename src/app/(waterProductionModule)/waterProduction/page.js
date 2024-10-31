@@ -54,9 +54,9 @@ function Dashboard() {
     labels: ['Production', 'Observation', 'Other'],
     datasets: [{
       data: [
-        wells.filter(well => well.WellType === 'Production').length,
-        wells.filter(well => well.WellType === 'Observation').length,
-        wells.filter(well => well.WellType === 'Other').length,
+        wells.filter(well => well.selectedWellType === 'Production').length,
+        wells.filter(well => well.selectedWellType === 'Observation').length,
+        wells.filter(well => well.selectedWellType === 'Other').length,
       ],
       backgroundColor: [
         'rgba(255, 99, 132, 0.8)',
@@ -121,11 +121,11 @@ function Dashboard() {
 
   // Add new data preparation for RSC, Province, and District
   const rscData = {
-    labels: [...new Set(wells.map(well => well.RSC))],
+    labels: [...new Set(wells.map(well => well.selectedRSC))],
     datasets: [{
       label: 'Wells by RSC',
-      data: [...new Set(wells.map(well => well.RSC))].map(rsc => 
-        wells.filter(well => well.RSC === rsc).length
+      data: [...new Set(wells.map(well => well.selectedRSC))].map(rsc => 
+        wells.filter(well => well.selectedRSC === rsc).length
       ),
       backgroundColor: 'rgba(75, 192, 192, 0.8)',
       borderColor: 'rgba(75, 192, 192, 1)',
@@ -134,11 +134,11 @@ function Dashboard() {
   };
 
   const provinceData = {
-    labels: [...new Set(wells.map(well => well.province))],
+    labels: [...new Set(wells.map(well => well.selectedProvince))],
     datasets: [{
       label: 'Wells by Province',
-      data: [...new Set(wells.map(well => well.province))].map(province => 
-        wells.filter(well => well.province === province).length
+      data: [...new Set(wells.map(well => well.selectedProvince))].map(province => 
+        wells.filter(well => well.selectedProvince === province).length
       ),
       borderColor: 'rgb(255, 99, 132)',
       tension: 0.1,
@@ -147,11 +147,11 @@ function Dashboard() {
   };
 
   const districtData = {
-    labels: [...new Set(wells.map(well => well.district))],
+    labels: [...new Set(wells.map(well => well.selectedDistrict))],
     datasets: [{
       label: 'Wells by District',
-      data: [...new Set(wells.map(well => well.district))].map(district => 
-        wells.filter(well => well.district === district).length
+      data: [...new Set(wells.map(well => well.selectedDistrict))].map(district => 
+        wells.filter(well => well.selectedDistrict === district).length
       ),
       backgroundColor: 'rgba(153, 102, 255, 0.8)',
       borderColor: 'rgba(153, 102, 255, 1)',
@@ -177,7 +177,7 @@ function Dashboard() {
         {/* Add new section for Regional Analysis */}
         <div className="grid grid-cols-1 gap-6 mb-6 md:grid-cols-2">
           {/* RSC Distribution */}
-          <div className="p-4 bg-white rounded-lg shadow-lg">
+          <div className="p-4 bg-white rounded-lg shadow-lg dark:bg-slate-800">
             <h2 className="mb-4 text-xl font-semibold">Wells by RSC</h2>
             <div className="h-[300px]">
               <Bar 
@@ -190,7 +190,7 @@ function Dashboard() {
                   scales: {
                     y: {
                       beginAtZero: true,
-                      title: { display: true, text: 'Number of Wells' }
+                      title: { display: true, text: 'Number of Wells'}
                     }
                   }
                 }}
@@ -199,7 +199,7 @@ function Dashboard() {
           </div>
 
           {/* Province Distribution */}
-          <div className="p-4 bg-white rounded-lg shadow-lg">
+          <div className="p-4 bg-white rounded-lg shadow-lg dark:bg-slate-800">
             <h2 className="mb-4 text-xl font-semibold">Wells by Province</h2>
             <div className="h-[300px]">
               <Line 
@@ -221,7 +221,7 @@ function Dashboard() {
           </div>
 
           {/* District Distribution */}
-          <div className="p-4 bg-white rounded-lg shadow-lg md:col-span-2">
+          <div className="p-4 bg-white rounded-lg shadow-lg md:col-span-2 dark:bg-slate-800">
             <h2 className="mb-4 text-xl font-semibold">Wells by District</h2>
             <div className="h-[400px]">
               <Bar 
@@ -245,7 +245,7 @@ function Dashboard() {
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {/* Well Types Distribution */}
-          <div className="p-4 bg-white rounded-lg shadow-lg">
+          <div className="p-4 bg-white rounded-lg shadow-lg dark:bg-slate-800 dark:text-white">
             <h2 className="mb-4 text-xl font-semibold">Well Types Distribution</h2>
             <div className="h-[300px]">
               <Pie data={wellTypeData} options={{
@@ -260,7 +260,7 @@ function Dashboard() {
           </div>
 
           {/* Depth Over Time */}
-          <div className="p-4 bg-white rounded-lg shadow-lg">
+          <div className="p-4 bg-white rounded-lg shadow-lg dark:bg-slate-800 dark:text-white">
             <h2 className="mb-4 text-xl font-semibold">Well Depth Over Time</h2>
             <div className="h-[300px]">
               <Line 
@@ -287,7 +287,7 @@ function Dashboard() {
           </div>
 
           {/* Depth vs Yield Scatter Plot */}
-          <div className="p-4 bg-white rounded-lg shadow-lg md:col-span-2">
+          <div className="p-4 bg-white rounded-lg shadow-lg md:col-span-2 dark:bg-slate-800 dark:text-white">
             <h2 className="mb-4 text-xl font-semibold">Depth vs Yield Analysis</h2>
             <div className="h-[400px]">
               <Scatter 
@@ -303,23 +303,23 @@ function Dashboard() {
 
         {/* Summary Statistics */}
         <div className="grid grid-cols-1 gap-4 mt-6 md:grid-cols-4">
-          <div className="p-4 bg-blue-100 rounded-lg">
+          <div className="p-4 bg-blue-100 rounded-lg dark:bg-slate-500">
             <h3 className="font-semibold">Total Wells</h3>
             <p className="text-2xl">{wells.length}</p>
           </div>
-          <div className="p-4 bg-green-100 rounded-lg">
+          <div className="p-4 bg-green-100 rounded-lg dark:bg-slate-600">
             <h3 className="font-semibold">Average Depth</h3>
             <p className="text-2xl">
               {(wells.reduce((acc, well) => acc + (well.drillDepth || 0), 0) / wells.length).toFixed(2)} m
             </p>
           </div>
-          <div className="p-4 bg-yellow-100 rounded-lg">
+          <div className="p-4 bg-yellow-100 rounded-lg dark:bg-slate-700">
             <h3 className="font-semibold">Average Yield</h3>
             <p className="text-2xl">
               {(wells.reduce((acc, well) => acc + (well.yield || 0), 0) / wells.length).toFixed(2)}
             </p>
           </div>
-          <div className="p-4 bg-purple-100 rounded-lg">
+          <div className="p-4 bg-purple-100 rounded-lg dark:bg-slate-800">
             <h3 className="font-semibold">Latest Well</h3>
             <p className="text-2xl">
               {wells.length > 0 ? wells[wells.length - 1].newWellNo : 'N/A'}
@@ -331,4 +331,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard; 
+export default Dashboard;
