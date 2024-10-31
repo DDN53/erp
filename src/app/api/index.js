@@ -179,6 +179,10 @@ const generateWellReportExcel = async (data) => {
     responseType: 'blob' 
   });
 };
+const waterQuality = async (data) => {
+  const response = await API.post("api/waterQuality", data);
+  return response.data;
+};
 
 const api = {
   signin,
@@ -205,5 +209,6 @@ const api = {
   viewdrill,
   generateWellReportPDF,
   generateWellReportExcel,
+  waterQuality,
 };
 export default api;
