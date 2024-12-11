@@ -71,15 +71,29 @@ const viewallwells = async () => {
 
 const viewwell = async (newWellNo) => {
   const response = await API.get(
-    `api/users/viewwell?newWellNo=${newWellNo}`,
+    `api/users/viewwell?newWellNumber=${newWellNo}`,
     config()
   );
   return response.data;
 };
 
 const addwell = async (data) => {
-  const response = await API.post("api/users/addwell", data);
-  return response.data;
+  try {
+    const response = await API.post("api/users/addwell", data);
+    
+    // Log the full response for debugging
+    console.log('Full API Response:', response);
+    
+    // Validate response structure
+    if (!response || !response.data) {
+      throw new Error('Invalid API response structure');
+    }
+    
+    return response;
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error; // Re-throw to handle in component
+  }
 };
 
 const editwell = async (newWellNo, data) => {
@@ -107,66 +121,58 @@ const deleteuser = async (userName) => {
 };
 
 const addmonthlydata = async (data) => {
-  const response = await API.post("api/users/addmonthlydata", data);
+  const response = await API.post("api/users/monthlyData", data);
   return response.data;
 };
 
 const viewallmonthlydata = async () => {
-  const response = await API.get("api/users/viewallmonthlydata");
+  const response = await API.get("api/users/monthlyData");
   return response.data;
 };
 
 const viewmonthlydata = async (mid) => {
   const response = await API.get(
-    `api/users/viewmonthlydata?mid=${mid}`,
+    `api/users/monthlyData?mid=${mid}`,
     config()
   );
   return response.data;
 };
 
-const editmonthlydata = async (data) => {
-  const response = await API.post("api/users/editmonthlydata", data);
+const editmonthlydata = async (mid, data) => {
+  const response = await API.put(`api/users/editmonthlydata/${mid}`, data);
   return response.data;
 };
 
-const removemonthlydata = async (data) => {
-  const response = await API.post(
-    "api/users/removemonthlydata",
-    data,
-    config()
-  );
-  return response.data;
-};
-const contactusdata = async (data) => {
+const removemonthlydata = async (mid) => {
+  const response = await API.delete(
+    `api/users/monthlyData/${mid}`,
   
-  const response = await API.post("api/users/contact", data);
-  return response.data;
-
-};
-const adddrill = async (data) => {
-  const response = await API.post("api/users/saveDrillLogs", data);
+  );
   return response.data;
 };
-const viewdrills = async () => 
-  API.get("api/users/viewdrilllogs")
-    .then((response) => response.data || { error: "No data found" })
-    .catch(() => ({ error: "Failed to fetch drill logs" }));
 
 
-    const viewdrill = async (wellNumber) => {
-      try {
-      
-        const response = await API.get(`/api/users/viewDrill`, {
-          params: { wellNumber },
-          ...config() 
-        });
-        return response.data;
-      } catch (error) {
-        console.error('Error fetching drill details:', error);
-        throw new Error('Could not fetch drill details.');
-      }
-    };
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const generateWellReportPDF = async (data) => {
   return await API.post(`api/users/report/pdf`, data, {
@@ -179,8 +185,58 @@ const generateWellReportExcel = async (data) => {
     responseType: 'blob' 
   });
 };
-const waterQuality = async (data) => {
-  const response = await API.post("api/waterQuality", data);
+
+const monthlyDataReportPDF = async (wellNo) => {
+  return await API.get(`api/users/monthlyData/export/pdf?wellNo=${wellNo}`, {
+    responseType: 'blob' 
+  });
+};
+
+const monthlyDataReportExcel = async (wellNo) => {
+  return await API.get(`api/users/monthlyData/export/excel?wellNo=${wellNo}`, {
+    responseType: 'blob' 
+  });
+};
+
+
+
+
+
+
+
+const AddwaterQuality = async (data) => {
+  const response = await API.post("api/waterQuality/", data);
+  return response.data;
+};
+
+const AddWeatherCondition = async (data) => {
+    const response = await API.post("api/waterQuality/wether", data);
+    return response.data;
+};
+const waterQualityEdit = async (data) => {
+  const response = await API.post("api/waterQuality/edit", data);
+  return response.data;
+};
+const waterQualityDelete = async (data) => {
+  const response = await API.post("api/waterQuality/delete", data);
+  return response.data;
+};
+const waterQualityView = async (data) => {
+  const response = await API.get("api/waterQuality/view", data);
+  return response.data;
+};
+const waterQualityUpdate = async (id, data) => {
+  const response = await API.put(`api/waterQuality/${id}`, data);
+  return response.data;
+};
+
+const addChemicalData = async (data) => {
+  const response = await API.post("api/users/chemical-data", data);
+  return response.data;
+};
+
+const addDrillingData = async (data) => {
+  const response = await API.post("api/users/drilling-data", data);
   return response.data;
 };
 
@@ -203,12 +259,15 @@ const api = {
   viewmonthlydata,
   viewallmonthlydata,
   deleteuser,
-  contactusdata,
-  adddrill,
-  viewdrills,
-  viewdrill,
   generateWellReportPDF,
   generateWellReportExcel,
-  waterQuality,
+  AddwaterQuality,
+  waterQualityView,
+  waterQualityUpdate,
+  monthlyDataReportPDF,
+  monthlyDataReportExcel,
+  AddWeatherCondition,
+  addChemicalData,
+  addDrillingData
 };
 export default api;

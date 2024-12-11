@@ -2,8 +2,8 @@ import React from "react";
 import {
   Worklocations,
   getWorklocationById,
-} from "../../constants/WorkLocations";
-import { allRSC, getRSCByNumber, getRSCById } from "../../constants/RSC";
+} from "@/app/constants/WorkLocations";
+import { allRSC, getRSCByNumber, getRSCById } from "@/app/constants/RSC";
 
 function WellData(props) {
   const selectedWorkLocation = getWorklocationById(

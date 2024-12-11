@@ -1,6 +1,6 @@
 "use client";
 
-import MainLayout from "@/components/MainLayout";
+import MainLayout from "@/components/WaterProductLayout/MainLayout";
 import { useState, useEffect } from "react";
 
 import { Button } from "@/components/ui/button";

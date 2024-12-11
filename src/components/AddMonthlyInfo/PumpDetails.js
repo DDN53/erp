@@ -12,7 +12,7 @@ function PumpDetails(props) {
             onChange={(e) =>
               props.handleAvailabilityofFlowMeterChange(e.target.value)
             }
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md dark:bg-gray-700 dark:text-white"
           >
             <option value="">Select Answer</option>
             <option value="Yes">Yes</option>
@@ -28,7 +28,7 @@ function PumpDetails(props) {
             value={props.formData.ControlValve}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md dark:bg-gray-700 dark:text-white"
           />
         </div>
         {/*  */}
@@ -40,7 +40,7 @@ function PumpDetails(props) {
             value={props.formData.NonReturnValve}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md dark:bg-gray-700 dark:text-white"
           />
         </div>
       </div>
@@ -53,7 +53,7 @@ function PumpDetails(props) {
           <select
             value={props.PumpControlUnit}
             onChange={(e) => props.handlePumpControlUnitChange(e.target.value)}
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md dark:bg-gray-700 dark:text-white"
           >
             <option value="">Select Answer</option>
             <option value="Yes">Yes</option>
@@ -69,7 +69,7 @@ function PumpDetails(props) {
             value={props.formData.DiameterofPumpingmain}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md dark:bg-gray-700 dark:text-white"
           />
         </div>
         {/*  */}
@@ -81,7 +81,7 @@ function PumpDetails(props) {
             value={props.formData.CapacityofthePump}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md dark:bg-gray-700 dark:text-white"
           />
         </div>
       </div>

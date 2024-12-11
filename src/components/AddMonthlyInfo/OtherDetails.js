@@ -12,7 +12,7 @@ function OtherDetails(props) {
             onChange={(e) =>
               props.handleAvailabilityofObservedWellChange(e.target.value)
             }
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md dark:bg-gray-700 dark:text-white"
           >
             <option value="">Select Answer</option>
             <option value="Yes">Yes</option>
@@ -29,7 +29,7 @@ function OtherDetails(props) {
                 e.target.value
               )
             }
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md dark:bg-gray-700 dark:text-white"
           >
             <option value="">Select Answer</option>
             <option value="Yes">Yes</option>
@@ -49,7 +49,7 @@ function OtherDetails(props) {
             value={props.formData.LastDateofWellFlushed}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md dark:bg-gray-700 dark:text-white"
           />
         </div>
         {/*  */}
@@ -61,7 +61,7 @@ function OtherDetails(props) {
             value={props.formData.LastDateofPumpingTestDone}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md dark:bg-gray-700 dark:text-white"
           />
         </div>
         {/*  */}
@@ -73,7 +73,7 @@ function OtherDetails(props) {
             value={props.formData.PossibilityForeNewWEllConstruct}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md dark:bg-gray-700 dark:text-white"
           />
         </div>
       </div>

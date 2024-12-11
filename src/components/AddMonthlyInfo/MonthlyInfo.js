@@ -12,7 +12,7 @@ function MonthlyInfo(props) {
           value={props.formData.GroundWaterExtraction}
           onChange={props.handleChange}
           type="text"
-          className="p-2 ml-auto border border-gray-500 rounded-md w-36"
+          className="p-2 ml-auto border border-gray-500 rounded-md w-36 dark:bg-gray-700 dark:text-white"
         />
       </div>
       {/*  */}
@@ -25,7 +25,7 @@ function MonthlyInfo(props) {
           value={props.formData.GroundWaterLevel}
           onChange={props.handleChange}
           type="text"
-          className="p-2 ml-auto border border-gray-500 rounded-md w-36"
+          className="p-2 ml-auto border border-gray-500 rounded-md w-36 dark:bg-gray-700 dark:text-white"
         />
       </div>
       {/*  */}
@@ -38,7 +38,7 @@ function MonthlyInfo(props) {
           value={props.formData.WaterSupplyScheme}
           onChange={props.handleChange}
           type="text"
-          className="p-2 ml-auto border border-gray-500 rounded-md w-36"
+          className="p-2 ml-auto border border-gray-500 rounded-md w-36 dark:bg-gray-700 dark:text-white"
         />
       </div>
     </div>

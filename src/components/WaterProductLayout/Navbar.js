@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
 
-import { ModeToggle } from "./ui/toggle-mode";
+import { ModeToggle } from "../ui/toggle-mode";
 import Profile from "./Profile";
 
 export default function Navbar() {

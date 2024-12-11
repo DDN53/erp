@@ -1,6 +1,6 @@
 "use client";
 
-import MainLayout from "@/components/MainLayout";
+import MainLayout from "@/components/WaterProductLayout/MainLayout";
 const WP = () => {
   return (
     <MainLayout>

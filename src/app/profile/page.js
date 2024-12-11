@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import MainLayout from "@/components/MainLayout";
+import MainLayout from "@/components/WaterProductLayout/MainLayout";
 
 import adminService from "@/services/adminService";
 

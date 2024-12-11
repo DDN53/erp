@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from 'next/navigation';
 import API from "@/app/api/index";
-import MainLayout from '@/components/MainLayout';
+import MainLayout from '@/components/WaterProductLayout/MainLayout';
 import { provinces, getDistrictsByProvince } from "@/app/constants/Area";
 import { getRSCByNumber } from "@/app/constants/RSC";
 import { Worklocations } from "@/app/constants/WorkLocations";
@@ -12,7 +12,96 @@ import { Well, ChemicalData, GeologyOverburden, GeologyRock, PumpInstall, Reques
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
+// Add this helper function near the top of your component, after the state declarations
+const getProvinceNameByCode = (code) => {
+  const provinceMap = {
+    'WES': 'WesternProvince',
+    'CEN': 'CentralProvince', 
+    'SOU': 'SouthernProvince',
+    'NOR': 'NorthernProvince',
+    'EST': 'EasternProvince',
+    'NWN': 'NorthWesternProvince',
+    'NCE': 'NorthCentralProvince',
+    'UVA': 'UvaProvince',
+    'SAB': 'SabaragamuwaProvince',
+    'EAS': 'EasternProvince'
+  };
+  
+  // Handle null/undefined cases
+  if (!code) return 'N/A';
+  
+  // Return mapped province name with proper spacing, or original code if not found
+  return provinceMap[code.toString().toUpperCase()] || code;
+};
+const getDistrictNameByCode = (code) => {
+  const districtMap = {
+    'AMPARA': 'Ampara',
+    'KUR': 'Kurunegala', 
+    'COL': 'Colombo',
+    'KAN': 'Kandy',
+    'BAD': 'Badulla',
+    'GAL': 'Galle',
+    'KEG': 'Kegalle',
+    'JAF': 'Jaffna',
+    'ANU': 'Anuradhapura',
+    'MTL': 'Matale',
+    'NUE': 'NuwaraEliya', 
+    'RAT': 'Ratnapura',
+    'POL': 'Polonnaruwa',
+    'TRI': 'Trincomalee',
+    'BAT': 'Batticaloa',
+    'MTR': 'Matara',
+    'HAM': 'Hambantota',
+    'MUL': 'Mullaitivu',
+    'AMP': 'Ampan',
+    'KIL': 'Kilinochchi', 
+    'MAN': 'Mannar',
+    'KAL': 'Kalutara',
+    'GAM': 'Gampaha',
+    'PUT': 'Puttalam',
+    'VAU': 'Vavuniya',
+    'MON': 'Monaragala',
+    
+  };
+  
+  // Handle null/undefined cases
+  if (!code) return 'N/A';
+  
+  // Return mapped province name with proper spacing, or original code if not found
+  return districtMap[code.toString().toUpperCase()] || code;
+};
+const getDivisionNameByCode = (code) => {
+  const dsDivisionMap = {
+    'NUWARAGAM PALATHA CENTRAL': 'Ampara',
+    'THISSAMAHARAMA': 'Kurunegala', 
+    'KATARAGAMA': 'Colombo',
+    'TANGALLE': 'Kandy',
+    'WEERAKETIYA': 'Badulla',
+    'AMBALANTOTA': 'Galle',
+    'THISSAMAHARAMA': 'Kegalle',
+    'HAMBANTOTA': 'Jaffna',
+    'NOCHCHIYAGAMA': 'Anuradhapura',
+    'THIRAPPANE': 'Matale',
+    'KARUWALAGASWEWA': 'NuwaraEliya', 
+    'ANAMADUWA': 'Ratnapura',
+    'THIRAPPANE': 'Polonnaruwa',
+    'NAWAGATTEGAMA': 'Trincomalee',
+    'MIHINTALE': 'Batticaloa',
+    'ANAMADUWA': 'Matara',
+    'WANATHAVILLUWA': 'Hambantota',
+    'MAHAWA': 'Mullaitivu',
+    'RATHMALANA': 'Head Office',
+    'MADULLA': 'Kilinochchi', 
+    'SIYAMBALANDUWA': 'Mannar',
+    
+  };
+  
+  // Handle null/undefined cases
+  if (!code) return 'N/A';
+  
+  // Return mapped province name with proper spacing, or original code if not found
+  return dsDivisionMap[code.toString().toUpperCase()] || code;
+};
 function WellInfo() {
   const router = useRouter();
   const [wells, setWells] = useState([]);
@@ -47,6 +136,8 @@ function WellInfo() {
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingWell, setEditingWell] = useState(null);
+
+  const [searchWellNo, setSearchWellNo] = useState("");
 
   const hideFilters = useCallback(() => {
     setShowFilters(false);
@@ -89,16 +180,27 @@ function WellInfo() {
     let filtered = wells;
 
     if (filters.province) {
-      filtered = filtered.filter(well => well.selectedProvince === filters.province);
+      filtered = filtered.filter(well => {
+        // Convert the province code to full name for comparison
+        const wellProvinceName = getProvinceNameByCode(well.PROVINCE_CODE);
+        return wellProvinceName === filters.province;
+      });
     }
     if (filters.district) {
-      filtered = filtered.filter(well => well.selectedDistrict === filters.district);
+      filtered = filtered.filter(well => {
+        // Fix: Use getDistrictNameByCode instead of getDistrictsByProvince
+        const wellDistrictName = getDistrictNameByCode(well.DISTRICT_CODE);
+        return wellDistrictName === filters.district;
+      });
     }
     if (filters.rsc) {
-      filtered = filtered.filter(well => well.selectedRSC === filters.rsc);
+      filtered = filtered.filter(well => well.DSDIV_CODE === filters.rsc);
     }
     if (filters.workLocation) {
-      filtered = filtered.filter(well => well.selectedWorkLocation === filters.workLocation);
+      filtered = filtered.filter(well => {
+        // Fix: Compare with WORK_LOCATION_CODE instead of selectedWorkLocation
+        return well.WORK_LOCATION_CODE === filters.workLocation;
+      });
     }
 
     setFilteredWells(filtered);
@@ -134,9 +236,10 @@ function WellInfo() {
       const response = await API.viewallwells();
       setWells(response.data);
       setFilteredWells(response.data);
+      toast.success('Well added successfully!'); 
     } catch (error) {
       console.error("Error adding well:", error);
-      // Handle error (e.g., show error message to user)
+      toast.error('Failed to add well. Please try again.'); // Toast message for error
     }
   };
 
@@ -180,9 +283,10 @@ function WellInfo() {
         const response = await API.viewallwells();
         setWells(response.data);
         setFilteredWells(response.data);
+        toast.success('Well deleted successfully!');
       } catch (error) {
         console.error("Error deleting well:", error);
-        alert('Failed to delete well. Please try again.');
+        toast.error('Failed to delete well. Please try again.'); 
       }
     }
   };
@@ -207,6 +311,7 @@ function WellInfo() {
       const response = await API.viewallwells();
       setWells(response.data);
       setFilteredWells(response.data);
+      toast.success('Well updated successfully!');
     } catch (error) {
       console.error("Error updating well:", error);
       
@@ -224,6 +329,7 @@ function WellInfo() {
 
       // Show error message to user
       alert(errorMessage);
+      toast.error(errorMessage);
     }
   };
 
@@ -233,12 +339,12 @@ function WellInfo() {
       const formattedData = {
         wellData: {
           // Map all properties from the well object
-          newWellNo: well.newWellNo || "",
+          newWellNo: well.WELLNO || "",
           WorkLocation: well.WorkLocation || "",
           OldWellNo: well.OldWellNo || "",
           ProjectOffice: well.ProjectOffice || "",
           RSCLocation: well.RSCLocation || "",
-          Location: well.Location || "",
+          Location: well.LOCATION || "",
           Electorate: well.Electorate || "",
           Village: well.Village || "",
           UserType: well.UserType || "",
@@ -434,7 +540,7 @@ function WellInfo() {
       );
       
       const url = window.URL.createObjectURL(pdfBlob);
-      const filename = `well-${well.newWellNo}-report.pdf`;
+      const filename = `well-${well.WELLNO}-report.pdf`;
       downloadFile(url, filename);
       
       toast.success('PDF generated successfully');
@@ -453,12 +559,12 @@ function WellInfo() {
       const formattedData = {
         wellData: {
           // Map all properties from the well object
-          newWellNo: well.newWellNo || "",
+          newWellNo: well.WELLNO || "",
           WorkLocation: well.WorkLocation || "",
           OldWellNo: well.OldWellNo || "",
           ProjectOffice: well.ProjectOffice || "",
           RSCLocation: well.RSCLocation || "",
-          Location: well.Location || "",
+          Location: well.LOCATION || "",
           Electorate: well.Electorate || "",
           Village: well.Village || "",
           UserType: well.UserType || "",
@@ -611,7 +717,7 @@ function WellInfo() {
           type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
         })
       );
-      const filename = `well-${well.newWellNo}-report.xlsx`;
+      const filename = `well-${well.WELLNO}-report.xlsx`;
       downloadFile(url, filename);
       
       toast.success('Excel generated successfully');
@@ -636,448 +742,464 @@ function WellInfo() {
     window.URL.revokeObjectURL(url);
   };
 
+  const handleSearch = (e) => {
+    const searchValue = e.target.value;
+    setSearchWellNo(searchValue);
+    
+    let filtered = wells;
+    
+    // Apply well number search
+    if (searchValue) {
+      filtered = filtered.filter(well => 
+        well.WELLNO.toString().toLowerCase().includes(searchValue.toLowerCase())
+      );
+    }
+    
+    // Apply existing filters
+    if (filters.province) {
+      filtered = filtered.filter(well => {
+        const wellProvinceName = getProvinceNameByCode(well.PROVINCE_CODE);
+        return wellProvinceName === filters.province;
+      });
+    }
+    if (filters.district) {
+      filtered = filtered.filter(well => {
+        const wellDistrictName = getDistrictNameByCode(well.DISTRICT_CODE);
+        return wellDistrictName === filters.district;
+      });
+    }
+    if (filters.rsc) {
+      filtered = filtered.filter(well => well.DSDIV_CODE === filters.rsc);
+    }
+    if (filters.workLocation) {
+      filtered = filtered.filter(well => well.WORK_LOCATION_CODE === filters.workLocation);
+    }
+
+    setFilteredWells(filtered);
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <div className="min-h-full" style={{ minHeight: "calc(100vh - 347px)" }}>
-      <MainLayout>
-        <ToastContainer />
-        <div className="-mt-5 border border-gray-400 w-[95%] shadow-xl mx-auto p-6 flex flex-col">
-          <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold">Well Information</h1>
-            <div className="flex gap-2">
-              <button
-                onClick={navigateBack}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-                </svg>
-                Back to Dashboard
-              </button>
-            </div>
+      <ToastContainer />
+      <div className="-mt-5 border border-gray-400 w-[95%] shadow-xl mx-auto p-6 flex flex-col">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-2xl font-bold">Well Information</h1>
+          <div className="flex gap-2">
+            <button
+              onClick={navigateBack}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+              </svg>
+              Back to Dashboard
+            </button>
           </div>
+        </div>
 
-          {/* Filter section */}
-          {showFilters && (
-            <div className="mb-4 bg-gray-100 p-4 rounded-lg dark:bg-slate-800">
-              <h2 className="text-lg font-semibold mb-2">Filters</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <select
-                  value={filters.province}
-                  onChange={(e) => handleFilterChange('province', e.target.value)}
-                  className="w-full p-2 border rounded"
-                >
-                  <option value="">All Provinces</option>
-                  {provinces.map((province) => (
-                    <option key={province} value={province}>{province}</option>
-                  ))}
-                </select>
 
-                <select
-                  value={filters.district}
-                  onChange={(e) => handleFilterChange('district', e.target.value)}
-                  className="w-full p-2 border rounded"
-                >
-                  <option value="">All Districts</option>
-                  {filters.province && getDistrictsByProvince(filters.province).map((district) => (
-                    <option key={district} value={district}>{district}</option>
-                  ))}
-                </select>
-                <select
-                  value={filters.workLocation}
-                  onChange={(e) => handleWorkLocationChange(e.target.value)}
-                  className="w-full p-2 border rounded"
-                >
-                  <option value="">All Work Locations</option>
-                  {Worklocations.map((location) => (
-                    <option key={location.id} value={location.id}>
-                      {location.name}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  value={filters.rsc}
-                  onChange={(e) => handleFilterChange('rsc', e.target.value)}
-                  className="w-full p-2 border rounded"
-                  disabled={!filters.workLocation}
-                >
-                  <option value="">All RSCs</option>
-                  {rscOptions.map((rscLocation) => (
-                    <option key={rscLocation.id} value={rscLocation.costCentreName}>
-                      {rscLocation.costCentreName}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {rscOptions.length === 0 && filters.workLocation && (
-                <p className="text-red-500 mt-2">No RSC locations available for this work location.</p>
-              )}
+        {/* Filter section */}
+        {showFilters && (
+          <div className="mb-4 bg-white dark:bg-slate-800 p-4 rounded-lg shadow">
+            <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Filters</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 min-w-full">
+              <select
+                value={filters.province}
+                onChange={(e) => handleFilterChange('province', e.target.value)}
+                className="w-full p-2 border rounded bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              >
+                <option value="">All Provinces</option>
+                {provinces.map((province) => (
+                  <option key={province} value={province}>{province}</option>
+                ))}
+              </select>
+
+              <select
+                value={filters.district}
+                onChange={(e) => handleFilterChange('district', e.target.value)}
+                className="w-full p-2 border rounded bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              >
+                <option value="">All Districts</option>
+                {filters.province && getDistrictsByProvince(filters.province).map((district) => (
+                  <option key={district} value={district}>{district}</option>
+                ))}
+              </select>
+
+              <input
+                type="text"
+                placeholder="Search by Well Number..."
+                value={searchWellNo}
+                onChange={handleSearch}
+                className="w-full p-2 border rounded bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              />
+
               <button 
                 onClick={clearFilters}
-                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                className="w-3/4 p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
               >
                 Clear Filters
               </button>
             </div>
-          )}
-          <div className="overflow-x-auto">
-            <table className="min-w-full dark:bg-slate-900 bg-white border border-gray-300">
-              <thead>
-                <tr className="bg-gray-100 dark:bg-slate-800 dark:hover:bg-slate-700">
-                  <th className="py-2 px-4 border-b text-left">Well No</th>
-                  <th className="py-2 px-4 border-b text-left">Location</th>
-                  <th className="py-2 px-4 border-b text-left">Province</th>
-                  <th className="py-2 px-4 border-b text-left">District</th>
-                  <th className="py-2 px-4 border-b text-left">RSC</th>
-                  <th className="py-2 px-4 border-b text-left">Well Type</th>
-                  <th className="py-2 px-4 border-b text-left">Condition</th>
-                  <th className="py-2 px-4 border-b text-left">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredWells.map((well) => (
-                  <tr key={well.newWellNo} className="hover:bg-gray-50 align-left dark:hover:bg-slate-800">
-                    <td className="py-2 px-4 border-b text-left">{well.newWellNo}</td>
-                    <td className="py-2 px-4 border-b text-left">{well.Location}</td>
-                    <td className="py-2 px-4 border-b text-left">{well.selectedProvince}</td>
-                    <td className="py-2 px-4 border-b text-left">{well.selectedDistrict}</td>
-                    <td className="py-2 px-4 border-b text-left">{well.selectedRSC}</td>
-                    <td className="py-2 px-4 border-b text-left">{well.selectedWellType}</td>
-                    <td className="py-2 px-4 border-b text-left">{well.selectedWellCondition}</td>
-                    <td className="py-2 px-4 border-b text-left">
-                      <div className="flex space-x-2">
-                        <button
-                          onClick={() => handleEditClick(well)}
-                          className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
-                          title="Edit"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                          </svg>
-                        </button>
-                        
-                        <button
-                          onClick={() => handleDeleteWell(well.newWellNo)}
-                          className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                          title="Delete"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-                          </svg>
-                        </button>
-
-                        <button
-                          onClick={() => handleGenerateWellPDF(well)}
-                          className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
-                          title="Export PDF"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586L7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clipRule="evenodd" />
-                          </svg>
-                        </button>
-
-                        <button
-                          onClick={() => handleGenerateWellExcel(well)}
-                          className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700"
-                          title="Export Excel"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1zm0-4a1 1 0 011-1h4a1 1 0 110 2H9a1 1 0 01-1-1z" clipRule="evenodd" />
-                          </svg>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
           </div>
-
-          {showAddWellModal && (
-            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-              <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-                <h3 className="text-lg font-bold mb-4">Add New Well</h3>
-                <form onSubmit={handleAddWell}>
-                  <input
-                    type="text"
-                    name="newWellNo"
-                    value={newWell.newWellNo}
-                    onChange={handleNewWellChange}
-                    placeholder="Well No"
-                    className="w-full p-2 mb-2 border rounded"
-                    required
-                  />
-                  <input
-                    type="text"
-                    name="Location"
-                    value={newWell.Location}
-                    onChange={handleNewWellChange}
-                    placeholder="Location"
-                    className="w-full p-2 mb-2 border rounded"
-                    required
-                  />
-                  <select
-                    name="selectedProvince"
-                    value={newWell.selectedProvince}
-                    onChange={handleNewWellChange}
-                    className="w-full p-2 mb-2 border rounded"
-                    required
-                  >
-                    <option value="">Select Province</option>
-                    {provinces.map((province) => (
-                      <option key={province} value={province}>{province}</option>
-                    ))}
-                  </select>
-                  <select
-                    name="selectedDistrict"
-                    value={newWell.selectedDistrict}
-                    onChange={handleNewWellChange}
-                    className="w-full p-2 mb-2 border rounded"
-                    required
-                  >
-                    <option value="">Select District</option>
-                    {newWell.selectedProvince && getDistrictsByProvince(newWell.selectedProvince).map((district) => (
-                      <option key={district} value={district}>{district}</option>
-                    ))}
-                  </select>
+        )}
+        <div className="overflow-x-auto">
+          <table className="min-w-full dark:bg-slate-900 bg-white border border-gray-300">
+            <thead>
+              <tr className="bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-700">
+                <th className="py-2 px-4 border-b text-left">Well No</th>
+                <th className="py-2 px-5 border-b text-left">Province</th>
+                <th className="py-2 px-4 border-b text-left">District</th>
+               
+               
+               
+                <th className="py-2 px-4 border-b text-left">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredWells.map((well) => (
+                <tr key={well.WELLNO} className="hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-900">
+                  <td className="py-2 px-4 border-b text-left">{well.WELLNO}</td>
                  
-                  <select
-                    name="selectedRSC"
-                    value={newWell.selectedRSC}
-                    onChange={handleNewWellChange}
-                    className="w-full p-2 mb-2 border rounded"
-                    required
-                  >
-                    <option value="">Select RSC</option>
-                    {newWell.selectedWorkLocation && getRSCByNumber(newWell.selectedWorkLocation).map((rsc) => (
-                      <option key={rsc.value} value={rsc.value}>{rsc.label}</option>
-                    ))}
-                  </select>
-                  <select
-                    name="selectedWellType"
-                    value={newWell.selectedWellType}
-                    onChange={handleNewWellChange}
-                    className="w-full p-2 mb-2 border rounded"
-                    required
-                  >
-                    <option value="">Select Well Type</option>
-                    {WellTypes.map((type) => (
-                      <option key={type.value} value={type.value}>{type.label}</option>
-                    ))}
-                  </select>
-                  <select
-                    name="selectedWellCondition"
-                    value={newWell.selectedWellCondition}
-                    onChange={handleNewWellChange}
-                    className="w-full p-2 mb-2 border rounded"
-                    required
-                  >
-                    <option value="">Select Well Condition</option>
-                    {WellConditions.map((condition) => (
-                      <option key={condition.value} value={condition.value}>{condition.label}</option>
-                    ))}
-                  </select>
-                  <div className="flex justify-end">
-                    <button
-                      type="button"
-                      onClick={() => setShowAddWellModal(false)}
-                      className="bg-gray-300 text-black px-4 py-2 rounded-lg hover:bg-gray-400 mr-2"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-                    >
-                      Add Well
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          )}
+                  <td className="py-2 px-5 border-b text-left">{getProvinceNameByCode(well.PROVINCE_CODE)}</td>
+                  <td className="py-2 px-4 border-b text-left">{getDistrictNameByCode(well.DISTRICT_CODE)}</td>
+                
+                
+                
+                  <td className="py-2 px-4 border-b text-left">
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => handleEditClick(well)}
+                        className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                        title="Edit"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                        </svg>
+                      </button>
+                      
+                      <button
+                        onClick={() => handleDeleteWell(well.WELLNO)}
+                        className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                        title="Delete"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+                        </svg>
+                      </button>
 
-          {showEditModal && editingWell && (
-            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-              <div className="relative top-20 mx-auto p-5 border w-[80%] mt-2 shadow-lg rounded-md bg-white">
-                <h3 className="text-lg font-bold mb-4">Edit Well</h3>
-                <form onSubmit={handleEditWell}>
-                  <div className="w-full h-12 bg-slate-400 mb-4 justify-center flex items-center rounded-lg">
-                    <h2 className="text-lg font-semibold mb-2">Well Data</h2>
-                  </div>
-                  <Well 
-                    formData={editingWell}
-                    handleChange={(e) => {
-                      const { name, value } = e.target;
-                      setEditingWell(prev => ({
-                        ...prev,
-                        [name]: value
-                      }));
-                    }}
-                    handleProvinceChange={(value) => {
-                      setEditingWell(prev => ({
-                        ...prev,
-                        selectedProvince: value,
-                        selectedDistrict: '',
-                        selectedDSDivision: ''
-                      }));
-                    }}
-                    handleDistrictChange={(value) => {
-                      setEditingWell(prev => ({
-                        ...prev,
-                        selectedDistrict: value,
-                        selectedDSDivision: ''
-                      }));
-                    }}
-                    handleDSDivisionChange={(value) => {
-                      setEditingWell(prev => ({
-                        ...prev,
-                        selectedDSDivision: value
-                      }));
-                    }}
-                    handleWorkLocationChange={(value) => {
-                      setEditingWell(prev => ({
-                        ...prev,
-                        selectedWorkLocation: value,
-                        selectedRSC: ''
-                      }));
-                    }}
-                    handleRSCChange={(value) => {
-                      setEditingWell(prev => ({
-                        ...prev,
-                        selectedRSC: value
-                      }));
-                    }}
-                    handleTypeChange={(value) => {
-                      setEditingWell(prev => ({
-                        ...prev,
-                        WellType: value
-                      }));
-                    }}
-                    handleWellConditionChange={(value) => {
-                      setEditingWell(prev => ({
-                        ...prev,
-                        WellCondition: value
-                      }));
-                    }}
-                    provinces={provinces}
-                    getDistrictsByProvince={getDistrictsByProvince}
-                    Worklocations={Worklocations}
-                  />
-                  <div className="w-full h-12 bg-slate-400 mb-4 justify-center flex items-center rounded-lg">
-                    <h2 className="text-lg font-semibold mb-2">Chemical Data</h2>
-                  </div>
-                  <ChemicalData 
-                    formData={editingWell}
-                    handleChange={(e) => {
-                      const { name, value } = e.target;
-                      setEditingWell(prev => ({
-                        ...prev,
-                        [name]: value
-                      }));
-                    }}
-                  />
-                  <div className="mt-7 w-full h-12 bg-slate-400 mb-4 justify-center flex items-center rounded-lg">
-                    <h2 className="text-lg font-semibold mb-2">GeologyOverburden</h2>
-                  </div>
-                  <GeologyOverburden 
-                    formData={editingWell}
-                    handleChange={(e) => {
-                      const { name, value } = e.target;
-                      setEditingWell(prev => ({
-                        ...prev,
-                        [name]: value
-                      }));
-                    }}
-                  />
-                  <div className="mt-2 w-full h-12 bg-slate-400 mb-4 justify-center flex items-center rounded-lg">
-                    <h2 className="text-lg font-semibold mb-2">GeologyRock</h2>
-                  </div>
-                  <GeologyRock 
-                    formData={editingWell}
-                    handleChange={(e) => {
-                      const { name, value } = e.target;
-                      setEditingWell(prev => ({
-                        ...prev,
-                        [name]: value
-                      }));
-                    }}
-                  />
-                  <div className="mt-2 w-full h-12 bg-slate-400 mb-4 justify-center flex items-center rounded-lg">
-                    <h2 className="text-lg font-semibold mb-2">PumpInstall</h2>
-                  </div>
-                  <PumpInstall 
-                    formData={editingWell}
-                    handleChange={(e) => {
-                      const { name, value } = e.target;
-                      setEditingWell(prev => ({
-                        ...prev,
-                        [name]: value
-                      }));
-                    }}
-                  />
-                  <div className="mt-2 w-full h-12 bg-slate-400 mb-4 justify-center flex items-center rounded-lg">
-                    <h2 className="text-lg font-semibold mb-2">RequestGeneral</h2>
-                  </div>
-                  <RequestGeneral 
-                    formData={editingWell}
-                    handleChange={(e) => {
-                      const { name, value } = e.target;
-                      setEditingWell(prev => ({
-                        ...prev,
-                        [name]: value
-                      }));
-                    }}
-                  />
-                  <div className="mt-2 w-full h-12 bg-slate-400 mb-4 justify-center flex items-center rounded-lg">
-                    <h2 className="text-lg font-semibold mb-2">Test</h2>
-                  </div>
-                  <Test 
-                    formData={editingWell}
-                    handleChange={(e) => {
-                      const { name, value } = e.target;
-                      setEditingWell(prev => ({
-                        ...prev,
-                        [name]: value
-                      }));
-                    }}
-                  />
-                  <div className="mt-2 w-full h-12 bg-slate-400 justify-center flex items-center rounded-lg">
-                    <h2 className="text-lg font-semibold mb-2">Drilling</h2>
-                  </div>
-                  <Drilling 
-                    formData={editingWell}
-                    handleChange={(e) => {
-                      const { name, value } = e.target;
-                      setEditingWell(prev => ({
-                        ...prev,
-                        [name]: value
-                      }));
-                    }}
-                  />
-                  <div className="flex justify-end mt-4">
-                    <button
-                      type="button"
-                      onClick={() => setShowEditModal(false)}
-                      className="bg-gray-300 text-black px-4 py-2 rounded-lg hover:bg-gray-400 mr-2"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-                    >
-                      Save Changes
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          )}
+                      <button
+                        onClick={() => handleGenerateWellPDF(well)}
+                        className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
+                        title="Export PDF"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586L7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+
+                      <button
+                        onClick={() => handleGenerateWellExcel(well)}
+                        className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700"
+                        title="Export Excel"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1zm0-4a1 1 0 011-1h4a1 1 0 110 2H9a1 1 0 01-1-1z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      </MainLayout>
+
+        {showAddWellModal && (
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+            <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-slate-800">
+              <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white">Add New Well</h3>
+              <form onSubmit={handleAddWell}>
+                <input
+                  type="text"
+                  name="WELLNO"
+                  value={newWell.WELLNO}
+                  onChange={handleNewWellChange}
+                  placeholder="Well No"
+                  className="w-full p-2 mb-2 border rounded bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  required
+                />
+                <input
+                  type="text"
+                  name="LOCATION"
+                  value={newWell.LOCATION}
+                  onChange={handleNewWellChange}
+                  placeholder="LOCATION"
+                  className="w-full p-2 mb-2 border rounded bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  required
+                />
+                <select
+                  name="selectedProvince"
+                  value={newWell.selectedProvince}
+                  onChange={handleNewWellChange}
+                  className="w-full p-2 mb-2 border rounded bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  required
+                >
+                  <option value="">Select Province</option>
+                  {provinces.map((province) => (
+                    <option key={province} value={province}>{province}</option>
+                  ))}
+                </select>
+                <select
+                  name="selectedDistrict"
+                  value={newWell.selectedDistrict}
+                  onChange={handleNewWellChange}
+                  className="w-full p-2 mb-2 border rounded bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  required
+                >
+                  <option value="">Select District</option>
+                  {newWell.selectedProvince && getDistrictsByProvince(newWell.selectedProvince).map((district) => (
+                    <option key={district} value={district}>{district}</option>
+                  ))}
+                </select>
+               
+                <select
+                  name="selectedRSC"
+                  value={newWell.selectedRSC}
+                  onChange={handleNewWellChange}
+                  className="w-full p-2 mb-2 border rounded bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  required
+                >
+                  <option value="">Select RSC</option>
+                  {newWell.selectedWorkLocation && getRSCByNumber(newWell.selectedWorkLocation).map((rsc) => (
+                    <option key={rsc.value} value={rsc.value}>{rsc.label}</option>
+                  ))}
+                </select>
+                <select
+                  name="selectedWellType"
+                  value={newWell.selectedWellType}
+                  onChange={handleNewWellChange}
+                  className="w-full p-2 mb-2 border rounded bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  required
+                >
+                  <option value="">Select Well Type</option>
+                  {WellTypes.map((type) => (
+                    <option key={type.value} value={type.value}>{type.label}</option>
+                  ))}
+                </select>
+                <select
+                  name="selectedWellCondition"
+                  value={newWell.selectedWellCondition}
+                  onChange={handleNewWellChange}
+                  className="w-full p-2 mb-2 border rounded bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  required
+                >
+                  <option value="">Select Well Condition</option>
+                  {WellConditions.map((condition) => (
+                    <option key={condition.value} value={condition.value}>{condition.label}</option>
+                  ))}
+                </select>
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => setShowAddWellModal(false)}
+                    className="bg-gray-300 text-black px-4 py-2 rounded-lg hover:bg-gray-400 mr-2"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                  >
+                    Add Well
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {showEditModal && editingWell && (
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+            <div className="relative top-20 mx-auto p-5 border w-[80%] mt-2 shadow-lg rounded-md bg-white dark:bg-slate-800">
+              <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white">Edit Well</h3>
+              <form onSubmit={handleEditWell} className="text-gray-900 dark:text-white">
+                <div className="w-full h-12 bg-gray-200 dark:bg-slate-700 mb-4 justify-center flex items-center rounded-lg">
+                  <h2 className="text-lg font-semibold mb-2">Well Data</h2>
+                </div>
+                <Well 
+                  formData={editingWell}
+                  handleChange={(e) => {
+                    const { name, value } = e.target;
+                    setEditingWell(prev => ({
+                      ...prev,
+                      [name]: value
+                    }));
+                  }}
+                  handleProvinceChange={(value) => {
+                    setEditingWell(prev => ({
+                      ...prev,
+                      selectedProvince: value,
+                      selectedDistrict: '',
+                      selectedDSDivision: ''
+                    }));
+                  }}
+                  handleDistrictChange={(value) => {
+                    setEditingWell(prev => ({
+                      ...prev,
+                      selectedDistrict: value,
+                      selectedDSDivision: ''
+                    }));
+                  }}
+                  handleDSDivisionChange={(value) => {
+                    setEditingWell(prev => ({
+                      ...prev,
+                      selectedDSDivision: value
+                    }));
+                  }}
+                  handleWorkLocationChange={(value) => {
+                    setEditingWell(prev => ({
+                      ...prev,
+                      selectedWorkLocation: value,
+                      selectedRSC: ''
+                    }));
+                  }}
+                  handleRSCChange={(value) => {
+                    setEditingWell(prev => ({
+                      ...prev,
+                      selectedRSC: value
+                    }));
+                  }}
+                  handleTypeChange={(value) => {
+                    setEditingWell(prev => ({
+                      ...prev,
+                      WellType: value
+                    }));
+                  }}
+                  handleWellConditionChange={(value) => {
+                    setEditingWell(prev => ({
+                      ...prev,
+                      WellCondition: value
+                    }));
+                  }}
+                  provinces={provinces}
+                  getDistrictsByProvince={getDistrictsByProvince}
+                  Worklocations={Worklocations}
+                />
+                <div className="w-full h-12 bg-gray-200 dark:bg-slate-700 mb-4 justify-center flex items-center rounded-lg">
+                  <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Chemical Data</h2>
+                </div>
+                <ChemicalData 
+                  formData={editingWell}
+                  handleChange={(e) => {
+                    const { name, value } = e.target;
+                    setEditingWell(prev => ({
+                      ...prev,
+                      [name]: value
+                    }));
+                  }}
+                  
+                />
+                <div className="mt-7 w-full h-12 bg-gray-200 dark:bg-slate-700 mb-4 justify-center flex items-center rounded-lg">
+                  <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">GeologyOverburden</h2>
+                </div>
+                <GeologyOverburden 
+                  formData={editingWell}
+                  handleChange={(e) => {
+                    const { name, value } = e.target;
+                    setEditingWell(prev => ({
+                      ...prev,
+                      [name]: value
+                    }));
+                  }}
+                />
+                <div className="mt-2 w-full h-12 bg-gray-200 dark:bg-slate-700 mb-4 justify-center flex items-center rounded-lg">
+                  <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">GeologyRock</h2>
+                </div>
+                <GeologyRock 
+                  formData={editingWell}
+                  handleChange={(e) => {
+                    const { name, value } = e.target;
+                    setEditingWell(prev => ({
+                      ...prev,
+                      [name]: value
+                    }));
+                  }}
+                />
+                <div className="mt-2 w-full h-12 bg-gray-200 dark:bg-slate-700 mb-4 justify-center flex items-center rounded-lg">
+                  <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">PumpInstall</h2>
+                </div>
+                <PumpInstall 
+                  formData={editingWell}
+                  handleChange={(e) => {
+                    const { name, value } = e.target;
+                    setEditingWell(prev => ({
+                      ...prev,
+                      [name]: value
+                    }));
+                  }}
+                />
+                <div className="mt-2 w-full h-12 bg-gray-200 dark:bg-slate-700 mb-4 justify-center flex items-center rounded-lg">
+                  <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">RequestGeneral</h2>
+                </div>
+                <RequestGeneral 
+                  formData={editingWell}
+                  handleChange={(e) => {
+                    const { name, value } = e.target;
+                    setEditingWell(prev => ({
+                      ...prev,
+                      [name]: value
+                    }));
+                  }}
+                />
+                <div className="mt-2 w-full h-12 bg-gray-200 dark:bg-slate-700 mb-4 justify-center flex items-center rounded-lg">
+                  <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Test</h2>
+                </div>
+                <Test 
+                  formData={editingWell}
+                  handleChange={(e) => {
+                    const { name, value } = e.target;
+                    setEditingWell(prev => ({
+                      ...prev,
+                      [name]: value
+                    }));
+                  }}
+                />
+                <div className="mt-2 w-full h-12 bg-gray-200 dark:bg-slate-700 justify-center flex items-center rounded-lg">
+                  <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Drilling</h2>
+                </div>
+                <Drilling 
+                  formData={editingWell}
+                  handleChange={(e) => {
+                    const { name, value } = e.target;
+                    setEditingWell(prev => ({
+                      ...prev,
+                      [name]: value
+                    }));
+                  }}
+                />
+                <div className="flex justify-end mt-4">
+                  <button
+                    type="button"
+                    onClick={() => setShowEditModal(false)}
+                    className="bg-gray-300 text-black px-4 py-2 rounded-lg hover:bg-gray-400 mr-2"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

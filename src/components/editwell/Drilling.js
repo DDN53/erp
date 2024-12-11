@@ -71,7 +71,7 @@ function Drilling(props) {
           name="DrillData"
           value={currentLog.DrillData}
           onChange={handleInputChange}
-          className="border rounded p-1"
+          className="border rounded p-1 dark:bg-slate-600 dark:text-white text-black"
         />
       </div>
       <div className="overflow-x-auto">
@@ -106,23 +106,23 @@ function Drilling(props) {
               </tr>
             ))}
             <tr>
-              <td className="border p-2 dark:text-white">
+              <td className="border p-2 dark:dark:text-white text-black">
                 <input 
-                  className="w-full p-1 border rounded"
+                  className="w-full p-1 border rounded dark:bg-slate-600 dark:text-white text-black"
                   name="RodNo"
                   value={currentLog.RodNo}
                   onChange={handleInputChange}
                 />
               </td>
-              <td className="border p-2 dark:text-white"><input className="w-full p-1 border rounded" name="Starttime" value={currentLog.Starttime} onChange={handleInputChange} /></td>
-              <td className="border p-2 dark:text-white"><input className="w-full p-1 border rounded" name="FinishTime" value={currentLog.FinishTime} onChange={handleInputChange} /></td>
-              <td className="border p-2 dark:text-white"><input className="w-full p-1 border rounded" name="Duration" value={currentLog.Duration} onChange={handleInputChange} /></td>
-              <td className="border p-2 dark:text-white"><input className="w-full p-1 border rounded" name="DrillBitandHammerType" value={currentLog.DrillBitandHammerType} onChange={handleInputChange} /></td>
-              <td className="border p-2 dark:text-white"><input className="w-full p-1 border rounded" name="drillDepth" value={currentLog.drillDepth} onChange={handleInputChange} /></td>
-              <td className="border p-2 dark:text-white"><input className="w-full p-1 border rounded" name="yield" value={currentLog.yield} onChange={handleInputChange} /></td>
-              <td className="border p-2 dark:text-white"><input className="w-full p-1 border rounded" name="EC" value={currentLog.EC} onChange={handleInputChange} /></td>
-              <td className="border p-2 dark:text-white"><input className="w-full p-1 border rounded" name="Fracture" value={currentLog.Fracture} onChange={handleInputChange} /></td>
-              <td className="border p-2 dark:text-white"><input className="w-full p-1 border rounded" name="Description" value={currentLog.Description} onChange={handleInputChange} /></td>
+              <td className="border p-2 dark:dark:text-white text-black"><input className="w-full p-1 border rounded dark:bg-slate-600 dark:text-white text-black" name="Starttime" value={currentLog.Starttime} onChange={handleInputChange} /></td>
+              <td className="border p-2 dark:dark:text-white text-black"><input className="w-full p-1 border rounded dark:bg-slate-600 dark:text-white text-black" name="FinishTime" value={currentLog.FinishTime} onChange={handleInputChange} /></td>
+              <td className="border p-2 dark:dark:text-white text-black"><input className="w-full p-1 border rounded dark:bg-slate-600 dark:text-white text-black" name="Duration" value={currentLog.Duration} onChange={handleInputChange} /></td>
+              <td className="border p-2 dark:dark:text-white text-black"><input className="w-full p-1 border rounded dark:bg-slate-600 dark:text-white text-black" name="DrillBitandHammerType" value={currentLog.DrillBitandHammerType} onChange={handleInputChange} /></td>
+              <td className="border p-2 dark:dark:text-white text-black"><input className="w-full p-1 border rounded dark:bg-slate-600 dark:text-white text-black" name="drillDepth" value={currentLog.drillDepth} onChange={handleInputChange} /></td>
+              <td className="border p-2 dark:dark:text-white text-black"><input className="w-full p-1 border rounded dark:bg-slate-600 dark:text-white text-black" name="yield" value={currentLog.yield} onChange={handleInputChange} /></td>
+              <td className="border p-2 dark:dark:text-white text-black"><input className="w-full p-1 border rounded dark:bg-slate-600 dark:text-white text-black" name="EC" value={currentLog.EC} onChange={handleInputChange} /></td>
+              <td className="border p-2 dark:dark:text-white text-black"><input className="w-full p-1 border rounded dark:bg-slate-600 dark:text-white text-black" name="Fracture" value={currentLog.Fracture} onChange={handleInputChange} /></td>
+              <td className="border p-2 dark:dark:text-white text-black"><input className="w-full p-1 border rounded dark:bg-slate-600 dark:text-white text-black" name="Description" value={currentLog.Description} onChange={handleInputChange} /></td>
             </tr>
           </tbody>
         </table>
@@ -135,7 +135,7 @@ function Drilling(props) {
             name="Solidsample"
             value={props.Solidsample || ''}
             onChange={props.handleChange}
-            className="border rounded p-1"
+            className="border rounded p-1 dark:bg-slate-600 dark:text-white text-black"
           >
             <option value="">Select</option>
             <option value="collected">Collected</option>
@@ -148,7 +148,7 @@ function Drilling(props) {
             name="WaterSample"
             value={props.WaterSample || ''}
             onChange={props.handleChange}
-            className="border rounded p-1"
+            className="border rounded p-1 dark:bg-slate-600 dark:text-white text-black"
           >
             <option value="">Select</option>
             <option value="collected">Collected</option>
@@ -163,7 +163,7 @@ function Drilling(props) {
             value={props.Drillingsign || ''}
             onChange={props.handleChange}
             placeholder="Driller Name Signature"
-            className="border rounded p-1"
+            className="border rounded p-1 dark:bg-slate-600 dark:text-white text-black"
           />
         </div>
         <div className="mb-2">
@@ -174,7 +174,7 @@ function Drilling(props) {
             value={props.OicSign || ''}
             onChange={props.handleChange}
             placeholder="OIC Name Signature"
-            className="border rounded p-1"
+            className="border rounded p-1 dark:bg-slate-600 dark:text-white text-black"
           />
         </div>
       </div>

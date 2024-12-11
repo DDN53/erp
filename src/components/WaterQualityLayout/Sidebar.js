@@ -10,6 +10,8 @@ import {
   FaCog,
   FaDatabase,
   FaCalendarAlt,
+  FaChartBar,
+  FaChartLine,
 } from "react-icons/fa";
 import Cookies from "js-cookie";
 import reportData from "@/data/reportData.json";
@@ -26,9 +28,6 @@ const Sidebar = ({ isOpen }) => {
   const [menuData, setMenuData] = useState([]);
 
   const [wellData, setWellData] = useState([]);
-
-  const [isWellDataExpanded, setIsWellDataExpanded] = useState(false);
-  const [isMonthlyDataExpanded, setIsMonthlyDataExpanded] = useState(false);
 
   const moduleId = parseInt(Cookies.get("moduleId"), 10);
   const moduleName = Cookies.get("moduleName");
@@ -225,6 +224,37 @@ const Sidebar = ({ isOpen }) => {
 
       {isMainProcessExpanded && (
         <div className="p-1 overflow-y-auto max-h-[calc(100vh-210px)]">
+          {/* Well Data Section - Now inside Main Process */}
+          <div className="ml-0 mb-2 font-semibold">
+            <h4 className="text-sm ml-2 cursor-pointer flex items-center border-b p-1 pb-2 pt-2 hover:bg-gray-400 rounded-md">
+              <FaDatabase className="mr-2" style={{ color: "blue", fontSize: "20px" }} />
+              WaterQuality 
+            </h4>
+            <div className="ml-4 p-1 hover:bg-gray-400 rounded-md">
+              <Link href="/waterQuality" className="cursor-pointer text-sm font-medium">
+              WaterQuality Dashboard
+              </Link>
+            </div>
+            <div className="ml-4 p-1 hover:bg-gray-400 rounded-md">
+              <Link href="/waterQuality/addwell" className="cursor-pointer text-sm font-medium">
+                WaterQuality Data
+              </Link>
+            </div>
+          </div>
+
+          {/* Monthly Data Section - Now inside Main Process */}
+          <div className="ml-0 mb-2 font-semibold">
+            <h4 className="text-sm ml-2 cursor-pointer flex items-center border-b p-1 pb-2 pt-2 hover:bg-gray-400 rounded-md">
+              <FaCalendarAlt className="mr-2" style={{ color: "blue", fontSize: "20px" }} />
+              MONTHLY DATA
+            </h4>
+            <div className="ml-4 p-1 hover:bg-gray-400 rounded-md">
+              <Link href="/waterQuality/monthlyData" className="cursor-pointer text-sm font-medium">
+                Monthly Data
+              </Link>
+            </div>
+          </div>
+
           {menuData.map((group) => (
             <div key={group.groupId} className="ml-0 mb-2 font-semibold">
               <h4
@@ -280,58 +310,6 @@ const Sidebar = ({ isOpen }) => {
         </div>
       )}
 
-      {/* Well Data Section */}
-      <div
-        className="p-2 mt-2 mx-4 text-sm font-bold flex items-center justify-between cursor-pointer border-2 rounded-lg hover:bg-gray-400"
-        onClick={toggleWellData}
-      >
-        <FaDatabase className="mr-2" style={{ color: "blue", fontSize: "20px" }} />
-        WELL DATA
-        {isWellDataExpanded ? <FaChevronDown /> : <FaChevronRight />}
-      </div>
-
-      {isWellDataExpanded && (
-        <div className="p-1 overflow-y-auto max-h-[calc(100vh-210px)]">
-          {/* Add your well data menu items here */}
-          <div className="ml-4 p-1 hover:bg-gray-400 rounded-md">
-            <Link href="/waterProduction" className="cursor-pointer text-sm font-medium">
-              Well Analysis
-            </Link>
-          </div>
-          <div className="ml-4 p-1 hover:bg-gray-400 rounded-md">
-            <Link href="/waterProduction/addwell" className="cursor-pointer text-sm font-medium">
-              Well Data 
-            </Link>
-          </div>
-        </div>
-      )}
-
-      {/* Monthly Data Section */}
-      <div
-        className="p-2 mt-2 mx-4 text-sm font-bold flex items-center justify-between cursor-pointer border-2 rounded-lg hover:bg-gray-400"
-        onClick={toggleMonthlyData}
-      >
-        <FaCalendarAlt className="mr-2" style={{ color: "blue", fontSize: "20px" }} />
-        MONTHLY DATA
-        {isMonthlyDataExpanded ? <FaChevronDown /> : <FaChevronRight />}
-      </div>
-
-      {isMonthlyDataExpanded && (
-        <div className="p-1 overflow-y-auto max-h-[calc(100vh-210px)]">
-          {/* Add your monthly data menu items here */}
-          <div className="ml-4 p-1 hover:bg-gray-400 rounded-md">
-            <Link href="/monthly-data/reports" className="cursor-pointer text-sm font-medium">
-              Monthly Analysis
-            </Link>
-          </div>
-          <div className="ml-4 p-1 hover:bg-gray-400 rounded-md">
-            <Link href="/monthly-data/statistics" className="cursor-pointer text-sm font-medium">
-              Add Monthly Data
-            </Link>
-          </div>
-        </div>
-      )}
-
       {/* Reports Section */}
       <div
         className="p-2 mt-2 mx-4 mb-2 text-sm font-bold flex items-center justify-between cursor-pointer border-2 rounded-lg hover:bg-gray-400"
@@ -347,6 +325,27 @@ const Sidebar = ({ isOpen }) => {
 
       {isReportsExpanded && (
         <div className="p-1 overflow-y-auto max-h-[calc(100vh-230px)]">
+          {/* Well Info Reports */}
+          <div className="ml-0 mb-2 font-semibold">
+            <Link href="/waterQuality/wellreport" className="cursor-pointer text-sm font-medium mt-0">
+              <div className="ml-4 p-1 hover:bg-gray-400 rounded-md flex items-center">
+                <FaChartBar className="mr-2" style={{ color: "blue" }} />
+                Well Status Report
+              </div>
+            </Link>
+          </div>
+
+          {/* Monthly Data Reports */}
+          <div className="ml-0 mb-2 font-semibold">
+            <Link href="/waterQuality/monthlyreport" className="cursor-pointer text-sm font-medium mt-0">
+              <div className="ml-4 p-1 hover:bg-gray-400 rounded-md flex items-center">
+                <FaChartLine className="mr-2" style={{ color: "blue" }} />
+                Monthly Status Report
+              </div>
+            </Link>
+          </div>
+
+          {/* Existing Report Data */}
           {filteredReportData.map((process) => (
             <div key={process.rptProcessId} className="ml-0 mb-2 font-semibold">
               <h4

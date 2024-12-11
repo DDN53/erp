@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import modulesData from "@/data/modules.json";
-import { Footer } from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+import { Footer } from "@/components/WaterProductLayout/Footer";
+import Navbar from "@/components/WaterProductLayout/Navbar";
 
 const HomeCards = () => {
   const [cards, setCards] = useState([]);

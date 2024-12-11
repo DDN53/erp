@@ -7,11 +7,14 @@ import { getDSDivisionByDistrict } from "@/app/constants/dsDivisions";;
 import API from "@/app/api/index";
 import { getUserDataFromToken } from "@/app/utils/userValidation";
 // import WellData from "@/components/AddWell/WellData";
-import MainLayout from '@/components/MainLayout';
+
 
 import { Worklocations } from "@/app/constants/WorkLocations";
 import { getRSCByNumber } from "@/app/constants/RSC";
 import { Well, ChemicalData, GeologyOverburden, GeologyRock, PumpInstall, RequestGeneral, Test, Drilling } from "@/components/AddWell/index";
+
+
+
 function AddWell() {
   const router = useRouter();
   const userData = getUserDataFromToken().result;
@@ -73,11 +76,22 @@ function AddWell() {
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedDSDivision, setSelectedDSDivision] = useState("");
+  // Frontend example
+  const [projectOffices, setProjectOffices] = useState([]);
 
-  const handleProvinceChange = (province) => {
+ 
+
+  const handleProvinceChange = async (province) => {
     setSelectedProvince(province);
     setSelectedDistrict("");
     setSelectedDSDivision("");
+    
+    try {
+      const districts = await getDistrictsByProvince(province);
+      // Handle the districts data as needed
+    } catch (error) {
+      console.error("Error fetching districts:", error);
+    }
   };
 
   const handleDistrictChange = (district) => {
@@ -104,150 +118,35 @@ function AddWell() {
   const [ChangeTab, setChangeTab] = useState("ChemicalData");
 
   const initState = {
-    newWellNo: "",
-    WorkLocation: "",
-    OldWellNo: "",
-    ProjectOffice: "",
-    RSCLocation: "",
-    Location: "",
-    Electorate: "",
-    Village: "",
-    UserType: "",
-    WellType: "",
-    selectedProvince: "",
-    selectedDistrict: "",
-    selectedDSDivision: "",
-    GSDivision: "",
-    SchemeName: "",
-    TopoSheet: "",
-    ScaleTopoSheet: "",
-    GeologyMap: "",
-    ScaleGeologyMap: "",
-    DepthtoTheBottomofSoilLayer: "",
-    HighlyWeatheredRock: "",
-    WeatheredRock: "",
-    Geologist: "",
-    X: "",
-    Y: "",
-    Elevation: "",
-    LocalMetric1: "",
-    LocalMetric2: "",
-    Methodofsurvey: "",
-    SampleDate: "",
-    SampleDepth: "",
-    SampleTime: "",
-    Color: "",
-    Turbidity: "",
-    Odor: "",
-    Taste: "",
-    PH: "",
-    Elecon: "",
-    Chlorides: "",
-    Sulphates: "",
-    TotalDissolvedSolids: "",
-    Totalk: "",
-    FreeAmonia: "",
-    Albamonia: "",
-    Nitrates: "",
-    Nitrite: "",
-    Fluorides: "",
-    Phosphate: "",
-    Totdissol: "",
-    Tothard: "",
-    Calchard: "",
-    Totiron: "",
-    Magnesium: "",
-    Sulphate: "",
-    Manganese: "",
-    Dissiron: "",
-    Totcoli: "",
-    Faecalcoli: "",
-    Filtiron: "",
-    Totresidue: "",
-    Calcium: "",
-    Oxygen: "",
-    Hysul: "",
-    Fixediron: "",
-    SWL: "",
-    InstalledDatePedestal: "",
-    InstalledDatePump: "",
-    PumpType: "",
-    PumpHeadNo: "",
-    CylinderType: "",
-    CylinderDepth: "",
-    RiserPipeType: "",
-    RiserPipeLength: "",
-    ConnecRodType: "",
-    ConnecRodLength: "",
-    Remarks: "",
-    RequestMode: "",
-    Fundingcriteria: "",
-    WellCategory: "",
-    AgentName: "",
-    ProjectName: "",
-    ContactOrderNo: "",
-    DistancetoNearestPublicPerinialWell: "",
-    NoOfHousesWithin500M: "",
-    ConcentOfPSForMaintenance: "",
-    ConsumerSocietyFormed: "",
-    NameofCareTaker: "",
-    AddressofCareTakerline1: "",
-    AddressofCareTakerline2: "",
-    AddressofCareTakerline3: "",
-    TestDate: "",
-    Step1one: "",
-    Step1two: "",
-    Step2one: "",
-    Step2two: "",
-    Step3one: "",
-    Step3two: "",
-    Step4one: "",
-    Step4two: "",
-    Step5one: "",
-    Step5two: "",
-    TestDate2: "",
-    EndDate2: "",
-    PumpInstallationDepth: "",
-    PumpInstallationDepth2: "",
-    AvarageDischargeRate: "",
-    waterlevelatendoftherecovery: "",
-    PumingDuration: "",
-    StatisticWaterLevel: "",
-    StaticWaterLevel: "",
-    PumpingWaterLevelattheEndofthetest: "",
-    Storativity: "",
-    RecoveryPeriod: "",
-    Transmassvity: "",
-    B: "",
-    C: "",
-    TestDate3: "",
-    PumpInstallationDepth3: "",
-    DischargeRate: "",
-    PumpingWaterLevel: "",
-    PumpingDuration: "",
-    RecomendationBasedon: "",
-    GeologyRock: "",
-    GeologyOverburden: "",
-    selectedWorkLocation: "",
-    selectedRSC: "",
-    selectedWellType: "",
-    selectedWellCondition: "",
-    DrillData: "",
-    RodNo: "",
-    Starttime: "",
-    FinishTime: "",
-    Duration: "",
-    drillBitNo: "",
-    DrillBitandHammerType: "",
-    drillDepth: "",
-    yield: "",
-    EC: "",
-    Fracture: "",
-    Description: "",
-    Solidsample: "",
-    WaterSample: "",
-    Drillingsign: "",
-    OicSign: "",
+    WELLNO: "",
+    OLDWELLNO: "",
+    NWELLNO: "",
+    PROJOFFICE_CODE: "",
+    PROVINCE_CODE: "",
+    DISTRICT_CODE: "",
+    DSDIV_CODE: "",
+    GSDIV: "",
+    ELECT_CODE: "",
+    VILLAGE: "",
+    LOCATION: "",
+    X_COORDINATE: "",
+    Y_COORDINATE: "",
+    MAP_USED: "",
+    MAP_SCALE: "",
+    GEOLOGICAL_USED: "",
+    GEOLOGICAL_SCALE: "",
+    X_METRIC: "",
+    Y_METRIC: "",
+    ELEVATIONMSL: "",
+    USERTYPE: "",
+    SCHEMENAME: "",
+    SOURCE: "",
+    ELV_METHOD: "",
+    DEP_SOIL: "",
+    DEP_HW_ROCK: "",
+    DEP_W_ROCK: "",
+    GEOL: "",
+    IsLock: 0
   };
   const [formData, setFormData] = useState(initState);
 
@@ -268,29 +167,56 @@ function AddWell() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const [drillLogs, setDrillLogs] = useState([]);
+  const [isWellSaved, setIsWellSaved] = useState(false);
+  const [savedWellId, setSavedWellId] = useState(null);
 
-  const addDrillLog = (log) => {
-    setDrillLogs((prevLogs) => [
-      ...prevLogs,
-      {
-        DrillData: log.DrillData,
-        RodNo: log.RodNo,
-        Starttime: log.Starttime,
-        FinishTime: log.FinishTime,
-        Duration: log.Duration,
-        DrillBitandHammerType: log.DrillBitandHammerType,
-        drillDepth: log.drillDepth,
-        yield: log.yield,
-        EC: log.EC,
-        Fracture: log.Fracture,
-        Description: log.Description,
-        Solidsample: log.Solidsample,
-        Watersample: log.Watersample,
-        DrillerSignature: log.DrillerSignature,
-        OicSignature: log.OicSignature
-      }
-    ]);
+  // Add new function to handle Well data submission
+  const handleWellSubmit = async (e) => {
+    e.preventDefault();
+    
+    const wellData = {
+      WELLNO: formData.WELLNO,
+      NWELLNO: formData.NWELLNO,
+      OLDWELLNO: formData.OLDWELLNO,
+      PROJOFFICE_CODE: formData.PROJOFFICE_CODE,
+      PROVINCE_CODE: formData.PROVINCE_CODE,
+      DISTRICT_CODE: formData.DISTRICT_CODE,
+      DSDIV_CODE: formData.DSDIV_CODE,
+      GSDIV: formData.GSDIV,
+      ELECT_CODE: formData.ELECT_CODE,
+      VILLAGE: formData.VILLAGE,
+      LOCATION: formData.LOCATION,
+      X_COORDINATE: Number(formData.X_COORDINATE),
+      Y_COORDINATE: Number(formData.Y_COORDINATE),
+      MAP_USED: formData.MAP_USED,
+      MAP_SCALE: formData.MAP_SCALE,
+      GEOLOGICAL_USED: formData.GEOLOGICAL_USED,
+      GEOLOGICAL_SCALE: formData.GEOLOGICAL_SCALE,
+      X_METRIC: Number(formData.X_METRIC),
+      Y_METRIC: Number(formData.Y_METRIC),
+      ELEVATIONMSL: Number(formData.ELEVATIONMSL),
+      USERTYPE: formData.USERTYPE,
+      SCHEMENAME: formData.SCHEMENAME,
+      SOURCE: formData.SOURCE,
+      ELV_METHOD: formData.ELV_METHOD,
+      DEP_SOIL: Number(formData.DEP_SOIL),
+      DEP_HW_ROCK: Number(formData.DEP_HW_ROCK),
+      DEP_W_ROCK: Number(formData.DEP_W_ROCK),
+      GEOL: formData.GEOL,
+      IsLock: Boolean(formData.IsLock),
+      SSMA_TimeStamp: formData.SSMA_TimeStamp || new Date().toISOString()
+    };
+
+    try {
+      const response = await API.addwell(wellData);
+      console.log('add well response',response);
+      setIsWellSaved(true);
+      setSavedWellId(response.data.id); // Assuming the API returns the created well ID
+      alert("Well data saved successfully!");
+    } catch (error) {
+      console.error("Error saving well:", error);
+      alert("Error saving well data");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -325,25 +251,30 @@ function AddWell() {
   useEffect(() => {
     const checkWellId = async () => {
       try {
-        const data = await API.viewallwells();
-        const wellExists = data?.data.some(
-          (well) => well.newWellNo === formData.newWellNo
+        const response = await API.viewallwells();
+        const wellExists = response.data?.data.some(
+          (well) => well.WELLNO === formData.WELLNO
         );
         setWellIdExists(wellExists);
       } catch (error) {
-        console.log(error);
+        console.error("Error checking well ID:", error);
       }
     };
-    checkWellId();
-  }, [formData.newWellNo]);
+
+    if (formData.WELLNO) {
+      checkWellId();
+    }
+  }, [formData.WELLNO]);
 
   return (
     <div className="min-h-full" style={{ minHeight: "calc(100vh - 347px)" }}>
       <div>
-        <MainLayout>
-          <form onSubmit={handleSubmit}>
-            <div className="-mt-5 border border-gray-400 w-[95%] h-[500%] shadow-xl mx-auto p-6 flex flex-col dark:bg-slate-800 dark:text-white">
+        {!isWellSaved ? (
+          // Show only Well component form initially
+          <form onSubmit={handleWellSubmit}>
+            <div className="-mt-5 border border-gray-400 w-[95%] shadow-xl mx-auto p-6 flex flex-col dark:bg-slate-800 dark:text-white">
               <button
+                type="button"
                 className="w-12 h-12 p-2 ml-auto text-3xl text-black rounded-full hover:bg-gray-300 hover:text-white focus:outline-none"
                 onClick={() => router.push('/waterProduction')}
               >
@@ -376,32 +307,53 @@ function AddWell() {
                 handleMethodofsurveyChange={handleMethodofsurveyChange}
                 Methodofsurvey={Methodofsurvey}
               />
+              <div className="flex justify-end mt-4 gap-4">
+                <button
+                  type="button"
+                  onClick={() => router.push('/waterProduction')}
+                  className="text-white px-4 py-2 rounded-lg bg-red-500 hover:bg-red-700"
+                >
+                  Back to Dashboard
+                </button>
+                <button
+                  disabled={wellIdExists}
+                  type="submit"
+                  className={`text-white px-4 py-2 rounded-lg ${
+                    wellIdExists
+                      ? "bg-gray-500 cursor-not-allowed"
+                      : "bg-green-500 hover:bg-green-700"
+                  }`}
+                >
+                  Save Well Data
+                </button>
+              </div>
+            </div>
+          </form>
+        ) : (
+          // Show component selection and forms after Well is saved
+          <div className="-mt-5 border border-gray-400 w-[95%] shadow-xl mx-auto p-6 flex flex-col dark:bg-slate-800 dark:text-white">
+            <div className="mb-4">
+              <label className="block mb-2 text-xl font-extrabold">
+                Select Well Other Data:
+              </label>
+              <select
+                value={ChangeTab}
+                onChange={(e) => setChangeTab(e.target.value)}
+                className="w-[30%] p-2 border-2 rounded dark:bg-slate-700"
+              >
+                
+                <option value="ChemicalData">Chemical Data</option>
+                <option value="GeologyOverburden">Geology Overburden</option>
+                <option value="GeologyRock">Geology Rock</option>
+                <option value="PumpInstall">Pump Install</option>
+                <option value="RequestGeneral">Request General</option>
+                <option value="Drilling">Drilling</option>
+                <option value="Test">Test</option>
+              </select>
+            </div>
 
-              {/* Selection section */}
-              <div className="py-3 border-t border-gray-500">
-                <div className="w-[100%] justify-center flex">
-                  <div className="flex">
-                    {["ChemicalData", "GeologyOverburden", "GeologyRock", "PumpInstall", "RequestGeneral", "Drilling", "Test"].map((tab) => (
-                      <div
-                        key={tab}
-                        className={`p-2 text-white border border-white ${
-                          ChangeTab === tab
-                            ? "bg-gray-500"
-                            : "bg-gray-700 hover:bg-gray-500"
-                        } ${
-                          tab === "ChemicalData"
-                            ? "rounded-l-2xl"
-                            : tab === "Test"
-                            ? "rounded-r-2xl"
-                            : ""
-                        }`}
-                        onClick={() => setChangeTab(tab)}
-                      >
-                        {tab}
-                      </div>
-                    ))}
-                  </div>
-                </div>
+            {ChangeTab && (
+              <form onSubmit={handleSubmit}>
                 <div className="w-[100%] mt-4">
                   {ChangeTab === "ChemicalData" && (
                     <ChemicalData
@@ -448,29 +400,25 @@ function AddWell() {
                     <Test handleChange={handleChange} formData={formData} />
                   )}
                 </div>
-              </div>
-            </div>
-            <div className="flex w-[100%] my-5 px-10">
-              <div
-                onClick={() => router.push('/waterProduction')}
-                className="flex justify-center w-32 p-2 ml-auto mr-3 text-white bg-blue-500 rounded-lg hover:bg-blue-700 cursor-pointer"
-              >
-                Cancel
-              </div>
-              <button
-                disabled={wellIdExists}
-                type="submit"
-                className={`flex justify-center p-2 text-white rounded-lg w-44 ${
-                  wellIdExists
-                    ? "bg-gray-500 cursor-not-allowed"
-                    : "bg-green-500 hover:bg-green-700"
-                }`}
-              >
-                Add Well
-              </button>
-            </div>
-          </form>
-        </MainLayout>
+                <div className="flex justify-end mt-4 gap-4">
+                  <button
+                    type="button"
+                    onClick={() => router.push('/waterProduction')}
+                    className="p-2  bg-red-500  text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="p-2  bg-green-500  text-white px-4 py-2 rounded-lg hover:bg-green-700"
+                  >
+                    Save {ChangeTab}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

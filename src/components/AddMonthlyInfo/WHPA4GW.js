@@ -13,7 +13,7 @@ function WHPA4GW(props) {
                 e.target.value
               )
             }
-            className="p-2 ml-auto border border-gray-500 rounded-md"
+            className="p-2 ml-auto border border-gray-500 rounded-md dark:bg-gray-700 dark:text-white"
           >
             <option value="">Select Answer</option>
             <option value="Yes">Yes</option>
@@ -29,7 +29,7 @@ function WHPA4GW(props) {
             value={props.formData.PerimeterProtectareatotheWell}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md w-36"
+            className="p-2 ml-auto border border-gray-500 rounded-md w-36 dark:bg-gray-700 dark:text-white"
           />
         </div>
         {/*  */}
@@ -44,7 +44,7 @@ function WHPA4GW(props) {
             value={props.formData.ActivitiesDoneforGWRecharge}
             onChange={props.handleChange}
             type="text"
-            className="p-2 ml-auto border border-gray-500 rounded-md w-36"
+            className="p-2 ml-auto border border-gray-500 rounded-md w-36 dark:bg-gray-700 dark:text-white"
           />
         </div>
         {/*  */}
@@ -58,7 +58,7 @@ function WHPA4GW(props) {
             value={props.formData.AvailabilityofPolletsSourcesAroundtheWell}
             onChange={props.handleChange}
             type="text"
-            className="w-[300px] h-[150px] ml-auto p-2 border border-gray-500 rounded-md "
+            className="w-[300px] h-[150px] ml-auto p-2 border border-gray-500 rounded-md dark:bg-gray-700 dark:text-white"
           />
         </div>
       </div>

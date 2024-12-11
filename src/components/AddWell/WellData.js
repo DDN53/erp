@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
-import API from "../../app/api"; 
+import React, { useState } from "react";
 import { getRSCByNumber } from "../../app/constants/RSC";
+import { Worklocations } from '../../app/constants/WorkLocations';
 
-
-function WellData(props) {
-  // Remove duplicate state variables that are already managed in page.jsx
-  // Keep only the local state variables needed for internal component logic
+function Well(props) {
   const [rscOptions, setRscOptions] = useState([]);
+  const [projectOffices, setProjectOffices] = useState(Worklocations);
 
-  const handleWorkLocationChange = (value, name) => {
+  const handleWorkLocationChange = (value) => {
     props.handleWorkLocationChange(value);
     
     if (value !== "") {
@@ -30,6 +28,7 @@ function WellData(props) {
 
   const handleUserTypeChange = (value) => {
     props.handleUserTypeChange(value);
+    props.handleChange({ target: { name: "USERTYPE", value } });
   };
 
   const handleWellConditionChange = (value) => {
@@ -42,10 +41,8 @@ function WellData(props) {
     props.handleChange({ target: { name: "Methodofsurvey", value } });
   };
 
-  // Remove handleSubmit as it's handled in page.jsx
-
   return (
-    <div> {/* Changed from form to div since form is in parent */}
+    <div className="well-data-container">
       <div>
         <div className="border-b border-gray-400 dark:border-gray-600">
           <div className="flex">
@@ -54,8 +51,8 @@ function WellData(props) {
               <input
                 required
                 placeholder="New Well No"
-                name="newWellNo"
-                value={props.formData.newWellNo}
+                name="WELLNO"
+                value={props.formData.WELLNO}
                 onChange={props.handleChange}
                 type="text"
                 className="p-2 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
@@ -65,41 +62,30 @@ function WellData(props) {
               <p className="block mb-2">Old Well No : </p>
               <input
                 placeholder="Old Well No"
-                name="OldWellNo"
-                value={props.formData.OldWellNo}
+                name="OLDWELLNO"
+                value={props.formData.OLDWELLNO}
                 onChange={props.handleChange}
                 type="text"
                 className="p-2 border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white  "
               />
             </div>
           </div>
-          {props.wellIdExists && (
+           {props.wellIdExists && (
             <span className="ml-2 text-red-500">Well ID already exists!</span>
-          )}
+          )} 
         </div>
 
-        <div className="flex">
+        <div className="flex flex-row-reverse">
           {/* 1st row */}
           <div className="w-[50%] border-r border-gray-400 p-[64px] ml-auto -mt-10 dark:bg-slate-800 dark:text-white">
-            {/* project office */}
-            <div className="flex items-center mb-1">
-              <p className="block mb-2">Project Office : </p>
-              <input
-                placeholder="Project Office"
-                name="ProjectOffice"
-                value={props.formData.ProjectOffice}
-                onChange={props.handleChange}
-                type="text"
-                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
-              />
-            </div>
+         
             {/* Location */}
             <div className="flex items-center mb-1">
               <p className="block mb-2">Location : </p>
               <input
                 placeholder="Location"
-                name="Location"
-                value={props.formData.Location}
+                name="LOCATION"
+                value={props.formData.LOCATION}
                 onChange={props.handleChange}
                 type="text"
                 className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
@@ -110,8 +96,8 @@ function WellData(props) {
               <p className="block mb-2">Electorate : </p>
               <input
                 placeholder="Electorate"
-                name="Electorate"
-                value={props.formData.Electorate}
+                name="ELECT_CODE"
+                value={props.formData.ELECT_CODE}
                 onChange={props.handleChange}
                 type="text"
                 className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
@@ -122,8 +108,8 @@ function WellData(props) {
               <p className="block mb-2">Village : </p>
               <input
                 placeholder="Village"
-                name="Village"
-                value={props.formData.Village}
+                name="VILLAGE"
+                value={props.formData.VILLAGE}
                 onChange={props.handleChange}
                 type="text"
                 className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
@@ -202,8 +188,8 @@ function WellData(props) {
               <p className="block mb-2">Geology Map : </p>
               <input
                 placeholder="Geology Map"
-                name="GeologyMap"
-                value={props.formData.GeologyMap}
+                name="GEOLOGICAL_USED"
+                value={props.formData.GEOLOGICAL_USED}
                 onChange={props.handleChange}
                 type="text"
                 className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
@@ -213,8 +199,8 @@ function WellData(props) {
               <p className="block mb-2">Weathered Rock : </p>
               <input
                 placeholder="Weathered Rock"
-                name="WeatheredRock"
-                value={props.formData.WeatheredRock}
+                name="DEP_W_ROCK"
+                value={props.formData.DEP_W_ROCK}
                 onChange={props.handleChange}
                 type="text"
                 className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
@@ -232,6 +218,17 @@ function WellData(props) {
                 className="items-end p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               />
             </div>
+            <div className="flex items-center mb-1">
+              <p className="block mb-2">Geologist Used : </p>
+              <input
+                placeholder="Geologist Used"
+                name="GEOLOGICAL_USED"
+                value={props.formData.GEOLOGICAL_USED || ''} 
+                onChange={props.handleChange}
+                type="text"
+                className="items-end p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
+              />
+            </div>
           </div>
           {/* 2nd row */}
           <div className="w-[50%] border-r border-gray-400 p-[64px] -mt-10">
@@ -239,7 +236,7 @@ function WellData(props) {
             <div className="flex items-center mb-1">
               <p className="block mb-2">Province : </p>
               <select
-                value={props.selectedProvince}
+                value={props.DISTRICT_CODE}
                 onChange={(e) => props.handleProvinceChange(e.target.value)}
                 className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               >
@@ -258,31 +255,36 @@ function WellData(props) {
                 value={props.selectedDistrict}
                 onChange={(e) => props.handleDistrictChange(e.target.value)}
                 disabled={!props.selectedProvince}
-                className="p-2 ml-auto border border-gray-500 rounded-md  w-[220px] dark:bg-slate-700 dark:text-white"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               >
                 <option value="">Select District</option>
-                {props.getDistrictsByProvince(props.selectedProvince).map((district) => (
-                  <option key={district} value={district}>
-                    {district}
-                  </option>
-                ))}
+                {props.selectedProvince && props.getDistrictsByProvince && 
+                  props.getDistrictsByProvince(props.selectedProvince)?.map((district) => (
+                    <option key={district} value={district}>
+                      {district}
+                    </option>
+                  ))}
               </select>
             </div>
             {/* DS Division */}
             <div className="flex items-center mb-1">
               <p className="block mb-2">DS Division : </p>
               <select
-                value={props.selectedDSDivision}
-                onChange={(e) => props.handleDSDivisionChange(e.target.value)}
+                value={props.formData.DSDIV_CODE}
+                onChange={(e) => {
+                  props.handleDSDivisionChange(e.target.value);
+                  props.handleChange({ target: { name: "DSDIV_CODE", value: e.target.value } });
+                }}
                 disabled={!props.selectedDistrict}
-                className="p-2 ml-auto border border-gray-500 rounded-md  w-[220px] dark:bg-slate-700 dark:text-white"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               >
                 <option value="">Select DS Division</option>
-                {props.getDSDivisionByDistrict(props.selectedDistrict).map((dsDivision) => (
-                  <option key={dsDivision} value={dsDivision}>
-                    {dsDivision}
-                  </option>
-                ))}
+                {props.selectedDistrict && props.getDSDivisionByDistrict && 
+                  props.getDSDivisionByDistrict(props.selectedDistrict)?.map((dsDivision) => (
+                    <option key={dsDivision} value={dsDivision}>
+                      {dsDivision}
+                    </option>
+                  ))}
               </select>
             </div>
             {/* GS Division */}
@@ -291,7 +293,7 @@ function WellData(props) {
               <input
                 placeholder="GS Division"
                 name="GSDivision"
-                value={props.formData.GSDivision}
+                value={props.formData.GSDIV}
                 onChange={props.handleChange}
                 type="text"
                 className="p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
@@ -304,7 +306,7 @@ function WellData(props) {
               <input
                 placeholder="Scheme Name"
                 name="SchemeName"
-                value={props.formData.SchemeName}
+                value={props.formData.SCHEMENAME}
                 onChange={props.handleChange}
                 type="text"
                 className="p-2 ml-auto border border-gray-500 rounded-md dark:bg-slate-700 dark:text-white"
@@ -313,7 +315,7 @@ function WellData(props) {
 
             {/* Work locations */}
             <div className="flex items-center mb-1">
-              <p className="block mb-2">Work locations: </p>
+              <p className="block mb-2"> Project Office</p>
               <select
                 required
                 value={props.selectedWorkLocation}
@@ -325,7 +327,7 @@ function WellData(props) {
                 }}
                 className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               >
-                <option value="">Select Work Location</option>
+                <option value="">Select Project Office</option>
                 {props.Worklocations.map((workLocation) => (
                   <option key={workLocation.id} value={workLocation.id}>
                     {workLocation.name}
@@ -360,8 +362,8 @@ function WellData(props) {
               <p className="block mb-2">Scale Geology Map : </p>
               <input
                 placeholder="Scale Geology Map"
-                name="ScaleGeologyMap"
-                value={props.formData.ScaleGeologyMap}
+                name="MAP_USED"
+                value={props.formData.MAP_USED}
                 onChange={props.handleChange}
                 type="text"
                 className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
@@ -372,8 +374,8 @@ function WellData(props) {
               <p className="block mb-2">Depth to The Bottom of Soil Layer : </p>
               <input
                 placeholder="Depth to The Bottom of Soil Layer"
-                name="DepthtoTheBottomofSoilLayer"
-                value={props.formData.DepthtoTheBottomofSoilLayer}
+                name="DEP_SOIL"
+                value={props.formData.DEP_SOIL}
                 onChange={props.handleChange}
                 type="text"
                 className="p-2 ml-auto border border-gray-500 rounded-md w-[220px] mt-[1rem] dark:bg-slate-700 dark:text-white"
@@ -384,8 +386,19 @@ function WellData(props) {
               <p className="block mb-2">Highly Weathered Rock : </p>
               <input
                 placeholder="Highly Weathered Rock"
-                name="HighlyWeatheredRock"
-                value={props.formData.HighlyWeatheredRock}
+                name="DEP_HW_ROCK"
+                value={props.formData.DEP_HW_ROCK}
+                onChange={props.handleChange}
+                type="text"
+                className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]  mt-[0.7rem] dark:bg-slate-700 dark:text-white"
+              />
+            </div>
+            <div className="flex items-center mb-1">
+              <p className="block mb-2">Map Scale : </p>
+              <input
+                placeholder="Highly Weathered Rock"
+                name="MAP_SCALE"
+                value={props.formData.MAP_SCALE}
                 onChange={props.handleChange}
                 type="text"
                 className="p-2 ml-auto border border-gray-500 rounded-md w-[220px]  mt-[0.7rem] dark:bg-slate-700 dark:text-white"
@@ -393,6 +406,7 @@ function WellData(props) {
             </div>
           </div>
         </div>
+       
         {/* geo location info */}
         <div className="flex py-3 border-t border-gray-500">
           {/* 1st row */}
@@ -400,12 +414,12 @@ function WellData(props) {
             <div className="flex">
               <p className="dark:text-white">Co-ordinates Geographic</p>
               <div className="flex ml-8">
-                <div className="flex items-center">
+                <div className="flex items-center ">
                   <p>X : </p>
                   <input
                     placeholder="X"
-                    name="X"
-                    value={props.formData.X}
+                    name="X_COORDINATE"
+                    value={props.formData.X_COORDINATE}
                     onChange={props.handleChange}
                     type="text"
                     className=" p-2 ml-2 border border-gray-500 rounded-md w-24 dark:bg-slate-700 dark:text-white"
@@ -415,8 +429,35 @@ function WellData(props) {
                   <p>Y : </p>
                   <input
                     placeholder="Y"
-                    name="Y"
-                    value={props.formData.Y}
+                    name="Y_COORDINATE"
+                    value={props.formData.Y_COORDINATE}
+                    onChange={props.handleChange}
+                    type="text"
+                    className=" p-2 ml-2 border border-gray-500 rounded-md w-24 dark:bg-slate-700 dark:text-white"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex mt-3">
+              <p className="dark:text-white">Co-ordinates Metric</p>
+              <div className="flex ml-8">
+                <div className="flex items-center ml-[2.30rem]">
+                  <p>X : </p>
+                  <input
+                    placeholder="X"
+                    name="X_METRIC"
+                    value={props.formData.X_METRIC}
+                    onChange={props.handleChange}
+                    type="text"
+                    className=" p-2 ml-2 border border-gray-500 rounded-md w-24 dark:bg-slate-700 dark:text-white"
+                  />
+                </div>
+                <div className="flex items-center ml-3">
+                  <p>Y : </p>
+                  <input
+                    placeholder="Y"
+                    name="Y_METRIC"
+                    value={props.formData.Y_METRIC}
                     onChange={props.handleChange}
                     type="text"
                     className=" p-2 ml-2 border border-gray-500 rounded-md w-24 dark:bg-slate-700 dark:text-white"
@@ -428,8 +469,8 @@ function WellData(props) {
               <p>Elevation</p>
               <input
                 placeholder="Elevation"
-                name="Elevation"
-                value={props.formData.Elevation}
+                name="ELV_METHOD"
+                value={props.formData.ELV_METHOD}
                 onChange={props.handleChange}
                 type="text"
                 className=" p-2 ml-2 border border-gray-500 rounded-md w-24 dark:bg-slate-700 dark:text-white"
@@ -461,7 +502,7 @@ function WellData(props) {
             <div className="flex mt-2">
               <p>Method of survey</p>
               <select
-                value={props.methodOfSurvey}
+                value={props.formData.SOURCE}
                 onChange={(e) => handleMethodOfSurveyChange(e.target.value)}
                 className="p-2 ml-2 border border-gray-500 rounded-md w-[220px] dark:bg-slate-700 dark:text-white"
               >
@@ -480,4 +521,4 @@ function WellData(props) {
   );
 }
 
-export default WellData;
+export default Well;

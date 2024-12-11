@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
-import { ThemeProvider } from "@/components/theme-provider";
-import Navbar from "@/components/Navbar";
-import Sidebar from "@/components/Sidebar";
+import { ThemeProvider } from "@/components/WaterQualityLayout/theme-provider";
+import Navbar from "@/components/WaterQualityLayout/Navbar";
+import Sidebar from "@/components/WaterQualityLayout/Sidebar";
 // import { FaBars } from "react-icons/fa";
 import { VscLayoutSidebarLeft } from "react-icons/vsc";
 
