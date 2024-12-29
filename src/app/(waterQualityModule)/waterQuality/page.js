@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import API from "@/api/index";
+import api from "@/api/index";
 import { toast } from 'react-toastify';
 import { provinces, getDistrictsByProvince } from "@/app/constants/Area";
 import { getDSDivisionByDistrict } from "@/app/constants/dsDivisions";
@@ -25,46 +25,77 @@ const WaterQualityPage = () => {
     weatherCondition: '',
     sampleNumber: ''
   });
+  const [selectedDate, setSelectedDate] = useState("");
+  const sampleDates = [
+    "2024-01-01",
+    "2024-02-14",
+    "2024-03-17",
+    "2024-04-01",
+    "2024-05-25",
+  ];
+  const [wheatherCondition,setWheatherCondition] = useState([
+    { id: 1, weatherCondition: "Sunny" },
+    { id: 2, weatherCondition: "Cloudy" },
+    { id: 3, weatherCondition: "Rainy" },
+    { id: 4, weatherCondition: "Snowy" },
+  ]);
+  const handleSourceUpdateCondition = (index, newCondition) => {
+    const updatedRows = [...wheatherCondition];
+    updatedRows[index].weatherCondition = newCondition;
+    setWheatherCondition(updatedRows);
+  };
 
+  const handleChangedropdown=()=>{
+    setSelectedDate(event.target.value);
+  }
   // Add tableData state
   const [tableData, setTableData] = useState([]);
+  const [randomNumber, setRandomNumber] = useState(0);
 
-  // Add useEffect to fetch data when component mounts
   useEffect(() => {
-    fetchWaterQualityData();
+   
+      const uniqueNumber = `${Math.floor(Math.random() * 1000)}`;
+      setRandomNumber(Number(uniqueNumber));
+
+
   }, []);
 
-  const fetchWaterQualityData = async () => {
-    try {
-      const response = await api.waterQualityView();
-      console.log('response', response);
-      if (response.success) {
-        // Update to include all relevant fields, including _id
-        const formattedData = response.data.map(item => ({
-          _id: item._id, // Ensure _id is included
-          rsc: item.rsc,
-          region: item.region,
-          scheme: item.scheme,
-          source: item.source,
-          sampleDate: item.sampleDate,
-          collectorName: item.collectorName,
-          references: item.references,
-          sampleGroup: item.sampleGroup,
-          prepareDate: item.prepareDate,
-          volume: item.volume,
-          designation: item.designation,
-          samplePointName: item.samplePointName,
-          time: item.time,
-          weatherCondition: item.condition,
-          sampleNumber: item.sampleNumber
-        }));
-        setTableData(formattedData);
-      }
-    } catch (error) {
-      toast.error('Failed to fetch water quality data');
-      console.error('Fetch Error:', error);
-    }
-  };
+  // Add useEffect to fetch data when component mounts
+  // useEffect(() => {
+  //   fetchWaterQualityData();
+  // }, []);
+
+  // const fetchWaterQualityData = async () => {
+  //   try {
+  //     const response = await api.waterQualityView();
+  //     console.log('response', response);
+  //     if (response.success) {
+  //       // Update to include all relevant fields, including _id
+  //       const formattedData = response.data.map(item => ({
+  //         _id: item._id, // Ensure _id is included
+  //         rsc: item.rsc,
+  //         region: item.region,
+  //         scheme: item.scheme,
+  //         source: item.source,
+  //         sampleDate: item.sampleDate,
+  //         collectorName: item.collectorName,
+  //         references: item.references,
+  //         sampleGroup: item.sampleGroup,
+  //         prepareDate: item.prepareDate,
+  //         volume: item.volume,
+  //         designation: item.designation,
+  //         samplePointName: item.samplePointName,
+  //         time: item.time,
+  //         weatherCondition: item.condition,
+  //         sampleNumber: item.sampleNumber
+  //       }));
+  //       setTableData(formattedData);
+  //     }
+  //   } catch (error) {
+  //     toast.error('Failed to fetch water quality data');
+  //     console.error('Fetch Error:', error);
+  //   }
+  // };
 
   // Handle input changes
   const handleChange = (e) => {
@@ -81,7 +112,7 @@ const WaterQualityPage = () => {
     { 
       label: "Sample Volume (ml)", 
       id: "volume", 
-      type: "number",
+      type:"text",
       min: "0" // Add min attribute to prevent negative values
     },
     { label: "Sample Collector Designation", id: "designation" },
@@ -108,7 +139,7 @@ const WaterQualityPage = () => {
     }
     try {
       // Validate required fields
-      const requiredFields = ['rsc', 'region', 'scheme', 'source'];
+      const requiredFields = ['rsc', 'region', 'source'];
       const missingFields = requiredFields.filter(field => !formData[field]);
       
       if (missingFields.length > 0) {
@@ -120,7 +151,6 @@ const WaterQualityPage = () => {
       const formattedData = {
         rsc: formData.rsc,
         region: formData.region,
-        scheme: formData.scheme,
         source: formData.source,
         sampleDate: new Date().toISOString(),
         collectorName: formData.collectorName || null,
@@ -145,7 +175,6 @@ const WaterQualityPage = () => {
       setFormData({
         rsc: '',
         region: '',
-        scheme: '',
         source: '',
         sampleDate: '',
         collectorName: '',
@@ -178,61 +207,68 @@ const WaterQualityPage = () => {
     }
   };
 
-  // Update handleAction function
   const handleAction = async (action) => {
-    if (action === "Save") {
-      try {
-        const data = {
-          ...formData,
-          sampleDate: new Date().toISOString(),
-          // ... other fields ...
-        };
-        
-        const response = await api.AddwaterQuality(data);
-        if (response.success) {
-          toast.success('Data saved successfully');
-          fetchWaterQualityData();
-        } else {
-          toast.error('Failed to save data');
-        }
-      } catch (error) {
-        toast.error('Failed to save data');
-        console.error('Save Error:', error);
+    try {
+      if (action.toLowerCase() === "save") {
+          const data = {
+              ...formData,
+              sampleDate: new Date().toISOString(),
+          };
+  
+          const response = await api.savewaterquality(data);
+  
+          if (response.success) {
+              toast.success("Data saved successfully");
+          } else {
+              throw new Error("Failed to save data"); // Ensure error is caught
+          }
+      } else {
+          switch (action.toLowerCase()) {
+              case "edit":
+                  // Enable form editing logic here
+                  break;
+  
+              case "view":
+                  // Handle view action logic here
+                  break;
+  
+              case "clear":
+                  setFormData({
+                      rsc: "",
+                      region: "",
+                      source: "",
+                      sampleDate: "",
+                      collectorName: "",
+                      references: "",
+                      sampleGroup: "",
+                      prepareDate: "",
+                      volume: "",
+                      designation: "",
+                      samplePointName: "",
+                      time: "",
+                      condition: "",
+                      sampleNumber: "",
+                  });
+                  break;
+  
+              case "close":
+                  // Handle modal close or navigation logic here
+                  break;
+  
+              default:
+                  console.warn("Unknown action:", action);
+                  break;
+          }
       }
-    }
-    switch (action.toLowerCase()) {
-      case 'edit':
-        // Enable form editing if disabled
-        break;
-      case 'view':
-        // Handle view action
-        break;
-      case 'clear':
-        setFormData({
-          rsc: '',
-          region: '',
-          scheme: '',
-          source: '',
-          sampleDate: '',
-          collectorName: '',
-          references: '',
-          sampleGroup: '',
-          prepareDate: '',
-          volume: '',
-          designation: '',
-          samplePointName: '',
-          time: '',
-          condition: '',
-          sampleNumber: ''
-        });
-        break;
-      case 'close':
-        // Handle navigation or modal close
-        break;
-      default:
-        break;
-    }
-  };
+  } catch (error) {
+      if (action.toLowerCase() === "save") {
+          toast.error("An error occurred while saving data");
+      }
+      console.error(`Error during "${action}" action:`, error);
+  }
+  
+};
+  
 
   // Add this new function before the return statement
   const handleSourceUpdate = async (index, newSource) => {
@@ -281,10 +317,9 @@ const WaterQualityPage = () => {
                 required: true
               },
                 { label: "Region", id: "region", type: "select", options: formData.rsc ? getDistrictsByProvince(formData.rsc) : [], required: true },
-                { label: "Scheme", id: "scheme", type: "select", options: formData.region ? getDSDivisionByDistrict(formData.region) : [], required: true },
                 { label: "Source", id: "source", type: "select", options: ["River", "Well", "Spring", "Stream"], required: true },
+                { label: "Sample Point Name", id: "collectorName",type: "select",options: ["Ampara", "Kegalla", "Rathmalana", "Monaragala"], },
                 { label: "Sample Date", id: "sampleDate", type: "date" },
-                { label: "Sample Collector Name", id: "collectorName" },
                 { label: "References", id: "references" },
                 { label: "Sample Group", id: "sampleGroup", type: "select", options: ["Physical", "Chemical", "Biological"] },
               ].map(({ label, id, type, options, required }) => (
@@ -298,7 +333,7 @@ const WaterQualityPage = () => {
                       id={id}
                       className="w-[70%] p-2 border rounded-md border-gray-950 dark:bg-slate-600 dark:text-white"
                       required={required}
-                      value={formData[id]}
+                      value={formData[id] || ''}
                       onChange={handleChange}
                     >
                       <option value="">Select</option>
@@ -344,10 +379,10 @@ const WaterQualityPage = () => {
               <th className="border border-gray-950 px-4 py-2">Time</th>
 
              
-              <th className="border border-gray-950 px-4 py-2">Sample Point Number</th>
+              <th className="border border-gray-950 px-4 py-2">Sample Point Name</th>
               <th className="border border-gray-950 px-4 py-2">weather Condition</th>
                 <th className="border border-gray-950 px-4 py-2">Sample Number</th>
-                <th className="border border-gray-950 px-4 py-2">Action</th>
+                <th className="border border-gray-950 px-4 py-2">Sample Group</th>
              
              
              
@@ -366,12 +401,12 @@ const WaterQualityPage = () => {
                       }) : 'N/A'}
                     </td>
                   
-                    <td className="border border-gray-950 px-4 py-2">{row.samplePointName}</td>
+                    <td className="border border-gray-950 px-4 py-2">{row.collectorName}</td>
                     <td className="border border-gray-950 px-4 py-2">
                       <select 
                         className="w-full p-1 border rounded dark:bg-slate-600 dark:text-white"
                         value={row.weatherCondition}
-                        onChange={(e) => handleSourceUpdate(index, e.target.value)}
+                        onChange={(e) => handleSourceUpdateCondition(index, e.target.value|| '')}
                       >
                         {["Sunny", "Cloudy", "Rainy", "Snowy"].map((option) => (
                           <option key={option} value={option}>
@@ -380,7 +415,7 @@ const WaterQualityPage = () => {
                         ))}
                       </select>
                     </td>
-                    <td className="border border-gray-950 px-4 py-2">{`Number ${index + 1}`}</td>
+                    <td className="border border-gray-950 px-4 py-2">{`Sample Number: ${randomNumber}`}</td>
                     <td className="border border-gray-950 px-4 py-2">{row.sampleGroup}</td>
                   
                     

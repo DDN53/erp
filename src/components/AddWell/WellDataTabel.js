@@ -30,7 +30,7 @@ export default function page() {
           <WellForm onAddWell={handleAddWell} onCancel={handleCloseForm} />
         </div>
       )}
-      <WellDataTable wellData={wellData} /> {/* Render the table with well data */}
+      <WellDataTable wellData={wellData} /> 
     </div>
   );
 }

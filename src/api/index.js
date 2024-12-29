@@ -173,6 +173,33 @@ const addDrillingData = async (data) => {
   const response = await API.post("api/users/drilling-data", data);
   return response.data;
 };
+const savewaterquality = async (data) => {
+  try {
+    const response = await API.post("api/waterquality/save", data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    console.log("API Response:", response);
+
+    // Validate the response structure and success field
+    if (!response || !response.data || !response.data.success) {
+      throw new Error(
+        "Invalid API response structure or unsuccessful operation"
+      );
+    }
+
+    return response.data; // Return the successful response data
+  } catch (error) {
+    console.error("API Error:", error);
+
+    // Handle errors gracefully by rethrowing them for further handling
+    throw new Error(
+      error.response?.data?.message || "An error occurred while saving data"
+    );
+  }
+};
 
 
 
@@ -200,6 +227,7 @@ const api = {
   AddWeatherCondition,
   addChemicalData,
   addDrillingData,
+  savewaterquality,
   province
 
 

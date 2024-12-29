@@ -12,7 +12,7 @@ export default function WellReport() {
 
   const fetchWellData = async () => {
     try {
-      const response = await API.viewallwells(); // Adjust the API endpoint
+      const response = await API.viewallwells(); 
       setWellData(response.data);
     } catch (error) {
       console.error('Error fetching well data:', error);
@@ -22,15 +22,15 @@ export default function WellReport() {
   const exportToExcel = () => {
     const ws = XLSX.utils.json_to_sheet(wellData);
 
-    // Apply styles to the header
+    
     const headerRange = XLSX.utils.decode_range(ws['!ref']);
     for (let C = headerRange.s.c; C <= headerRange.e.c; ++C) {
       const cellAddress = XLSX.utils.encode_cell({ c: C, r: 0 });
       if (!ws[cellAddress]) continue;
       ws[cellAddress].s = {
-        fill: { fgColor: { rgb: "4CAF50" } }, // Modern green background
-        font: { bold: true, color: { rgb: "FFFFFF" } }, // White bold font
-        alignment: { horizontal: "center", vertical: "center" } // Center alignment
+        fill: { fgColor: { rgb: "4CAF50" } }, 
+        font: { bold: true, color: { rgb: "FFFFFF" } }, 
+        alignment: { horizontal: "center", vertical: "center" }
       };
     }
 

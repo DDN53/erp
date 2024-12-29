@@ -617,11 +617,10 @@ function Well(props) {
               />
             </div>
           </div>
-          {/* 2nd row */}
+       
           
         </div>
        
-        {/* geo location info */}
         <div className="flex py-3 border-t border-gray-500">
          
         </div>

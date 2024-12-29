@@ -1,4 +1,5 @@
 "use client"
+
 import React, { useEffect, useState } from 'react'
 import dynamic from "next/dynamic";
 import './styles.css'; 
@@ -40,7 +41,456 @@ export default function page() {
   const [provinceFilter, setProvinceFilter] = useState("");
   const [districtFilter, setDistrictFilter] = useState("");
   const [divisionFilter, setDivisionFilter] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
+  const handleEditWell = async (e) => {
+    e.preventDefault();
+    try {
+      if (!editingWell || !editingWell.newWellNo) {
+        throw new Error('Well Number is missing');
+      }
 
+      // Create a clean payload by removing any undefined or null values
+      const cleanPayload = Object.fromEntries(
+        Object.entries(editingWell).filter(([_, value]) => value != null)
+      );
+      
+      await API.editwell(editingWell.newWellNo, cleanPayload);
+
+      setShowEditModal(false);
+      
+      // Refresh the well list
+      const response = await API.viewallwells();
+      setWells(response.data);
+      setFilteredWells(response.data);
+      toast.success('Well updated successfully!');
+    } catch (error) {
+      console.error("Error updating well:", error);
+      
+      // Enhanced error message handling
+      let errorMessage = 'Failed to update well: ';
+      if (error.response) {
+        errorMessage += error.response.data?.message || 
+                       `Server error (${error.response.status})`;
+        console.error('Error response:', error.response.data);
+      } else if (error.request) {
+        errorMessage += 'No response from server';
+      } else {
+        errorMessage += error.message || 'Unknown error occurred';
+      }
+
+      // Show error message to user
+      alert(errorMessage);
+      toast.error(errorMessage);
+    }
+  };
+
+  const handleGenerateWellPDF = async (well) => {
+    try {
+      const formattedData = {
+        wellData: {
+          // Map all properties from the well object
+          newWellNo: well.WELLNO || "",
+          WorkLocation: well.WorkLocation || "",
+          OldWellNo: well.OldWellNo || "",
+          ProjectOffice: well.ProjectOffice || "",
+          RSCLocation: well.RSCLocation || "",
+          Location: well.LOCATION || "",
+          Electorate: well.Electorate || "",
+          Village: well.Village || "",
+          UserType: well.UserType || "",
+          WellType: well.WellType || "",
+          selectedProvince: well.selectedProvince || "",
+          selectedDistrict: well.selectedDistrict || "",
+          selectedDSDivision: well.selectedDSDivision || "",
+          GSDivision: well.GSDivision || "",
+          SchemeName: well.SchemeName || "",
+          TopoSheet: well.TopoSheet || "",
+          ScaleTopoSheet: well.ScaleTopoSheet || "",
+          GeologyMap: well.GeologyMap || "",
+          ScaleGeologyMap: well.ScaleGeologyMap || "",
+          DepthtoTheBottomofSoilLayer: well.DepthtoTheBottomofSoilLayer || "",
+          HighlyWeatheredRock: well.HighlyWeatheredRock || "",
+          WeatheredRock: well.WeatheredRock || "",
+          Geologist: well.Geologist || "",
+          X: well.X || "",
+          Y: well.Y || "",
+          Elevation: well.Elevation || "",
+          LocalMetric1: well.LocalMetric1 || "",
+          LocalMetric2: well.LocalMetric2 || "",
+          Methodofsurvey: well.Methodofsurvey || "",
+          //Chemical Data
+          SampleDate: well.SampleDate || "",
+          SampleDepth: well.SampleDepth || "",
+          SampleTime: well.SampleTime || "",
+          Color: well.Color || "",
+          Turbidity: well.Turbidity || "",
+          Odor: well.Odor || "",
+          Taste: well.Taste || "",
+          PH: well.PH || "",
+          Elecon: well.Elecon || "",
+          Chlorides: well.Chlorides || "",
+          Sulphates: well.Sulphates || "",
+          TotalDissolvedSolids: well.TotalDissolvedSolids || "",
+          Totalk: well.Totalk || "",
+          FreeAmonia: well.FreeAmonia || "",
+          Albamonia: well.Albamonia || "",
+          Nitrates: well.Nitrates || "",
+          Nitrite: well.Nitrite || "",
+          Fluorides: well.Fluorides || "",
+          Phosphate: well.Phosphate || "",
+          Totdissol: well.Totdissol || "",
+          Tothard: well.Tothard || "",
+          Calchard: well.Calchard || "",
+          Totiron: well.Totiron || "",
+          Magnesium: well.Magnesium || "",
+          Sulphate: well.Sulphate || "",
+          Manganese: well.Manganese || "",
+          Dissiron: well.Dissiron || "",
+          Totcoli: well.Totcoli || "",
+          Faecalcoli: well.Faecalcoli || "",
+          Filtiron: well.Filtiron || "",
+          Totresidue: well.Totresidue || "",
+          Calcium: well.Calcium || "",
+          Oxygen: well.Oxygen || "",
+          Hysul: well.Hysul || "",
+          Fixediron: well.Fixediron || "",
+          //Pump Install
+          SWL: well.SWL || "",
+          InstalledDatePedestal: well.InstalledDatePedestal || "",
+          InstalledDatePump: well.InstalledDatePump || "",
+          PumpType: well.PumpType || "",
+          PumpHeadNo: well.PumpHeadNo || "",
+          CylinderType: well.CylinderType || "",
+          CylinderDepth: well.CylinderDepth || "",
+          RiserPipeType: well.RiserPipeType || "",
+          RiserPipeLength: well.RiserPipeLength || "",
+          ConnecRodType: well.ConnecRodType || "",
+          ConnecRodLength: well.ConnecRodLength || "",
+          Remarks: well.Remarks || "",
+          //Request General
+          RequestMode: well.RequestMode || "",
+          Fundingcriteria: well.Fundingcriteria || "",
+          WellCategory: well.WellCategory || "",
+          AgentName: well.AgentName || "",
+          ProjectName: well.ProjectName || "",
+          ContactOrderNo: well.ContactOrderNo || "",
+          DistancetoNearestPublicPerinialWell: well.DistancetoNearestPublicPerinialWell || "",
+          NoOfHousesWithin500M: well.NoOfHousesWithin500M || "",
+          ConcentOfPSForMaintenance: well.ConcentOfPSForMaintenance || "",
+          ConsumerSocietyFormed: well.ConsumerSocietyFormed || "",
+          NameofCareTaker: well.NameofCareTaker || "",
+          AddressofCareTakerline1: well.AddressofCareTakerline1 || "",
+          AddressofCareTakerline2: well.AddressofCareTakerline2 || "",
+          AddressofCareTakerline3: well.AddressofCareTakerline3 || "",
+          TestDate: well.TestDate || "",
+          Step1one: well.Step1one || "",
+          Step1two: well.Step1two || "",
+          Step2one: well.Step2one || "",
+          Step2two: well.Step2two || "",
+          Step3one: well.Step3one || "",
+          Step3two: well.Step3two || "",
+          Step4one: well.Step4one || "",
+          Step4two: well.Step4two || "",
+          Step5one: well.Step5one || "",
+          Step5two: well.Step5two || "",
+          TestDate2: well.TestDate2 || "",
+          EndDate2: well.EndDate2 || "",
+          PumpInstallationDepth: well.PumpInstallationDepth || "",
+          PumpInstallationDepth2: well.PumpInstallationDepth2 || "",
+          AvarageDischargeRate: well.AvarageDischargeRate || "",
+          waterlevelatendoftherecovery: well.waterlevelatendoftherecovery || "",
+          PumingDuration: well.PumingDuration || "",
+          StatisticWaterLevel: well.StatisticWaterLevel || "",
+          StaticWaterLevel: well.StaticWaterLevel || "",
+          PumpingWaterLevelattheEndofthetest: well.PumpingWaterLevelattheEndofthetest || "",
+          Storativity: well.Storativity || "",
+          RecoveryPeriod: well.RecoveryPeriod || "",
+          Transmassvity: well.Transmassvity || "",
+          B: well.B || "",
+          C: well.C || "",
+          TestDate3: well.TestDate3 || "",
+          PumpInstallationDepth3: well.PumpInstallationDepth3 || "",
+          DischargeRate: well.DischargeRate || "",
+          PumpingWaterLevel: well.PumpingWaterLevel || "",
+          PumpingDuration: well.PumpingDuration || "",
+          RecomendationBasedon: well.RecomendationBasedon || "",
+          GeologyRock: well.GeologyRock || "",
+          GeologyOverburden: well.GeologyOverburden || "",
+          selectedWorkLocation: well.selectedWorkLocation || "",
+          selectedRSC: well.selectedRSC || "",
+          selectedWellType: well.selectedWellType || "",
+          selectedWellCondition: well.selectedWellCondition || "",
+          //Drilling Data
+          DrillData: well.DrillData || "",
+          RodNo: well.RodNo || "",
+          Starttime: well.Starttime || "",
+          FinishTime: well.FinishTime || "",
+          Duration: well.Duration || "",
+          drillBitNo: well.drillBitNo || "",
+          DrillBitandHammerType: well.DrillBitandHammerType || "",
+          drillDepth: well.drillDepth || "",
+          yield: well.yield || "",
+          EC: well.EC || "",
+          Fracture: well.Fracture || "",
+          Description: well.Description || "",
+          Solidsample: well.Solidsample || "",
+          WaterSample: well.WaterSample || "",
+          Drillingsign: well.Drillingsign || "",
+          OicSign: well.OicSign || ""
+        },
+        styling: {
+          colors: {
+            primary: '#1E40AF', // Deep blue
+            secondary: '#059669', // Green
+            accent: '#DC2626', // Red
+            background: '#F3F4F6', // Light gray
+            text: '#111827' // Dark gray/black
+          },
+          fonts: {
+            header: 'Helvetica-Bold',
+            body: 'Helvetica'
+          },
+          sections: {
+            header: {
+              backgroundColor: '#1E40AF',
+              textColor: '#FFFFFF',
+              padding: 20
+            },
+            subHeader: {
+              backgroundColor: '#E5E7EB',
+              textColor: '#1F2937',
+              padding: 10
+            },
+            content: {
+              backgroundColor: '#FFFFFF',
+              textColor: '#374151',
+              padding: 15
+            }
+          },
+          table: {
+            headerBgColor: '#1E40AF',
+            headerTextColor: '#FFFFFF',
+            rowBgColor: '#FFFFFF',
+            rowAltBgColor: '#F3F4F6',
+            borderColor: '#D1D5DB'
+          },
+          logo: {
+            width: 150,
+            height: 60,
+            position: { x: 50, y: 50 }
+          }
+        }
+      };
+
+      const response = await API.generateWellReportPDF(formattedData);
+
+      const pdfBlob = new Blob(
+        [response.data || response],
+        { type: 'application/pdf' }
+      );
+      
+      const url = window.URL.createObjectURL(pdfBlob);
+      const filename = `well-${well.WELLNO}-report.pdf`;
+      downloadFile(url, filename);
+      
+      toast.success('PDF generated successfully');
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      toast.error(
+        error.response?.data?.message || 
+        'Failed to generate PDF report. Please try again.'
+      );
+    }
+  };
+
+  const handleGenerateWellExcel = async (well) => {
+    try {
+      // Format the well data according to the required structure
+      const formattedData = {
+        wellData: {
+          // Map all properties from the well object
+          newWellNo: well.WELLNO || "",
+          WorkLocation: well.WorkLocation || "",
+          OldWellNo: well.OldWellNo || "",
+          ProjectOffice: well.ProjectOffice || "",
+          RSCLocation: well.RSCLocation || "",
+          Location: well.LOCATION || "",
+          Electorate: well.Electorate || "",
+          Village: well.Village || "",
+          UserType: well.UserType || "",
+          WellType: well.WellType || "",
+          selectedProvince: well.selectedProvince || "",
+          selectedDistrict: well.selectedDistrict || "",
+          selectedDSDivision: well.selectedDSDivision || "",
+          GSDivision: well.GSDivision || "",
+          SchemeName: well.SchemeName || "",
+          TopoSheet: well.TopoSheet || "",
+          ScaleTopoSheet: well.ScaleTopoSheet || "",
+          GeologyMap: well.GeologyMap || "",
+          ScaleGeologyMap: well.ScaleGeologyMap || "",
+          DepthtoTheBottomofSoilLayer: well.DepthtoTheBottomofSoilLayer || "",
+          HighlyWeatheredRock: well.HighlyWeatheredRock || "",
+          WeatheredRock: well.WeatheredRock || "",
+          Geologist: well.Geologist || "",
+          X: well.X || "",
+          Y: well.Y || "",
+          Elevation: well.Elevation || "",
+          LocalMetric1: well.LocalMetric1 || "",
+          LocalMetric2: well.LocalMetric2 || "",
+          Methodofsurvey: well.Methodofsurvey || "",
+          //Chemical Data
+          SampleDate: well.SampleDate || "",
+          SampleDepth: well.SampleDepth || "",
+          SampleTime: well.SampleTime || "",
+          Color: well.Color || "",
+          Turbidity: well.Turbidity || "",
+          Odor: well.Odor || "",
+          Taste: well.Taste || "",
+          PH: well.PH || "",
+          Elecon: well.Elecon || "",
+          Chlorides: well.Chlorides || "",
+          Sulphates: well.Sulphates || "",
+          TotalDissolvedSolids: well.TotalDissolvedSolids || "",
+          Totalk: well.Totalk || "",
+          FreeAmonia: well.FreeAmonia || "",
+          Albamonia: well.Albamonia || "",
+          Nitrates: well.Nitrates || "",
+          Nitrite: well.Nitrite || "",
+          Fluorides: well.Fluorides || "",
+          Phosphate: well.Phosphate || "",
+          Totdissol: well.Totdissol || "",
+          Tothard: well.Tothard || "",
+          Calchard: well.Calchard || "",
+          Totiron: well.Totiron || "",
+          Magnesium: well.Magnesium || "",
+          Sulphate: well.Sulphate || "",
+          Manganese: well.Manganese || "",
+          Dissiron: well.Dissiron || "",
+          Totcoli: well.Totcoli || "",
+          Faecalcoli: well.Faecalcoli || "",
+          Filtiron: well.Filtiron || "",
+          Totresidue: well.Totresidue || "",
+          Calcium: well.Calcium || "",
+          Oxygen: well.Oxygen || "",
+          Hysul: well.Hysul || "",
+          Fixediron: well.Fixediron || "",
+          //Pump Install
+          SWL: well.SWL || "",
+          InstalledDatePedestal: well.InstalledDatePedestal || "",
+          InstalledDatePump: well.InstalledDatePump || "",
+          PumpType: well.PumpType || "",
+          PumpHeadNo: well.PumpHeadNo || "",
+          CylinderType: well.CylinderType || "",
+          CylinderDepth: well.CylinderDepth || "",
+          RiserPipeType: well.RiserPipeType || "",
+          RiserPipeLength: well.RiserPipeLength || "",
+          ConnecRodType: well.ConnecRodType || "",
+          ConnecRodLength: well.ConnecRodLength || "",
+          Remarks: well.Remarks || "",
+          //Request General
+          RequestMode: well.RequestMode || "",
+          Fundingcriteria: well.Fundingcriteria || "",
+          WellCategory: well.WellCategory || "",
+          AgentName: well.AgentName || "",
+          ProjectName: well.ProjectName || "",
+          ContactOrderNo: well.ContactOrderNo || "",
+          DistancetoNearestPublicPerinialWell: well.DistancetoNearestPublicPerinialWell || "",
+          NoOfHousesWithin500M: well.NoOfHousesWithin500M || "",
+          ConcentOfPSForMaintenance: well.ConcentOfPSForMaintenance || "",
+          ConsumerSocietyFormed: well.ConsumerSocietyFormed || "",
+          NameofCareTaker: well.NameofCareTaker || "",
+          AddressofCareTakerline1: well.AddressofCareTakerline1 || "",
+          AddressofCareTakerline2: well.AddressofCareTakerline2 || "",
+          AddressofCareTakerline3: well.AddressofCareTakerline3 || "",
+          TestDate: well.TestDate || "",
+          Step1one: well.Step1one || "",
+          Step1two: well.Step1two || "",
+          Step2one: well.Step2one || "",
+          Step2two: well.Step2two || "",
+          Step3one: well.Step3one || "",
+          Step3two: well.Step3two || "",
+          Step4one: well.Step4one || "",
+          Step4two: well.Step4two || "",
+          Step5one: well.Step5one || "",
+          Step5two: well.Step5two || "",
+          TestDate2: well.TestDate2 || "",
+          EndDate2: well.EndDate2 || "",
+          PumpInstallationDepth: well.PumpInstallationDepth || "",
+          PumpInstallationDepth2: well.PumpInstallationDepth2 || "",
+          AvarageDischargeRate: well.AvarageDischargeRate || "",
+          waterlevelatendoftherecovery: well.waterlevelatendoftherecovery || "",
+          PumingDuration: well.PumingDuration || "",
+          StatisticWaterLevel: well.StatisticWaterLevel || "",
+          StaticWaterLevel: well.StaticWaterLevel || "",
+          PumpingWaterLevelattheEndofthetest: well.PumpingWaterLevelattheEndofthetest || "",
+          Storativity: well.Storativity || "",
+          RecoveryPeriod: well.RecoveryPeriod || "",
+          Transmassvity: well.Transmassvity || "",
+          B: well.B || "",
+          C: well.C || "",
+          TestDate3: well.TestDate3 || "",
+          PumpInstallationDepth3: well.PumpInstallationDepth3 || "",
+          DischargeRate: well.DischargeRate || "",
+          PumpingWaterLevel: well.PumpingWaterLevel || "",
+          PumpingDuration: well.PumpingDuration || "",
+          RecomendationBasedon: well.RecomendationBasedon || "",
+          GeologyRock: well.GeologyRock || "",
+          GeologyOverburden: well.GeologyOverburden || "",
+          selectedWorkLocation: well.selectedWorkLocation || "",
+          selectedRSC: well.selectedRSC || "",
+          selectedWellType: well.selectedWellType || "",
+          selectedWellCondition: well.selectedWellCondition || "",
+          //Drilling Data
+          DrillData: well.DrillData || "",
+          RodNo: well.RodNo || "",
+          Starttime: well.Starttime || "",
+          FinishTime: well.FinishTime || "",
+          Duration: well.Duration || "",
+          drillBitNo: well.drillBitNo || "",
+          DrillBitandHammerType: well.DrillBitandHammerType || "",
+          drillDepth: well.drillDepth || "",
+          yield: well.yield || "",
+          EC: well.EC || "",
+          Fracture: well.Fracture || "",
+          Description: well.Description || "",
+          Solidsample: well.Solidsample || "",
+          WaterSample: well.WaterSample || "",
+          Drillingsign: well.Drillingsign || "",
+          OicSign: well.OicSign || ""
+        },
+      };
+
+      const response = await API.generateWellReportExcel(formattedData);
+      
+      const url = window.URL.createObjectURL(
+        new Blob([response.data], { 
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
+        })
+      );
+      const filename = `well-${well.WELLNO}-report.xlsx`;
+      downloadFile(url, filename);
+      
+      toast.success('Excel generated successfully');
+    } catch (error) {
+      console.error("Error generating Excel:", error);
+      toast.error(
+        error.response?.data?.message || 
+        'Failed to generate Excel report. Please try again.'
+      );
+    }
+  };
+
+  // Helper function to handle file downloads
+  const downloadFile = (url, filename) => {
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    // Clean up the URL object
+    window.URL.revokeObjectURL(url);
+  };
   const getProjectOfficeNameByCode = (code) => {
     const provinceMap = {
       'EMB': 'Embilipitiya',
@@ -153,11 +603,13 @@ export default function page() {
   
     return dsDivisionMap[code.toString().toUpperCase()] || code;
   };
+   
+
   
   useEffect(() => {
     const fetchWellData = async () => {
       try {
-        setLoading(true); // Set loading true when fetching data
+        setLoading(true); 
         const response = await API.viewallwells();
         console.log("Fetched Well Data:", response);
         
@@ -165,7 +617,7 @@ export default function page() {
         setTableVisible(response.data && response.data.length > 0);
       } catch (error) {
         console.error("Error fetching well data:", error);
-        setWellData([]); // Fallback in case of error
+        setWellData([]); 
       } finally {
         setLoading(false);
       }
