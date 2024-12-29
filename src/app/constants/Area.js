@@ -60,7 +60,7 @@ const provinces = [
   "UvaProvince",
   "WesternProvince",
   "NorthWesternProvince",
-  "NorthCentralProvince",
+ 
 ];
 
 const allDistricts = Object.values(provincesData)

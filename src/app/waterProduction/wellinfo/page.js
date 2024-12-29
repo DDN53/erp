@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from 'next/navigation';
-import API from "@/app/api/index";
+import API from "@/api/index";
 import MainLayout from '@/components/WaterProductLayout/MainLayout';
 import { provinces, getDistrictsByProvince } from "@/app/constants/Area";
 import { getRSCByNumber } from "@/app/constants/RSC";

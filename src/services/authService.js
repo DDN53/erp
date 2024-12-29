@@ -7,7 +7,7 @@ export const Authenticate = async (employeeNo, password) => {
     //   password: password,
     // });
 
-    const response = await apiClient.post("/Authenticate", {
+    const response = await apiClient.post("/auth/Authenticate", {
       userName: employeeNo,
       password: password,
     });

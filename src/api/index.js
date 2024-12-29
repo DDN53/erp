@@ -10,8 +10,8 @@ const config = () => {
 
 const API = axios.create({
   //baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:5000",
-  baseURL: "http://localhost:5000",
-  //baseURL: "http://10.0.19.207:5000",
+   baseURL: "http://localhost:8000",
+  //baseURL: "http://192.168.1.3:8000",
 });
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
@@ -21,49 +21,26 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
-const getEmployee = async (data) => {
-  const response = await API.get("api/users/getemployee");
-  return response.data;
+const addwell = async (data) => {
+  try {
+    const response = await API.post("api/users/addwell", data, {
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  });
+    console.log('API Response:', response);
+    
+    if (!response || !response.data || !response.data.success) {
+      throw new Error('Invalid API response structure or unsuccessful operation');
+    }
+    
+    return response.data;
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error; 
+  }
 };
 
-const signin = async (loginData) => {
-  console.log(loginData);
-  const response = await API.post("api/users/login", loginData);
-  return response.data;
-};
-
-const signup = async (data) => {
-  const response = await API.post("api/users/register", data);
-  return response.data;
-};
-
-const sendVerificationCode = async (data) => {
-  const response = await API.post(
-    "api/users/sendVerificationCode",
-    data,
-    config()
-  );
-  return response.data;
-};
-
-const submitVerficationCode = async (data) => {
-  const response = await API.post(
-    "api/users/submitVerificationCode",
-    data,
-    config()
-  );
-  return response.data;
-};
-
-const changePassword = async (data) => {
-  const response = await API.post("api/users/resetPassword", data);
-  return response.data;
-};
-
-const getProfile = async () => {
-  const response = await API.get("api/users/profile");
-  return response.data;
-};
 const viewallwells = async () => {
   const response = await API.get("api/users/viewallwells");
   return response.data;
@@ -77,24 +54,6 @@ const viewwell = async (newWellNo) => {
   return response.data;
 };
 
-const addwell = async (data) => {
-  try {
-    const response = await API.post("api/users/addwell", data);
-    
-    // Log the full response for debugging
-    console.log('Full API Response:', response);
-    
-    // Validate response structure
-    if (!response || !response.data) {
-      throw new Error('Invalid API response structure');
-    }
-    
-    return response;
-  } catch (error) {
-    console.error('API Error:', error);
-    throw error; // Re-throw to handle in component
-  }
-};
 
 const editwell = async (newWellNo, data) => {
   const response = await API.put(`api/users/editwell/${newWellNo}`, data);
@@ -117,6 +76,11 @@ const edituser = async (data) => {
 
 const deleteuser = async (userName) => {
   const response = await API.post(`api/users/deleteuser/${userName}`);
+  return response.data;
+};
+
+const province = async () => {
+  const response = await API.get("api/comman/getAllProvinces");
   return response.data;
 };
 
@@ -150,30 +114,6 @@ const removemonthlydata = async (mid) => {
   );
   return response.data;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const generateWellReportPDF = async (data) => {
   return await API.post(`api/users/report/pdf`, data, {
     responseType: 'blob' 
@@ -197,12 +137,6 @@ const monthlyDataReportExcel = async (wellNo) => {
     responseType: 'blob' 
   });
 };
-
-
-
-
-
-
 
 const AddwaterQuality = async (data) => {
   const response = await API.post("api/waterQuality/", data);
@@ -240,12 +174,9 @@ const addDrillingData = async (data) => {
   return response.data;
 };
 
+
+
 const api = {
-  signin,
-  signup,
-  submitVerficationCode,
-  sendVerificationCode,
-  changePassword,
   viewallwells,
   addwell,
   viewwell,
@@ -268,6 +199,9 @@ const api = {
   monthlyDataReportExcel,
   AddWeatherCondition,
   addChemicalData,
-  addDrillingData
+  addDrillingData,
+  province
+
+
 };
 export default api;

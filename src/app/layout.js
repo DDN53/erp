@@ -14,10 +14,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
+    <html lang="en" >
+      <meta
+  name="format-detection"
+  content="telephone=no, date=no, email=no, address=no"
+/>
+      <body suppressHydrationWarning={true}
         className={`${roboto.variable} antialiased`}
       >
+        
         <ThemeProvider attribute="class" defaultTheme="system">
           {children}
         </ThemeProvider>

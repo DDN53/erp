@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import API from "../../app/api"; 
+import API from "../../api"; 
 import { getRSCByNumber } from "../../app/constants/RSC";
 
 function WellData(props) {

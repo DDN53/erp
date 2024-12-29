@@ -19,8 +19,8 @@ import TableHead from "@mui/material/TableHead";
 import { useDispatch, useSelector } from "react-redux";
 import RemoveWell from "./RemoveWell";
 import { useRouter } from "next/router";
-import API from "@/app/api/index";
-import { getUserDataFromToken } from "@/app/utils/userValidation";
+import API from "@/api/index";
+import { getUserDataFromToken } from "@/utils/userValidation";
 
 WellsTable.propTypes = {
   count: PropTypes.number.isRequired,

@@ -1,16 +1,12 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import api from '@/app/api';
+import API from "@/api/index";
 import { toast } from 'react-toastify';
 import { provinces, getDistrictsByProvince } from "@/app/constants/Area";
 import { getDSDivisionByDistrict } from "@/app/constants/dsDivisions";
-import axios from 'axios';
 
 const WaterQualityPage = () => {
-  // Define the token variable here
-  const token = 'your_token_here'; // Replace with your actual token logic
-
   // Add state management for form data
   const [formData, setFormData] = useState({
     rsc: '',
@@ -27,26 +23,15 @@ const WaterQualityPage = () => {
     samplePointName: '',
     time: '',
     weatherCondition: '',
-    sampleNumber: '',
-    condition: ''
+    sampleNumber: ''
   });
 
   // Add tableData state
   const [tableData, setTableData] = useState([]);
 
-  // Add state for locations
-  const [locations, setLocations] = useState([]);
-
-  // Add state for regions
-  const [regions, setRegions] = useState([]); // New state for regions
-
-
-
   // Add useEffect to fetch data when component mounts
   useEffect(() => {
     fetchWaterQualityData();
-    fetchLocations(); // Fetch locations on component mount
-    fetchRegions(); // Fetch regions on component mount
   }, []);
 
   const fetchWaterQualityData = async () => {
@@ -81,58 +66,6 @@ const WaterQualityPage = () => {
     }
   };
 
-  // New function to fetch locations
-  const fetchLocations = async () => {
-    try {
-      const response = await axios.get('http://localhost:5229/GetAllLocations', {
-        headers: {
-          Authorization: `Bearer ${token}` 
-        }
-      });
-      console.log('Locations Response:', response.data); // Log the entire response data
-      if (response.data) {
-        // Filter locations to get only those with locationType "RO"
-        const filteredRegions = response.data.filter(location => location.locationType === "RSC");
-        setLocations(filteredRegions); // Set the filtered regions
-      }
-    } catch (error) {
-      toast.error('Failed to fetch locations');
-      console.error('Fetch Locations Error:', error);
-    }
-  };
-
-  // New function to fetch regions based on locations
-  const fetchRegions = async () => {
-    try {
-      const response = await axios.get('http://localhost:5229/GetAllLocations', {
-        headers: {
-          Authorization: `Bearer ${token}` 
-        }
-      });
-      console.log('Locations Response:', response.data); // Log the entire response data
-      if (response.data) {
-        // Filter locations to get only those with locationType "RO"
-        const filteredRegions = response.data.filter(location => location.locationType === "RO");
-        setRegions(filteredRegions); // Set the filtered regions
-      }
-    } catch (error) {
-      toast.error('Failed to fetch regions');
-      console.error('Fetch Regions Error:', error);
-    }
-  };
-
-  // Update the RSC select options to use the fetched locations
-  const rscOptions = locations.map(location => ({
-    value: location.id,
-    label: location.name
-  }));
-
-  // Update the Region select options to use the filtered regions
-  const regionOptions = regions.map(region => ({
-    value: region.id,
-    label: region.name
-  }));
-
   // Handle input changes
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -161,7 +94,7 @@ const WaterQualityPage = () => {
         type={type || "text"}
         id={id}
         min={min}
-        className="w-[70%] p-2 border rounded-md border-gray-300 dark:bg-slate-600 dark:text-white"
+        className="w-[70%] p-2 border rounded-md border-gray-950 dark:bg-slate-600 dark:text-white"
         value={formData[id]}
         onChange={handleChange}
       />
@@ -332,7 +265,7 @@ const WaterQualityPage = () => {
  
       <div className="flex flex-col items-center gap-6 p-6 bg-gray-50 min-h-screen dark:bg-slate-950 dark:text-white">
         {/* Form Section */}
-        <form onSubmit={handleSubmit} className="w-[90%] bg-white rounded-md shadow-md p-6 border border-gray-300 dark:bg-slate-800 dark:text-white">
+        <form onSubmit={handleSubmit} className="w-[90%] bg-white rounded-md shadow-md p-6 border border-gray-950 dark:bg-slate-800 dark:text-white">
           <div className="grid grid-cols-2 gap-6">
             {/* Left Column */}
             <div className="space-y-4">
@@ -341,11 +274,14 @@ const WaterQualityPage = () => {
                 label: "RSC",
                 id: "rsc",
                 type: "select",
-                options: rscOptions, // Use the fetched options
+                options: provinces.map(province => ({
+                  value: province,
+                  label: province
+                })),
                 required: true
               },
-                { label: "Region", id: "region", type: "select", options: regionOptions, required: true },
-                { label: "Scheme", id: "scheme", type: "select", options: formData.region ? getDSDivisionByDistrict(formData.region) : [], },
+                { label: "Region", id: "region", type: "select", options: formData.rsc ? getDistrictsByProvince(formData.rsc) : [], required: true },
+                { label: "Scheme", id: "scheme", type: "select", options: formData.region ? getDSDivisionByDistrict(formData.region) : [], required: true },
                 { label: "Source", id: "source", type: "select", options: ["River", "Well", "Spring", "Stream"], required: true },
                 { label: "Sample Date", id: "sampleDate", type: "date" },
                 { label: "Sample Collector Name", id: "collectorName" },
@@ -360,7 +296,7 @@ const WaterQualityPage = () => {
                   {type === "select" ? (
                     <select
                       id={id}
-                      className="w-[70%] p-2 border rounded-md border-gray-300 dark:bg-slate-600 dark:text-white"
+                      className="w-[70%] p-2 border rounded-md border-gray-950 dark:bg-slate-600 dark:text-white"
                       required={required}
                       value={formData[id]}
                       onChange={handleChange}
@@ -376,7 +312,7 @@ const WaterQualityPage = () => {
                     <input
                       type={type || "text"}
                       id={id}
-                      className="w-[70%] p-2 border rounded-md border-gray-300 dark:bg-slate-600 dark:text-white"
+                      className="w-[70%] p-2 border rounded-md border-gray-950 dark:bg-slate-600 dark:text-white"
                       required={required}
                       value={formData[id]}
                       onChange={handleChange}
@@ -401,17 +337,17 @@ const WaterQualityPage = () => {
         </form>
 
         {/* Updated Table Section */}
-        <div className="w-[90%] bg-white rounded-md shadow-md p-6 border border-gray-300 overflow-x-auto dark:bg-slate-800 dark:text-white">
-          <table className="w-full border-collapse border border-gray-300 dark:bg-slate-700 dark:text-white">
+        <div className="w-[90%] bg-white rounded-md shadow-md p-6 border border-gray-950 overflow-x-auto dark:bg-slate-800 dark:text-white">
+          <table className="w-full border-collapse border border-gray-950 dark:bg-slate-700 dark:text-white">
             <thead>
               <tr className="bg-gray-100 dark:bg-slate-800">
-              <th className="border border-gray-300 px-4 py-2">Time</th>
+              <th className="border border-gray-950 px-4 py-2">Time</th>
 
              
-              <th className="border border-gray-300 px-4 py-2">Sample Point Number</th>
-              <th className="border border-gray-300 px-4 py-2">weather Condition</th>
-                <th className="border border-gray-300 px-4 py-2">Sample Number</th>
-                <th className="border border-gray-300 px-4 py-2">Action</th>
+              <th className="border border-gray-950 px-4 py-2">Sample Point Number</th>
+              <th className="border border-gray-950 px-4 py-2">weather Condition</th>
+                <th className="border border-gray-950 px-4 py-2">Sample Number</th>
+                <th className="border border-gray-950 px-4 py-2">Action</th>
              
              
              
@@ -421,7 +357,7 @@ const WaterQualityPage = () => {
               {tableData.length > 0 ? (
                 tableData.map((row, index) => (
                   <tr key={index}>
-                    <td className="border border-gray-300 px-4 py-2">
+                    <td className="border border-gray-950 px-4 py-2">
                       {row.sampleDate ? new Date(row.sampleDate).toLocaleString('en-US', {
                         timeZone: 'Asia/Colombo',
                         hour: '2-digit',
@@ -430,8 +366,8 @@ const WaterQualityPage = () => {
                       }) : 'N/A'}
                     </td>
                   
-                    <td className="border border-gray-300 px-4 py-2">{row.samplePointName}</td>
-                    <td className="border border-gray-300 px-4 py-2">
+                    <td className="border border-gray-950 px-4 py-2">{row.samplePointName}</td>
+                    <td className="border border-gray-950 px-4 py-2">
                       <select 
                         className="w-full p-1 border rounded dark:bg-slate-600 dark:text-white"
                         value={row.weatherCondition}
@@ -444,8 +380,8 @@ const WaterQualityPage = () => {
                         ))}
                       </select>
                     </td>
-                    <td className="border border-gray-300 px-4 py-2">{`Number ${index + 1}`}</td>
-                    <td className="border border-gray-300 px-4 py-2">{row.sampleGroup}</td>
+                    <td className="border border-gray-950 px-4 py-2">{`Number ${index + 1}`}</td>
+                    <td className="border border-gray-950 px-4 py-2">{row.sampleGroup}</td>
                   
                     
                    
@@ -453,7 +389,7 @@ const WaterQualityPage = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="8" className="border border-gray-300 px-4 py-2 text-center text-gray-500">
+                  <td colSpan="8" className="border border-gray-950 px-4 py-2 text-center text-gray-500">
                     No data available
                   </td>
                 </tr>

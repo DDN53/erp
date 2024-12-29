@@ -1,5 +1,5 @@
 "use client"
-
+import dynamic from 'next/dynamic';
 import React, { useState, useEffect } from 'react';
 import { Pie, Line, Scatter, Bar } from 'react-chartjs-2';
 import {
@@ -15,8 +15,13 @@ import {
   ArcElement
 } from 'chart.js';
 
-import API from "@/app/api/index";
 
+const API = dynamic(()=>import("@/api/index").then((mod)=>mod.default),
+{
+  ssr: false,
+  loading: () => <LoadingAnimation />
+}
+)
 // Register ChartJS components
 ChartJS.register(
   CategoryScale,
@@ -40,7 +45,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchWells = async () => {
       try {
-        const response = await API.viewallwells();
+        const response =await API.viewallwells();
         const filteredWells = selectedWellType === 'all' 
           ? response.data 
           : response.data.filter(well => well.selectedWellType === selectedWellType);

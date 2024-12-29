@@ -16,7 +16,7 @@ const registerAdmin = async (adminData) => {
 
 const loginAdmin = async (adminLoginData) => {
   try {
-    const response = await apiClient.post("/LoginAdmin", adminLoginData);
+    const response = await apiClient.post("/admin/LoginAdmin", adminLoginData);
     return response.data;
   } catch (error) {
     console.error(
@@ -29,7 +29,7 @@ const loginAdmin = async (adminLoginData) => {
 
 const getAdminTasks = async () => {
   try {
-    const response = await apiClient.get("/AdminGetAllGroupTasks");
+    const response = await apiClient.get("/admin/AdminGetAllGroupTasks");
     return response.data;
   } catch (error) {
     console.error(
@@ -42,7 +42,7 @@ const getAdminTasks = async () => {
 
 const getEmployeeDetails = async (empNo) => {
   try {
-    const response = await apiClient.get(`/GetEmployeeNew/${empNo}`);
+    const response = await apiClient.get(`/comman/GetEmployeeNew/${empNo}`);
     return response.data;
   } catch (error) {
     console.error(
@@ -55,7 +55,7 @@ const getEmployeeDetails = async (empNo) => {
 
 const getModules = async () => {
   try {
-    const response = await apiClient.get(`/GetAdminModules`);
+    const response = await apiClient.get("/admin/GetAdminModules");
     return response.data;
   } catch (error) {
     console.error(
@@ -83,7 +83,7 @@ const getAdminModulesWithRelation = async () => {
 const getAssignedTasks = async (employeeNumber) => {
   try {
     const response = await apiClient.get(
-      `/GetAssignedGroupedTasks/${employeeNumber}`
+      `/admin/GetAssignedGroupedTasks/${employeeNumber}`
     );
     return response.data;
   } catch (error) {

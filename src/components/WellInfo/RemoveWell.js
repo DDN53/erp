@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "@/app/api/index";
+import api from "@/api/index";
 
 const RemoveWell = ({ onClose, wellId, onRemove }) => {
   const [timer, setTimer] = useState(15);

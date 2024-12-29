@@ -3,8 +3,8 @@ import MainLayout from '@/components/WaterProductLayout/MainLayout'
 import React, { useState, useEffect } from "react";
 import dynamic from 'next/dynamic';
 
-import API from "@/app/api/index";
-import { getUserDataFromToken } from "@/app/utils/userValidation";
+import API from "@/api/index";
+import { getUserDataFromToken } from "@/utils/userValidation";
 import Select from "react-select";
 
 import WellData from "@/components/ViewWell/WellData";

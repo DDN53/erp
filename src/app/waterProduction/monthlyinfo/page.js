@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import API from "@/app/api/index";
+import API from "@/api/index";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import dynamic from 'next/dynamic';
@@ -37,7 +37,7 @@ function MonthlyInfo(props) {
       try {
         setLoading(true);
        
-        const response = await API.viewallmonthlydata(); 
+        // const response = await API.viewallmonthlydata(); 
      
         
         if (!Array.isArray(response.data)) {
@@ -143,7 +143,7 @@ function MonthlyInfo(props) {
           throw new Error('No valid ID found for record');
         }
 
-        const response = await API.removemonthlydata(recordId);
+        // const response = await API.removemonthlydata(recordId);
         console.log('Delete response:', response);
         
         const refreshResponse = await API.viewallmonthlydata();
@@ -171,8 +171,6 @@ function MonthlyInfo(props) {
         ...editingRecord,
         SampleDate: new Date(editingRecord.SampleDate).toISOString().split('T')[0]
       };
-
-     
       
       
       // Close the edit modal
@@ -224,7 +222,7 @@ function MonthlyInfo(props) {
         return;
       }
 
-      const response = await API.monthlyDataReportPDF(wellNo);
+      // const response = await API.monthlyDataReportPDF(wellNo);
       
       // Create and trigger download
       const pdfBlob = new Blob([response.data], { type: 'application/pdf' });

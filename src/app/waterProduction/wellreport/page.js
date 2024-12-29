@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import * as XLSX from 'xlsx';
-import API from '@/app/api/index';
+import API from "@/api/index";
 
 export default function WellReport() {
   const [wellData, setWellData] = useState([]);

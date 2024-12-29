@@ -9,8 +9,11 @@ const nextConfig={
 };
 module.exports = withBundleAnalyzer(nextConfig),{
   
-  async middleware() {
-    return ["/", "/home","/waterQuality"];
-  },
+  // async middleware() {
+  //   return ["/", "/home","/waterQuality"];
+  // },
   
 };
+module.exports = {
+  reactStrictMode: true,
+}

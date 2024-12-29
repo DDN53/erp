@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css'
 export default function Layout({children}) {
   return (
     <div>
+      
       <MainLayout>{children}</MainLayout>
       <ToastContainer />
     </div>
