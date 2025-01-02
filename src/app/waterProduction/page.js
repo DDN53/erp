@@ -16,7 +16,7 @@ import {
 } from 'chart.js';
 
 
-const API = dynamic(()=>import("@/api/index").then((mod)=>mod.default),
+const API = dynamic(()=>import("@/api/route").then((mod)=>mod.default),
 {
   ssr: false,
   loading: () => <LoadingAnimation />

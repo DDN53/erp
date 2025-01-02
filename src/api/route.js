@@ -1,54 +1,28 @@
 import axios from "axios";
 
-const config = () => {
-  return {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-  };
-};
+
 
 const API = axios.create({
   //baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:5000",
    baseURL: "http://localhost:8000",
   //baseURL: "http://192.168.1.3:8000",
 });
-API.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+
 
 const addwell = async (data) => {
-  try {
-    const response = await API.post("api/users/addwell", data, {
-      headers: {
-          'Content-Type': 'application/json'
-      }
-  });
-    console.log('API Response:', response);
-    
-    if (!response || !response.data || !response.data.success) {
-      throw new Error('Invalid API response structure or unsuccessful operation');
-    }
-    
-    return response.data;
-  } catch (error) {
-    console.error('API Error:', error);
-    throw error; 
-  }
+  const response = await API.post("api/users/addwell", data);
+  return response.data;
 };
+
 
 const viewallwells = async () => {
   const response = await API.get("api/users/viewallwells");
   return response.data;
 };
 
-const viewwell = async (newWellNo) => {
+const viewwell = async (newWellNumber) => {
   const response = await API.get(
-    `api/users/viewwell?newWellNumber=${newWellNo}`,
+    `api/users/viewwell?newWellNumber=${newWellNumber}`,
     config()
   );
   return response.data;

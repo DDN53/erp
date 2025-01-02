@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import api from "@/api/index";
+import api from "@/api/route";
 import { toast } from 'react-toastify';
 import { provinces, getDistrictsByProvince } from "@/app/constants/Area";
 import { getDSDivisionByDistrict } from "@/app/constants/dsDivisions";
@@ -60,43 +60,6 @@ const WaterQualityPage = () => {
 
   }, []);
 
-  // Add useEffect to fetch data when component mounts
-  // useEffect(() => {
-  //   fetchWaterQualityData();
-  // }, []);
-
-  // const fetchWaterQualityData = async () => {
-  //   try {
-  //     const response = await api.waterQualityView();
-  //     console.log('response', response);
-  //     if (response.success) {
-  //       // Update to include all relevant fields, including _id
-  //       const formattedData = response.data.map(item => ({
-  //         _id: item._id, // Ensure _id is included
-  //         rsc: item.rsc,
-  //         region: item.region,
-  //         scheme: item.scheme,
-  //         source: item.source,
-  //         sampleDate: item.sampleDate,
-  //         collectorName: item.collectorName,
-  //         references: item.references,
-  //         sampleGroup: item.sampleGroup,
-  //         prepareDate: item.prepareDate,
-  //         volume: item.volume,
-  //         designation: item.designation,
-  //         samplePointName: item.samplePointName,
-  //         time: item.time,
-  //         weatherCondition: item.condition,
-  //         sampleNumber: item.sampleNumber
-  //       }));
-  //       setTableData(formattedData);
-  //     }
-  //   } catch (error) {
-  //     toast.error('Failed to fetch water quality data');
-  //     console.error('Fetch Error:', error);
-  //   }
-  // };
-
   // Handle input changes
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -148,22 +111,8 @@ const WaterQualityPage = () => {
       }
 
       // Format the data to match the expected structure
-      const formattedData = {
-        rsc: formData.rsc,
-        region: formData.region,
-        source: formData.source,
-        sampleDate: new Date().toISOString(),
-        collectorName: formData.collectorName || null,
-        references: formData.references || null,
-        sampleGroup: formData.sampleGroup || null,
-        prepareDate: formData.prepareDate ? new Date(formData.prepareDate).toISOString() : null,
-        volume: formData.volume ? parseInt(formData.volume, 10) : null,
-        designation: formData.designation || null,
-        samplePointName: formData.samplePointName || null,
-        time: formData.time || null,
-        weatherCondition: formData.condition || null,
-        sampleNumber: formData.sampleNumber ? parseInt(formData.sampleNumber, 10) : null
-      };
+     
+  
 
       // Log the formatted data to verify values
       console.log('Displaying data:', formattedData);
@@ -172,21 +121,22 @@ const WaterQualityPage = () => {
       setTableData(prev => [...prev, formattedData]);
 
       // Reset form data after submission
-      setFormData({
+      const [formData, setFormData] = useState({
         rsc: '',
         region: '',
+        scheme: '',
         source: '',
         sampleDate: '',
         collectorName: '',
         references: '',
         sampleGroup: '',
-        prepareDate: '',
-        volume: '',
+        prepareDate: null, // Match backend null default
+        volume: null, // Match backend null default
         designation: '',
         samplePointName: '',
-        time: '',
-        condition: '',
-        sampleNumber: ''
+        time: null, // Match backend null default
+        weatherCondition: null, // Match backend null default
+        sampleNumber: null, // Match backend null default
       });
 
     } catch (error) {
@@ -194,7 +144,26 @@ const WaterQualityPage = () => {
       console.error('Display Error:', error);
     }
   };
-
+  const formattedData = {
+    rsc: formData.rsc,
+    region: formData.region,
+    source: formData.source,
+    sampleDate: new Date().toISOString(),
+    collectorName: formData.collectorName || null,
+    references: formData.references || null,
+    sampleGroup: formData.sampleGroup || null,
+    prepareDate: formData.prepareDate
+      ? new Date(formData.prepareDate).toISOString()
+      : null,
+    volume: formData.volume !== null ? parseInt(formData.volume, 10) : null,
+    designation: formData.designation || null,
+    samplePointName: formData.samplePointName || null,
+    time: formData.time || null,
+    weatherCondition: formData.weatherCondition || null,
+    sampleNumber: formData.sampleNumber !== null 
+      ? parseInt(formData.sampleNumber, 10) 
+      : null,
+  };
   // Add this function to fetch current time from API
   const getCurrentDateTime = async () => {
     try {
@@ -209,65 +178,75 @@ const WaterQualityPage = () => {
 
   const handleAction = async (action) => {
     try {
-      if (action.toLowerCase() === "save") {
-          const data = {
-              ...formData,
-              sampleDate: new Date().toISOString(),
-          };
+      const lowerAction = action.toLowerCase();
   
-          const response = await api.savewaterquality(data);
+      if (lowerAction === "save") {
+        const data = {
+          ...formData,
+          sampleDate: new Date().toISOString(),
+        };
   
-          if (response.success) {
-              toast.success("Data saved successfully");
-          } else {
-              throw new Error("Failed to save data"); // Ensure error is caught
-          }
+        const response = await api.savewaterquality(data);
+  
+        if (response.success) {
+          toast.success("Data saved successfully");
+  
+          // Optionally, update the table data if needed
+          setTableData((prev) => [...prev, response.data]);
+  
+          // Reset form after save
+          setFormData(
+            Object.keys(formData).reduce((acc, key) => {
+              acc[key] = null; // Reset to `null` for better backend compatibility
+              return acc;
+            }, {})
+          );
+        } else {
+          throw new Error(response.message || "Failed to save data");
+        }
       } else {
-          switch (action.toLowerCase()) {
-              case "edit":
-                  // Enable form editing logic here
-                  break;
+        // Handle other actions
+        switch (lowerAction) {
+          case "edit":
+            // Enable form editing logic here
+            console.info("Edit action triggered");
+            break;
   
-              case "view":
-                  // Handle view action logic here
-                  break;
+          case "view":
+            // Handle view action logic here
+            console.info("View action triggered");
+            break;
   
-              case "clear":
-                  setFormData({
-                      rsc: "",
-                      region: "",
-                      source: "",
-                      sampleDate: "",
-                      collectorName: "",
-                      references: "",
-                      sampleGroup: "",
-                      prepareDate: "",
-                      volume: "",
-                      designation: "",
-                      samplePointName: "",
-                      time: "",
-                      condition: "",
-                      sampleNumber: "",
-                  });
-                  break;
+          case "clear":
+            setFormData(
+              Object.keys(formData).reduce((acc, key) => {
+                acc[key] = ""; // Clear form fields
+                return acc;
+              }, {})
+            );
+            toast.success("Form cleared successfully");
+            break;
   
-              case "close":
-                  // Handle modal close or navigation logic here
-                  break;
+          case "close":
+            // Handle modal close or navigation logic here
+            console.info("Close action triggered");
+            break;
   
-              default:
-                  console.warn("Unknown action:", action);
-                  break;
-          }
+          default:
+            console.warn("Unknown action:", action);
+            break;
+        }
       }
-  } catch (error) {
+    } catch (error) {
       if (action.toLowerCase() === "save") {
-          toast.error("An error occurred while saving data");
+        toast.error("An error occurred while saving data");
+      } else {
+        toast.error(`Failed to perform "${action}" action`);
       }
       console.error(`Error during "${action}" action:`, error);
-  }
+    }
+  };
   
-};
   
 
   // Add this new function before the return statement

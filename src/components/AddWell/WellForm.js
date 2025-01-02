@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { provinces } from "@/app/constants/Area";
 import { getDSDivisionByDistrict } from "@/app/constants/dsDivisions";
-import API from "@/api/index";
+import API from "@/api/route";
 import { getUserDataFromToken } from "@/utils/userValidation";
 import { Worklocations } from "@/app/constants/WorkLocations";
 import { ChemicalData, GeologyOverburden, GeologyRock, PumpInstall, RequestGeneral, Test, Drilling, Well } from "@/components/AddWell/index";
@@ -154,12 +154,14 @@ function Addwellmain() {
       const response = await API.addwell(wellData);
       console.log('Add well response:', response);
       
-      if (response.data) {
+      if (response && response.data) {
+        console.log('Add well response:', response.data);
         setIsWellSaved(true);
         setSavedWellId(response.data.id);
         alert("Well data saved successfully!");
       } else {
-        throw new Error('No data received from server');
+        console.error("No data in response.");
+        alert("Failed to save well data: No response data received.");
       }
     } catch (error) {
       console.error("Error saving well:", error);
@@ -225,7 +227,6 @@ function Addwellmain() {
                 handleChange={handleChange}
                 Worklocations={Worklocations}
                 provinces={provinces}
-           
                 setDsDivisions={setDSDivisions}
                 selectedProjectOffice={selectedProjectOffice}
                 setDistricts={setDistricts}

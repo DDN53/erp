@@ -18,45 +18,63 @@ function Well(props) {
      const [rscOptions, setRscOptions] = useState([]);
      const [dsDivisions, setDSDivisions] = useState([]);
 
-  const provinces = locationData.provinces;
-
-  const getDistricts = (provinceId) =>{
-    const province = provinces.find(p => p.Id === parseInt(provinceId));
-    return province ? province.districts : [];
-  }
+     const getDistricts = (provinceCode) => {
+      const province = locationData.provinces.find((p) => p.Code === provinceCode);
+      return province ? province.districts : [];
+    };
   
-  const getDSDivisions = (provinceId, districtId) => {
-    const province = provinces.find(p => p.Id === parseInt(provinceId));
-    if (!province) return [];
+    const getDSDivisions = (provinceCode, districtCode) => {
+      const province = locationData.provinces.find((p) => p.Code === provinceCode);
+      const district = province?.districts.find((d) => d.Code === districtCode);
+      return district ? district.dsDivisions : [];
+    };
+    const handleProvinceChange = (provinceCode) => {
+      setSelectedProvince(provinceCode); // Local state update
+      setDSDivisions([]); // Reset DS Divisions
+      props.handleChange({
+        target: { name: "PROVINCE_CODE", value: provinceCode },
+      });
     
-    const district = province.districts.find(d => d.Id === parseInt(districtId));
-    return district ? district.dsDivisions : [];
-  };
-
-  const handleProvinceChange = (provinceId) => {
-    setSelectedProvince(provinceId);
-    setSelectedDistrict(null);
-    props.handleChange({
-      target: { name: 'selectedProvince', value: provinceId }
-    });
+      const selectedProvinceName = locationData.provinces.find(
+        (province) => province.Code === provinceCode
+      )?.Name;
     
-   
-    const districts = getDistricts(provinceId);
-    props.setDistricts(districts);
-
-    props.handleChange({
-      target: { name: 'DSDIV_CODE', value: '' }
-    });
-  };
-  const handleDistrictChange = (districtId) => {
-    setSelectedDistrict(districtId);
-    props.handleChange({
-      target: { name: 'selectedDistrict', value: districtId }
-    });
+      props.handleChange({
+        target: { name: "PROVINCE_NAME", value: selectedProvinceName || "" },
+      });
+    };
     
-    const dsDivisions = getDSDivisions(districtId);
-    setDSDivisions(dsDivisions);
-  };
+    const handleDistrictChange = (districtCode) => {
+      setSelectedDistrict(districtCode); // Local state update
+      const dsDivisionsList = getDSDivisions(selectedProvince, districtCode);
+      setDSDivisions(dsDivisionsList);
+    
+      props.handleChange({
+        target: { name: "DISTRICT_CODE", value: districtCode },
+      });
+    
+      const selectedDistrictName = getDistricts(selectedProvince).find(
+        (district) => district.Code === districtCode
+      )?.Name;
+    
+      props.handleChange({
+        target: { name: "DISTRICT_NAME", value: selectedDistrictName || "" },
+      });
+    };
+    
+    
+  
+    const handleDSDivisionChange = (divisionCode) => {
+      const dsDivisionName = dsDivisions.find((division) => division === divisionCode);
+  
+      props.handleChange({
+        target: { name: "DSDIV_CODE", value: divisionCode },
+      });
+      props.handleChange({
+        target: { name: "DSDIV_NAME", value: dsDivisionName || "" },
+      });
+    };
+  
 
   const handleWorkLocationChange = (value, selectedOption) => {
     props.handleWorkLocationChange(value, selectedOption);
@@ -172,7 +190,7 @@ function Well(props) {
       props.handleChange({
         target: {
           name: 'selectedProjectOfficeName',
-          value: selectedLocation?.name || '',
+          value: selectedLocation.name || '',
         },
       });
     }}
@@ -190,75 +208,43 @@ function Well(props) {
 
 </div>
 
-
-
             {/* Province */}
             <div className="flex items-center mb-2">
       <p className="block mb-2">Province:</p>
       <select
-    value={props.formData.selectedProvince || ''}
-    onChange={(e) => {
-      const selectedProvinceId = e.target.value;
-      const selectedProvince = provinces.find(
-        (province) => province.Id === parseInt(selectedProvinceId)
-      );
+  value={props.formData.PROVINCE_CODE || ""}
+  onChange={(e) => handleProvinceChange(e.target.value)}
+  className="p-2 ml-auto border border-gray-500 rounded-md w-[63%] dark:bg-slate-700 dark:text-white"
+>
+  <option value="">Select Province</option>
+  {locationData.provinces.map((province) => (
+    <option key={province.Code} value={province.Code}>
+      {province.Name}
+    </option>
+  ))}
+</select>
 
-      handleProvinceChange(selectedProvinceId);
 
-      // Store the name of the selected province
-      props.handleChange({
-        target: { name: 'selectedProvince', value: selectedProvinceId },
-      });
-
-      props.handleChange({
-        target: { name: 'selectedProvinceName', value: selectedProvince?.Name || '' },
-      });
-    }}
-    className="p-2 ml-auto border border-gray-500 rounded-md w-[63%]   dark:bg-slate-700 dark:text-white"
-  >
-    <option value="">Select Province</option>
-    {provinces.map((province) => (
-      <option key={province.Id} value={province.Id}>
-        {province.Name}
-      </option>
-    ))}
-  </select>
 
     </div>
 
-            {/* District */}
-            <div className="flex items-center mb-2">
-      <p className="block mb-2">District:</p>
-      <select
-    value={props.formData.selectedDistrict || ''}
-    onChange={(e) => {
-      const selectedDistrictId = e.target.value;
-      const selectedDistrict = getDistricts(props.formData.selectedProvince).find(
-        (district) => district.Id === parseInt(selectedDistrictId)
-      );
-
-      handleDistrictChange(selectedDistrictId);
-
-      props.handleChange({
-        target: { name: 'selectedDistrict', value: selectedDistrictId },
-      });
-
-      props.handleChange({
-        target: { name: 'selectedDistrictName', value: selectedDistrict?.Name || '' },
-      });
-    }}
-    disabled={!props.formData.selectedProvince}
-    className="p-2 ml-auto border border-gray-500 rounded-md w-[63%]  dark:bg-slate-700 dark:text-white"
+  {/* District */}
+<div className="flex items-center mb-2">
+  <p className="block mb-2">District:</p>
+  <select
+    value={props.formData.DISTRICT_CODE || ""}
+    onChange={(e) => handleDistrictChange(e.target.value)}
+    disabled={!selectedProvince}
+    className="p-2 ml-auto border border-gray-500 rounded-md w-[63%] dark:bg-slate-700 dark:text-white"
   >
     <option value="">Select District</option>
-    {getDistricts(props.formData.selectedProvince).map((district) => (
-      <option key={district.Id} value={district.Id}>
+    {getDistricts(selectedProvince).map((district) => (
+      <option key={district.Code} value={district.Code}>
         {district.Name}
       </option>
     ))}
   </select>
-
-    </div>
+</div>
 
             {/* DS Division */}
             <div className="flex items-center mb-2">

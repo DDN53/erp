@@ -7,10 +7,7 @@ body {
   user-select: none;
 }
 
-::selection {
-  background: transparent;
-  color: inherit;
-}
+
 
 @layer utilities {
   .text-balance {

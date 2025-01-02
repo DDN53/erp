@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from 'next/navigation';
-import API from "@/api/index";
+import API from "@/api/route";
 import MainLayout from '@/components/WaterProductLayout/MainLayout';
 import { provinces, getDistrictsByProvince } from "@/app/constants/Area";
 import { getRSCByNumber } from "@/app/constants/RSC";
@@ -181,14 +181,12 @@ function WellInfo() {
 
     if (filters.province) {
       filtered = filtered.filter(well => {
-        // Convert the province code to full name for comparison
         const wellProvinceName = getProvinceNameByCode(well.PROVINCE_CODE);
         return wellProvinceName === filters.province;
       });
     }
     if (filters.district) {
       filtered = filtered.filter(well => {
-        // Fix: Use getDistrictNameByCode instead of getDistrictsByProvince
         const wellDistrictName = getDistrictNameByCode(well.DISTRICT_CODE);
         return wellDistrictName === filters.district;
       });
@@ -198,20 +196,16 @@ function WellInfo() {
     }
     if (filters.workLocation) {
       filtered = filtered.filter(well => {
-        // Fix: Compare with WORK_LOCATION_CODE instead of selectedWorkLocation
         return well.WORK_LOCATION_CODE === filters.workLocation;
       });
     }
-
     setFilteredWells(filtered);
   };
-
   const handleFilterChange = (filterName, value) => {
     setFilters(prev => ({ ...prev, [filterName]: value }));
     setShowFilters(true);
     resetFilterTimeout();
   };
-
   const clearFilters = () => {
     setFilters({
       province: "",
@@ -222,24 +216,21 @@ function WellInfo() {
     setShowFilters(true);
     resetFilterTimeout();
   };
-
   const navigateBack = () => {
     router.push('/waterProduction');
   };
-
   const handleAddWell = async (e) => {
     e.preventDefault();
     try {
       await API.addwell(newWell);
       setShowAddWellModal(false);
-      // Refresh the well list
       const response = await API.viewallwells();
       setWells(response.data);
       setFilteredWells(response.data);
       toast.success('Well added successfully!'); 
     } catch (error) {
       console.error("Error adding well:", error);
-      toast.error('Failed to add well. Please try again.'); // Toast message for error
+      toast.error('Failed to add well. Please try again.'); 
     }
   };
 
@@ -253,7 +244,6 @@ function WellInfo() {
       const selectedLocation = Worklocations.find(loc => loc.id === value);
       const rscArray = getRSCByNumber(value);
       setRscOptions(rscArray || []);
-      // Reset RSC when work location changes
       setFilters(prev => ({ 
         ...prev, 
         workLocation: value,
@@ -268,12 +258,10 @@ function WellInfo() {
       }));
     }
   };
-
   const handleEditClick = (well) => {
     setEditingWell(well);
     setShowEditModal(true);
   };
-
   const handleDeleteWell = async (newWellNo) => {
     if (window.confirm('Are you sure you want to delete this well?')) {
       try {
@@ -298,7 +286,6 @@ function WellInfo() {
         throw new Error('Well Number is missing');
       }
 
-      // Create a clean payload by removing any undefined or null values
       const cleanPayload = Object.fromEntries(
         Object.entries(editingWell).filter(([_, value]) => value != null)
       );

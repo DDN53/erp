@@ -19,7 +19,7 @@ import TableHead from "@mui/material/TableHead";
 import { useDispatch, useSelector } from "react-redux";
 import RemoveWell from "./RemoveWell";
 import { useRouter } from "next/router";
-import API from "@/api/index";
+import API from "@/api/route";
 import { getUserDataFromToken } from "@/utils/userValidation";
 
 WellsTable.propTypes = {
